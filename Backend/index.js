@@ -4,7 +4,7 @@ const { connection } = require('./database/db');
 
 const cartRouter = require('./routes/cart.route');
 
-// const orderRouter = require('./routes/order.route');
+const orderRouter = require('./routes/order.route');
 
 const productRouter = require('./routes/product.route');
 
@@ -24,14 +24,14 @@ app.use('/product',productRouter);
 
 app.use('/cart',cartRouter);
 
-// app.use('/order',orderRouter);
+app.use('/order',orderRouter);
 
 
 
 app.all("*", (req,res)=>{
 
     res.status(404).send({
-        "error": `404 ! Invalid URL`
+        "error": `404 ! Invalid URL Detected.`
     })
 
 })
@@ -45,7 +45,7 @@ app.listen(process.env.port, async (req,res)=>{
 
         await connection
 
-        console.log(' DB Connected ');
+        console.log('Connected to Mongo DB Atlas');
 
     } 
     
@@ -55,6 +55,6 @@ app.listen(process.env.port, async (req,res)=>{
 
     }
 
-    console.log(`Server is running on port ${process.env.port}`);
+    console.log(`Server is running at port ${process.env.port}`);
 
 })

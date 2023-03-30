@@ -1,3 +1,4 @@
+
 require('dotenv').config();
 
 const jwt = require('jsonwebtoken');
@@ -17,8 +18,9 @@ const AdminAuth = async (req,res,next)=>{
         return res.status(400).send({
 
             "msg":"Kindly Login First to Access Protected Routes.",
-            "Code":400,
-            "error":"Invalid Access",
+          
+            "error":"Invalid Access Detected.",
+
             "Success":false
 
         })
@@ -33,11 +35,11 @@ const AdminAuth = async (req,res,next)=>{
 
         if(decoded){
 
-            const user = await UserModel.findById({_id:decoded.UserID})
+            const user = await UserModel.findById( { _id: decoded.UserID } )
 
             if(user.isAdmin){
 
-                req.body.UserID = decoded.UserID;
+                req.body.AdminID = decoded.UserID;
 
                 next()
 
@@ -48,7 +50,7 @@ const AdminAuth = async (req,res,next)=>{
                 return res.status(400).send({
 
                     "error":"Access Denied!! Unauthorized access detected.",
-                    "Code":400,
+                   
                     "Success":false
 
                 })
@@ -60,9 +62,11 @@ const AdminAuth = async (req,res,next)=>{
         else{
 
             return res.status(400).send({
-                "error":"Invalid Token Found!",
-                "Code":400,
+
+                "error":"Token found to be Invalid.",
+                
                 "Success":false
+
             })
 
         }
@@ -73,10 +77,14 @@ const AdminAuth = async (req,res,next)=>{
     catch (error) {
         
         return res.status(400).send({
+
             "error":error.message,
-            "msg":"Something Wrong with Token",
+
+            "msg":"Something Wrong with the Token.",
+
             "Success":false,
-            "Code":400
+          
+
         })
 
     }

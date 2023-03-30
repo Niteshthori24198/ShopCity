@@ -14,8 +14,9 @@ const Auth = (req,res,next)=>{
         return res.status(400).send({
 
             "msg":"Kindly Login First to Access Protected Routes.",
-            "Code":400,
-            "error":"Invalid Access",
+           
+            "error":"Invalid Access Detected.",
+
             "Success":false
 
         })
@@ -39,8 +40,9 @@ const Auth = (req,res,next)=>{
         else{
 
             return res.status(400).send({
-                "error":"Invalid Token Found!",
-                "Code":400,
+
+                "error":"Token found to be Invalid.",
+              
                 "Success":false
             })
 
@@ -52,10 +54,14 @@ const Auth = (req,res,next)=>{
     catch (error) {
         
         return res.status(400).send({
+
             "error":error.message,
-            "msg":"Something Wrong with Token",
+
+            "msg":"Something Wrong with the Token passed",
+
             "Success":false,
-            "Code":400
+
+           
         })
 
     }
