@@ -4,23 +4,30 @@ const ProductModel = require('../model/product.model');
 
 const GetAllProducts = async (req,res)=>{
 
-    const {search, limit, page, price} = req.query;
+    const { search, limit, page, price } = req.query;
 
-    let priceSort;
+    let pricerange;
 
     if(price){
 
         if(price==="asc" || price==='desc'){
 
-            priceSort = price==="asc" ? 1 : -1;
+            if(price === 'asc'){
+                pricerange = 1;
+            }
+            else{
+                pricerange = -1;
+            }
+
 
         }
         
         else{
 
             return res.status(400).send({
-                "msg": "Please select a valid way to sort.Price order must be either asc or desc",
-                "Code": 400,
+
+                "msg": "Please select a valid way to sort items .Price order must be in either ascending or descending",
+                
                 "Success": false
             })
             
@@ -31,14 +38,14 @@ const GetAllProducts = async (req,res)=>{
 
         const searchFilter = new RegExp(search, 'i');
 
-        if(priceSort){
+        if(pricerange){
 
-            const products = await ProductModel.find( { Title : searchFilter } ).sort({Price:priceSort}).skip(limit*(page-1)).limit(limit);
+            const products = await ProductModel.find( { Title : searchFilter } ).sort({ Price: pricerange}).skip(limit*(page-1)).limit(limit);
 
             return res.status(200).send({
 
                 "Success" : true,
-                "Code" : 200,
+               
                 "Products" : products 
 
             })
@@ -52,7 +59,7 @@ const GetAllProducts = async (req,res)=>{
             return res.status(200).send({
 
                 "Success" : true,
-                "Code" : 200,
+               
                 "Products" : products 
 
             })
@@ -66,8 +73,9 @@ const GetAllProducts = async (req,res)=>{
         return res.status(400).send({
 
             "error": error.message,
+
             "msg": "Something Went Wrong!",
-            "Code": 400,
+           
             "Success": false
 
         })
@@ -87,8 +95,9 @@ const GetOneProduct = async (req,res)=>{
         const product = await ProductModel.findById({_id:productID});
 
         return res.status(200).send({
+
             "Success" : true,
-            "Code" : 200,
+           
             "Products" : product
         })
 
@@ -99,8 +108,9 @@ const GetOneProduct = async (req,res)=>{
         return res.status(400).send({
 
             "error": error.message,
+
             "msg": "Something Went Wrong!",
-            "Code": 400,
+           
             "Success": false
 
         })
@@ -114,19 +124,27 @@ const GetProductByCategory = async (req,res)=>{
 
     const {search, limit, page, price} = req.query;
 
-    let priceSort;
+    let pricerange;
 
     if(price){
 
         if(price==="asc" || price==='desc'){
 
-            priceSort = price==="asc" ? 1 : -1;
+            if(price === 'asc'){
+                pricerange = 1;
+            }
+            else{
+                pricerange = -1;
+            }
 
-        }else{
+        }
+        
+        else{
 
             return res.status(400).send({
-                "msg": "Please select a valid way to sort.Price order must be either asc or desc",
-                "Code": 400,
+
+                "msg": "Please select a valid way to sort items .Price order must be either ascending or descending",
+              
                 "Success": false
             })
             
@@ -137,15 +155,17 @@ const GetProductByCategory = async (req,res)=>{
 
         const searchFilter = new RegExp(search, 'i');
 
-        if(priceSort){
+        if(pricerange){
 
-            const products = await ProductModel.find( { Title : searchFilter , Category } ).sort({Price:priceSort}).skip(limit*(page-1)).limit(limit);
+            const products = await ProductModel.find( { Title : searchFilter , Category } ).sort({ Price: pricerange }).skip(limit*(page-1)).limit(limit);
 
             return res.status(200).send({
 
                 "Success" : true,
-                "Code" : 200,
-                "Products" : products 
+                
+                "msg": "Products has been fetched Successfully.",
+
+                "Products" : products,
 
             })
 
@@ -158,7 +178,9 @@ const GetProductByCategory = async (req,res)=>{
             return res.status(200).send({
 
                 "Success" : true,
-                "Code" : 200,
+              
+                "msg": "Products has been fetched Successfully",
+
                 "Products" : products 
 
             })
@@ -172,8 +194,9 @@ const GetProductByCategory = async (req,res)=>{
         return res.status(400).send({
 
             "error": error.message,
+
             "msg": "Something Went Wrong!",
-            "Code": 400,
+           
             "Success": false
 
         })
@@ -184,18 +207,18 @@ const GetProductByCategory = async (req,res)=>{
 }
 
 
-const CreateProduct = async (req, res) => {
+const CreateNewProduct = async (req, res) => {
 
 
     const payload = req.body;
 
     try {
 
-        const verifyProduct = await ProductModel.find({Image:payload.Image});
+        const verifyProduct = await ProductModel.find( { Image: payload.Image } );
 
-        console.log(verifyProduct)
+        // console.log(verifyProduct)
 
-        if (verifyProduct.length) {
+        if (verifyProduct.length !== 0) {
 
             await ProductModel.findByIdAndUpdate({ _id: verifyProduct[0]._id }, payload)
 
@@ -203,10 +226,11 @@ const CreateProduct = async (req, res) => {
 
             return res.status(200).send({
 
-                "msg": "Product Successfully Added",
-                "Code": 200,
+                "msg": "New Product has been Successfully Added into Database",
+               
                 "Success": true,
-                "ProductData": product
+
+                "ProductInfo": product
 
             })
 
@@ -220,10 +244,11 @@ const CreateProduct = async (req, res) => {
 
             return res.status(200).send({
 
-                "msg": "New Product has been Successfully Added",
-                "Code": 200,
+                "msg": "New Product has been Successfully Added into Database",
+
                 "Success": true,
-                "ProductData": product
+
+                "ProductInfo": product
 
             })
         }
@@ -235,8 +260,9 @@ const CreateProduct = async (req, res) => {
         return res.status(400).send({
 
             "error": error.message,
+
             "msg": "Something Went Wrong",
-            "Code": 400,
+           
             "Success": false
 
         })
@@ -262,9 +288,10 @@ const UpdateProduct = async (req,res)=>{
 
         return res.status(200).send({
 
-            "msg":"Product has been Updated Successfully.",
+            "msg":"Product Info has been Updated Successfully.",
+
             "Success":true,
-            "Code":200,
+           
             "Product":product
             
 
@@ -277,8 +304,9 @@ const UpdateProduct = async (req,res)=>{
         return res.status(400).send({
 
             "error":error.message,
+
             "msg":"Something Went Wrong !",
-            "Code":400,
+
             "Success":false
 
 
@@ -301,9 +329,10 @@ const RemoveProduct = async (req,res)=>{
 
         return res.status(200).send({
 
-            "msg":"Product has been Deleted Successfully.",
+            "msg":"Product has been Deleted Successfully from database.",
+
             "Success":true,
-            "Code":200,
+           
 
         })
 
@@ -314,8 +343,9 @@ const RemoveProduct = async (req,res)=>{
         return res.status(400).send({
 
             "error":error.message,
+            
             "msg":"Something Went Wrong !",
-            "Code":400,
+           
             "Success":false
 
 
@@ -332,7 +362,7 @@ module.exports = {
     GetAllProducts,
     GetOneProduct,
     GetProductByCategory,
-    CreateProduct,
+    CreateNewProduct,
     UpdateProduct,
     RemoveProduct
 

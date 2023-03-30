@@ -1,3 +1,4 @@
+
 const CartModel = require("../model/cart.model");
 
 const ProductModel = require("../model/product.model");
@@ -5,19 +6,26 @@ const ProductModel = require("../model/product.model");
 
 
 
-const addToCart = async (req,res)=>{
+const AddItemToCart = async (req,res)=>{
 
     let {UserID, ProductID, Quantity} = req.body;
 
-    if(!Quantity || Quantity<=0) Quantity = 1
+    /* Quantity must be nonzero positive */
+
+    if(!Quantity || Quantity<=0){
+
+        Quantity = 1
+    } 
+
+    /* checking invalid productid */
 
     if(!ProductID){
 
         return res.status(404).send({
 
             "Success":false,
-            "Code":404,
-            "msg" : "Product Not Found"
+           
+            "msg" : "Product Not Found in database"
 
         })
 
@@ -28,74 +36,88 @@ const addToCart = async (req,res)=>{
         try {
 
             const product = await ProductModel.findById({_id:ProductID})
+           
 
         } 
         
         catch (error) {
 
             return res.status(404).send({
+
                 "error":error.message,
+
                 "Success":false,
-                "Code":404,
-                "msg" : "Product Not Found"
+                
+                "msg" : "Product Not Found in database"
             })
         }
     }
 
     try {
         
-        const exist = await CartModel.findOne( { UserID : UserID } )
+        const UserCartExist = await CartModel.findOne( { UserID : UserID } )
     
-        // console.log(exist);
 
-        if(exist){
+        /*  If user has it's cart already present */
 
-            const checkCart = exist.Products.find((ele)=>{
+        if(UserCartExist){
 
-                // console.log('==>',ele.product, ProductID);
-                //For  Type Converison put (== inseted to ===)
+            const checkUserCart = UserCartExist.Products.find((ele)=>{
+            
+                /* For Type Converison put (==) inseted of (===) to match id's. */
 
                 if(ele.product == ProductID){
                     return true
                 }
             })
 
-            // console.log(checkCart);
+         
+            /*  Checking duplicate items in cart. */
 
-            if(checkCart){
+            if(checkUserCart){
 
                 return res.status(400).send({
+
                     "Success":false,
-                    "Code":400,
-                    "msg":"Product Already Added Into Cart"
+        
+                    "msg":"Product Already been Added Into the Cart"
                 })
 
-            }else{
+            }
+
+
+            /* add item if not added to cart */
+            
+            else{
                 
-                exist.Products.push({ product: ProductID, Quantity: Quantity });
+                UserCartExist.Products.push({ product: ProductID, Quantity: Quantity });
 
-                // console.log(exist);
 
-                try
-                {
-                   await CartModel.findByIdAndUpdate({_id:exist._id}, exist);
+                try{
+
+                   await CartModel.findByIdAndUpdate({_id: UserCartExist._id}, UserCartExist);
 
                    return res.status(200).send({
+
                         "Success" : true,
-                        "Code" : 200,
+                      
                         "msg" : "Successfully Added Into Cart",
-                        "CartData" : exist
+
+                        "CartItems" : UserCartExist
                     })
 
                 }
                 
-                catch(er){
+                catch(error){
 
                     return res.status(400).send({
+
+                        "msg" : "Something Went Wrong",
+
                         "Success" : false,
-                        "Code" : 400,
-                        "error" : er.message,
-                        "msg" : "Something Went Wrong"
+                       
+                        "error" : error.message
+                        
                     })
 
                 }
@@ -104,22 +126,30 @@ const addToCart = async (req,res)=>{
 
         }
         
+
+        /*  If No carts is there then create new cart of user */
+
         else{
 
             try {
                 
-                const cart = new CartModel( {
+                const UserCart = new CartModel( {
+
                     UserID: UserID,
+
                     Products : [ { product: ProductID, Quantity: Quantity } ]
+
                 } )
 
-                await cart.save();
+                await UserCart.save();
 
                 return res.status(200).send({
+
                     "Success" : true,
-                    "Code" : 200,
-                    "msg" : "Successfully Added Into Cart",
-                    "CartData" : cart
+                 
+                    "msg" : "Product has been Added Into Cart Successfully",
+
+                    "CartData" : UserCart
                 })
 
             } 
@@ -127,9 +157,11 @@ const addToCart = async (req,res)=>{
             catch (error) {
                 
                 return res.status(400).send({
-                    "Success" : false,
-                    "Code" : 400,
+
                     "error" : error.message,
+                    
+                    "Success" : false,
+
                     "msg" : "Something Went Wrong."
                 })
 
@@ -144,9 +176,11 @@ const addToCart = async (req,res)=>{
     catch (error) {
 
         return res.status(400).send({
-            "Success" : false,
-            "Code" : 400,
+
             "error" : error.message,
+            
+            "Success" : false,
+
             "msg" : "Something Went Wrong."
         })
 
@@ -156,21 +190,27 @@ const addToCart = async (req,res)=>{
 }
 
 
-const getCartproduct = async(req,res)=>{
+
+
+const GetCartItems = async(req,res)=>{
 
     try {
 
-        const getData = await CartModel.findOne({UserID:req.body.UserID}).populate("Products.product")
+
+        /* Feteching of cart items along with complete product details. */
+
+        const items = await CartModel.findOne({UserID:req.body.UserID}).populate("Products.product")
 
 
-        if(getData){
+        if(items){
 
             res.status(200).send({
     
                 "msg":"Your Cart Items are as : ",
+
                 "Success":true,
-                "Code":200,
-                "CartItem":getData
+               
+                "CartItem":items
     
             })
         }
@@ -179,9 +219,9 @@ const getCartproduct = async(req,res)=>{
 
             res.status(400).send({
 
-                "Code":400,
                 "Success":false,
-                "msg":"Your Cart is Empty"
+
+                "msg":"Your Cart is Empty!"
     
             })
 
@@ -194,8 +234,9 @@ const getCartproduct = async(req,res)=>{
         res.status(400).send({
 
             "error":error.message,
-            "Code":400,
+          
             "Success":false,
+
             "msg":"Something Went wrong !"
 
         })
@@ -205,13 +246,19 @@ const getCartproduct = async(req,res)=>{
 }
 
 
-const updateCartItem = async(req,res)=>{
+
+
+const UpdateCartItems = async(req,res)=>{
 
     const { ProductID } = req.params;
      
     let {UserID, Quantity} = req.body;
 
-    if(!Quantity || Quantity<=0) Quantity=1
+    if(!Quantity || Quantity<=0){
+
+        Quantity=1
+
+    } 
 
     try{
 
@@ -220,7 +267,9 @@ const updateCartItem = async(req,res)=>{
         const checkCart = userCart.Products.find((ele)=>{
 
             if(ele.product == ProductID){
+
                 ele.Quantity = Quantity
+
                 return true
             }
 
@@ -233,44 +282,60 @@ const updateCartItem = async(req,res)=>{
                 await CartModel.findByIdAndUpdate({ _id : userCart._id }, userCart)        
         
                 return res.status(200).send({
-                    "Code":200,
+
                     "Success":true,
-                    "msg":"Your Cart Successfully updated!",
-                    "CartData": userCart
+
+                    "msg":"Your Cart has been Successfully updated!",
+
+                    "CartItem": userCart
                 })
 
-            } catch (error) {
+            } 
+            
+            catch (error) {
+
                 return res.status(400).send({
                     
-                    error:error.message,
-                    "Code":400,
+                    "error":error.message,
+                   
                     "Success":false,
-                    "Code":400,
+                   
                     "msg":"Something Went Wrong."
                 
                 })
             }
 
-        }else{
+        }
+        
+        else{
+
             return res.status(404).send({
-                "Code":404,
+
                 "Success":false,
-                "msg":"Product Not Found"
+
+                "msg":"Product Not Found !"
             })
         }
 
         
-    }catch(error){
+    }
+    
+    catch(error){
+
         return res.status(400).send({
-            "Code":400,
+
+            "msg":"Your Cart Doesn't Even Exist",
+            
             "Success":false,
-            "msg":"Your Cart Doesn't Exist",
+
             "error":error.message
         })
     }
     
 
 }
+
+
 
 
 
@@ -286,7 +351,7 @@ const deleteCartItem =  async (req,res) =>{
         const userCart = await CartModel.findOne( { UserID } )
 
         
-        const afterDelete  = userCart.Products.reduce((acc, curr)=>{
+        const UpdatedCart  = userCart.Products.reduce((acc, curr)=>{
 
             if( curr.product != ProductID ){
 
@@ -298,48 +363,62 @@ const deleteCartItem =  async (req,res) =>{
 
         },[])
 
-        userCart.Products = afterDelete;
+        userCart.Products = UpdatedCart;
         
         try {
             
             await CartModel.findByIdAndUpdate({ _id : userCart._id }, userCart)        
     
             return res.status(200).send({
-                "Code":200,
+
+                "msg":"Your Cart item has been Successfully Deleted!",
+                
                 "Success":true,
-                "msg":"Your Cart Successfully Deleted!",
+
                 "CartData": userCart
             })
 
-        } catch (error) {
+        } 
+        
+        catch (error) {
 
             return res.status(400).send({
-                "Code":400,
-                "Success":false,
+
                 "msg":"Something Went Wrong",
+
+                "Success":false,
+
                 "error":error.message
+
             })
 
         }
         
-    }catch(error){
+    }
+    
+    catch(error){
 
         return res.status(400).send({
-            "Code":400,
-            "Success":false,
+
             "msg":"Your Cart Doesn't Exist",
+            
+            "Success":false,
+
             "error":error.message
+
         })
 
     }
    
 }
 
+
+
 module.exports = {
 
-    addToCart,
-    getCartproduct,
-    updateCartItem,
+    AddItemToCart,
+    GetCartItems,
+    UpdateCartItems,
     deleteCartItem
 
 }
