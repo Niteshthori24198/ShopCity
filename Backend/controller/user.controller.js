@@ -30,7 +30,7 @@ const RegisterNewUser = async (req, res) => {
 
         return res.status(400).send({
 
-            "error": "Kindly Provide a Valid Gender details as : { Male/Female } only.",
+            "msg": "Kindly Provide a Valid Gender details as : { Male/Female } only.",
           
             "Success": false
 
@@ -92,7 +92,7 @@ const RegisterNewUser = async (req, res) => {
 
                     "Success": false,
 
-                    "Message": "User is Already Registered with us. Kindly Login using crendentials."
+                    "msg": "User is Already Registered with us. Kindly Login using crendentials."
                 })
 
             }
@@ -175,7 +175,7 @@ const LoginUser = async (req, res) => {
 
             "Success": false,
 
-            "Message": "Something Went Wrong !"
+            "msg": "Something Went Wrong !"
         })
     }
 
