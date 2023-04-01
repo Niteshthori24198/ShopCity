@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page</title>
+
+
+    <!-- product style sheet -->
+
+    <link rel="stylesheet" href="../styles/user.products.css">
+
+    <link rel="stylesheet" href="../styles/navbar.css">
+
+    <!-- product style sheet -->
+
+    <!-- Google fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <!-- Google fonts -->
+
+    <!-- font awesome icon library -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- font awesome icon library -->
+
+
+</head>
+
+<body>
+
+
+    <!-- Nav section -->
+
+    <nav>
+
+        <div id="mylogo">
+
+            <a href="#"><img src="../shopcity.png" alt="Error"></a>
+
+        </div>
+
+        <div id="mynavsection">
+
+            <!-- top section of nav -->
+
+            <div>
+
+                <div>
+                    <input type="text" placeholder="Search Here">
+                </div>
+
+                <div>
+                    <a href="#"><i class="fa-solid fa-user fa-xl"></i> Sign In </a>
+                </div>
+
+                <div>
+                    <a href="#"><i class="fa-solid fa-cart-shopping fa-2xl"></i> <span>Cart</span> </a>
+
+
+                </div>
+
+                <div>
+                    <a href="#"> <i class="fa-sharp fa-solid fa-truck-fast fa-2xl"></i> <span>Orders</span> </a>
+
+                </div>
+
+            </div>
+
+            <!-- all references -->
+
+            <div>
+
+                <div>
+                    <a href="#">Home</a>
+                    <a href="#">Products</a>
+                    <a href="#">Men's</a>
+                    <a href="#">Women's</a>
+                    <a href="#">Kids</a>
+                    <a href="#">Store</a>
+                    <a href="#">About</a>
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+
+    </nav>
+
+    <!-- Nav section -->
+
+
+
+    <!-- product filter section -->
+    
+    <div class="niteshfiltersection">
+
+        <div>
+            <p>Search by Title</p>
+            <input type="text" placeholder="Search Here" id="Niteshproductsearch">
+        </div>
+
+        <div>
+            <p>Filter By Category</p>
+            <select id="Niteshcategoryselect">
+                <option value="">Select by Category</option>
+                <option value="Men">Men</option>
+                <option value="Women">Women</option>
+                <option value="Kids">Kids</option>
+            </select>
+        </div>
+
+        <div>
+            <p>Sort By Price</p>
+            <select id="NiteshsortbyPrice">
+                <option value="">Select Price</option>
+                <option value="Low to High">Low to High</option>
+                <option value="High to Low">High to Low</option>
+            </select>
+        </div>
+
+    </div>
+    
+    <!-- product filter section -->
+
+
+    <!-- Product display section -->
+    
+    <div id="Niteshproductscontainer">
+
+        <!-- Append products here -->
+
+    </div>
+
+    <div id="pagination-wrapper">
+
+        <!-- append buttons -->
+
+    </div>
+    
+    <!-- Product display section -->
+
+
+</body>
+
+</html>
+
+<script src="../scripts/products.js"></script>

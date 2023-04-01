@@ -54,3 +54,10 @@ body{
     text-decoration: underline;
     color: red;
 }
+
+footer{
+    width: 100%;
+}
+footer img{
+    width: 100%;
+}
