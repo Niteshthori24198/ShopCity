@@ -1,0 +1,104 @@
+
+.niteshfiltersection{
+    /* border: 2px solid red; */
+    margin: 150px auto auto 25px;
+    width: 20%;
+    padding: 10px 10px 25px 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    float: left;
+   
+}
+
+
+.niteshfiltersection > div:nth-child(1) > input{
+    border: none;
+    border-radius: 10px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    text-align: center;
+    width: 75%;
+    height: 25px;
+}
+
+.niteshfiltersection > div{
+    text-align: center;
+
+}
+
+
+#Niteshcategoryselect{
+    border: none;
+    border-radius: 10px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    text-align: center;
+    width: 75%;
+    height: 25px;
+}
+
+#NiteshsortbyPrice{
+    border: none;
+    border-radius: 10px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    text-align: center;
+    width: 75%;
+    height: 25px;
+}
+
+#Niteshproductscontainer{
+    border: 2px solid red;
+    width: 70%;
+    margin: 75px auto;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 15px;
+}
+
+
+.myproductcontainer{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 18px;
+}
+
+.mySeedetailbutton{
+    background-color: brown;
+    border: none;
+    width: 150px;
+    height: 25px;
+    color: white;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.myproductimage > img{
+    width: 100%;
+}
+
+.myproductdetails{
+    text-align: justify;
+}
+
+.mydivbutton{
+    text-align: center;
+    margin-top: 15px;
+}
+
+
+#pagination-wrapper{
+    width: 20%;
+    margin: -50px 45px auto auto;
+    float: right;
+    /* border: 2px solid red; */
+    display: flex;
+    justify-content: space-between;
+}
+
+.pagination-button{
+    border: none;
+    border-radius: 100%;
+    color: white;
+    background-color: brown;
+    font-size: 15px;
+    cursor: pointer;
+}

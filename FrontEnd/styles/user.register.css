@@ -38,3 +38,10 @@ body{
     margin-bottom: 20px;
     cursor: pointer;
 }
+
+footer{
+    width: 100%;
+}
+footer img{
+    width: 100%;
+}

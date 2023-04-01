@@ -6,9 +6,13 @@ const GetAllProducts = async (req,res)=>{
 
     const { search, limit, page, price } = req.query;
 
+    console.log("--->",search,limit,page,price)
+
     let pricerange;
 
     if(price){
+
+        console.log("--> pc",price)
 
         if(price==="asc" || price==='desc'){
 
@@ -40,7 +44,11 @@ const GetAllProducts = async (req,res)=>{
 
         if(pricerange){
 
+            console.log("hello",searchFilter,pricerange)
+
             const products = await ProductModel.find( { Title : searchFilter } ).sort({ Price: pricerange}).skip(limit*(page-1)).limit(limit);
+
+            console.log(products)
 
             return res.status(200).send({
 
@@ -123,6 +131,8 @@ const GetProductByCategory = async (req,res)=>{
     const { Category } = req.params;
 
     const {search, limit, page, price} = req.query;
+
+    console.log(search,limit,page,price,Category)
 
     let pricerange;
 

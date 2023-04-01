@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Page</title>
+
+    <!-- checkout style sheet -->
+
+    <link rel="stylesheet" href="../styles/cart.checkout.css">
+
+    <link rel="stylesheet" href="../styles/navbar.css">
+
+    <!-- checkout style sheet -->
+
+    <!-- Google fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <!-- Google fonts -->
+
+    <!-- font awesome icon library -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- font awesome icon library -->
+
+
+
+</head>
+
+<body>
+
+
+    <!-- Nav section -->
+
+    <nav>
+
+        <div id="mylogo">
+
+            <a href="#"><img src="../shopcity.png" alt="Error"></a>
+
+        </div>
+
+        <div id="mynavsection">
+
+            <!-- top section of nav -->
+
+            <div>
+
+                <div>
+                    <input type="text" placeholder="Search Here">
+                </div>
+
+                <div>
+                    <a href="#"><i class="fa-solid fa-user fa-xl"></i> Sign In </a>
+                </div>
+
+                <div>
+                    <a href="#"><i class="fa-solid fa-cart-shopping fa-2xl"></i> <span>Cart</span> </a>
+
+
+                </div>
+
+                <div>
+                    <a href="#"> <i class="fa-sharp fa-solid fa-truck-fast fa-2xl"></i> <span>Orders</span> </a>
+
+                </div>
+
+            </div>
+
+            <!-- all references -->
+
+            <div>
+
+                <div>
+                    <a href="#">Home</a>
+                    <a href="#">Products</a>
+                    <a href="#">Men's</a>
+                    <a href="#">Women's</a>
+                    <a href="#">Kids</a>
+                    <a href="#">Store</a>
+                    <a href="#">About</a>
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+
+    </nav>
+
+
+    <!-- Nav section -->
+
+    <div class="checkout_container">
+
+        <div id="checkout_form">
+
+            <h3>Shipping Address</h3>
+
+            <div>
+
+                <div>
+                    <p>First Name</p>
+                    <input type="text" placeholder="Enter your First Name" id="CustomerFName">
+                </div>
+
+                <div>
+                    <p>Last Name</p>
+                    <input type="text" placeholder="Enter your Last Name" id="CustomerLName">
+                </div>
+
+            </div>
+
+            <div>
+                <p>Country</p>
+                <select name="Country_Name" id="Country_Name">
+                    <option value="">Select</option>
+                    <option value="India">India</option>
+                    <option value="United State">United State</option>
+                    <option value="Canada">Canada</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="Australia">Australia</option>
+                    <option value="South Africa">South Africa</option>
+                    <option value="Pakisthan">Pakisthan</option>
+                </select>
+                <p>Address</p>
+                <input type="text" id="CustomerAddress">
+                <p>City</p>
+                <input type="text" id="CustomerCityName">
+            </div>
+
+            <div>
+
+                <div>
+
+                    <p>State</p>
+                    <select name="State" id="State_Select">
+
+                        <option value="">Select</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Haryana">Haryana</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Ontario">Ontario</option>
+                        <option value="Alaska">Alaska</option>
+                        <option value="California">California</option>
+                        <option value="Scotland">Scotland</option>
+                        <option value="Esteren Cap">Esteren Cap</option>
+                        <option value="Lahore">Lahore</option>
+                        <option value="Adelaide">Adelaide</option>
+
+                    </select>
+
+                </div>
+
+                <div>
+
+                    <p>Zip Code</p>
+                    <input type="number" id="CustomerZipCode">
+
+                </div>
+
+            </div>
+
+            <div>
+                <p>Phone</p>
+                <input type="number" id="CustomerPhoneNumber">
+            </div>
+
+            <div>
+                <button>Continue To Shipping Method</button>
+            </div>
+
+            <div class="PaymentSection">
+
+                <!-- payment section -->
+
+
+
+            </div>
+
+        </div>
+
+        <div id="Customer_Cart_items">
+
+        </div>
+
+    </div>
+
+    
+    <footer>
+        <div>
+            <img src="../Images/Fim.png" alt="Error">
+        </div>
+    </footer>
+
+
+</body>
+
+</body>
+
+</html>
