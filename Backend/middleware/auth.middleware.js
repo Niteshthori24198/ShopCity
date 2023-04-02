@@ -9,6 +9,8 @@ const Auth = (req,res,next)=>{
 
     const authToken = req.headers['authorization'];
 
+    console.log("---~~~~~~ >>> token ", authToken)
+
     if(!authToken){
 
         return res.status(400).send({

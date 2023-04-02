@@ -27,7 +27,7 @@ const cartSchema = mongoose.Schema({
                 ref:ProductModel
             },
             
-            Quntity:{type:Number}
+            Quantity:{type:Number}
         
         } 
     ]

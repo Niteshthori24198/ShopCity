@@ -28,7 +28,7 @@ const orderSchema = mongoose.Schema({
             
             },
 
-            Quntity:{type:Number},
+            Quantity:{type:Number},
             
             Address: {type:String , required:true},
 
