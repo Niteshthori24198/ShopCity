@@ -242,6 +242,7 @@ const updateUserData = async (req,res) => {
         }
 
     }
+    
 
     try {
 

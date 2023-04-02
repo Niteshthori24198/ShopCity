@@ -10,6 +10,8 @@ const AddItemToCart = async (req,res)=>{
 
     let {UserID, ProductID, Quantity} = req.body;
 
+    console.log("---->>>>",UserID,ProductID,Quantity)
+
     /* Quantity must be nonzero positive */
 
     if(!Quantity || Quantity<=0){
@@ -89,6 +91,8 @@ const AddItemToCart = async (req,res)=>{
             /* add item if not added to cart */
             
             else{
+
+                console.log("~~~~~~~ ", Quantity)
                 
                 UserCartExist.Products.push({ product: ProductID, Quantity: Quantity });
 
