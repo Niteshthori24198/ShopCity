@@ -13,7 +13,7 @@ AppendPaginationButton();
 function FetchAndDisplayProducts(page=1){
 
 
-    const url = `${BaseURL}/product/getall?limit=15&page=${page}`
+    const url = `${BaseURL}/product/getall?limit=9&page=${page}`
 
     fetch(url)
     .then((res)=>{

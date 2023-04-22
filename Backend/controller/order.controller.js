@@ -15,7 +15,7 @@ const PlaceNewOrder = async (req,res) => {
     console.log("----> order aaya",Orders)
 
     let flag = false
-
+    let d = new Date()
     let UserOrders = Orders.map((ele)=>{
 
         if(ele.Quantity <= 0){
@@ -27,7 +27,7 @@ const PlaceNewOrder = async (req,res) => {
 
         return {
 
-            product: ele.ProductID, Quantity:ele.Quantity, Address:ele.Address, Status:"Confirmed"
+            product: ele.ProductID, Quantity:ele.Quantity, Address:ele.Address, Status:"Confirmed" , Date:`${d.getDate()}-${d.getMonth()}-${d.getFullYear()}`
         }
 
     })

@@ -20,13 +20,14 @@ const orderSchema = mongoose.Schema({
     Products:[
         
         {
-            Product:{
+            product:{
                 
                 type:mongoose.Schema.Types.ObjectId,
                 
                 ref:ProductModel
             
             },
+            Date:{type:String, required:true},
 
             Quantity:{type:Number},
             
