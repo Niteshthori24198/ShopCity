@@ -5,7 +5,7 @@ const Auth = require('../middleware/auth.middleware');
 
 const cartRouter = Router();
 
-const { AddItemToCart, GetCartItems, UpdateCartItems, deleteCartItem } = require('../controller/cart.controller');
+const { AddItemToCart, GetCartItems, UpdateCartItems, deleteCartItem , EmptyCart } = require('../controller/cart.controller');
 
 
 
@@ -27,9 +27,10 @@ cartRouter.get("/get",GetCartItems);
 cartRouter.patch("/update/:ProductID", UpdateCartItems)
 
 
-
 cartRouter.delete("/delete/:ProductID" , deleteCartItem)
 
+
+cartRouter.delete("/empty" , EmptyCart)
 
 
 module.exports = cartRouter;

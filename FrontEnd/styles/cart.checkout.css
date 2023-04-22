@@ -173,8 +173,8 @@
 }
 
 #Customer_Cart_items > div img{
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 120px;
 }
 
 #Customer_Cart_items > div > div:nth-child(1){

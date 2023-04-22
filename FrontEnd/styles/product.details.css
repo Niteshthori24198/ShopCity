@@ -3,19 +3,25 @@
     width: 75%;
     margin: 100px auto;
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
-    border: 2px solid red;
+    /* border: 2px solid red; */
     padding: 30px;
 }
 
-.productdetailcont > div{
+#productdetailcont > div{
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    text-align: center;
 }
 
+/* .productdetailcont > div:nth-child(2) > div{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border: 2px solid black;
+} */
 
-.productdetailcont > div:nth-child(1) > img{
-    width: 100%;
+
+#productdetailcont > div:nth-child(1) > img{
+    width: 75%;
 }
 
 .nitesh_product_detail{
@@ -35,15 +41,6 @@
     cursor: pointer;
    
 }
-
-
-
-
-
-
-
-
-
 
 
 

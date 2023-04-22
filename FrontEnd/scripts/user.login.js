@@ -59,7 +59,7 @@ function LoginNewUser(user){
 
             alert(data.msg)
 
-            // location.href = "../index.html" 
+            location.href = "../index.html" 
         }
 
         else{

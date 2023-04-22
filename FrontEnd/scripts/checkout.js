@@ -1,14 +1,20 @@
 
-let Products_Cart = JSON.parse(localStorage.getItem("Pkey")) || [];
+const BaseUrL = `http://localhost:3000`
 
-let Quantity_item=JSON.parse(localStorage.getItem("Quantity")) || null;
+let ProductData = [];
 
+let Cart_Amount = 0;
 
+const token = localStorage.getItem("usertoken") || null;
 
-let ProductData=[];
+if (token) {
+    fetchAndRenderCart();
+}
 
-let Cart_Amount=0;
-
+else {
+    alert("Kindly Login First. Your Token is might be Expired or Invalid !");
+    location.href = "../view/user.login.html"
+}
 
 
 let CustomerFirstName = document.getElementById("CustomerFName");
@@ -33,189 +39,220 @@ let OrderCheckoutButton = document.querySelector("#checkout_form > div:nth-child
 
 
 
-OrderCheckoutButton.addEventListener("click",function (e){
+OrderCheckoutButton.addEventListener("click", function (e) {
 
     e.preventDefault()
 
-    let C_fname=CustomerFirstName.value;
-    let C_lname=CustomerLastName.value;
-    let C_country=CountrySelect.value;
-    let C_address=CustomerAddress.value;
-    let C_city=CustomerCity.value;
-    let C_state=CustomerState.value;
-    let C_zip=CustomerZipcode.value;
-    let C_phone=CustomerPhoneNumber.value;
+    let C_fname = CustomerFirstName.value;
+    let C_lname = CustomerLastName.value;
+    let C_country = CountrySelect.value;
+    let C_address = CustomerAddress.value;
+    let C_city = CustomerCity.value;
+    let C_state = CustomerState.value;
+    let C_zip = CustomerZipcode.value;
+    let C_phone = CustomerPhoneNumber.value;
 
     //console.log(C_fname,C_lname,C_country,C_address,C_city,C_state,C_zip,C_phone);
 
-    if(C_fname && C_lname && C_country && C_address && C_city && C_state && C_zip && C_phone){
+    if (C_fname && C_lname && C_country && C_address && C_city && C_state && C_zip && C_phone) {
 
         // address of customer including All details
 
 
-        let obj={
-            Cname:`${C_fname} ${C_lname}`,
-            Caddress:`${C_address}, ${C_country} , ${C_state}, ${C_city}`,
-            Czip:`${C_zip}`,
-            Cphone:`${C_phone}`
-        }
+        let Address = `${C_fname} ${C_lname} , ${C_address}, ${C_country} , ${C_state}, ${C_city} , ${C_zip} , ${C_phone}`
 
         //console.log(obj)
-       
+
         getPaymentoption();
 
         DiscountPrice();
 
-        PlaceNewOrder(obj);
+        PlaceNewOrder(Address);
 
     }
 
-    else{
+    else {
         alert("Kindly provide All required details ! ")
     }
-
-
 
 })
 
 
 
-function getPaymentoption(){
+function getPaymentoption() {
 
-    let paymentContainer=document.querySelector(".PaymentSection");
+    let paymentContainer = document.querySelector(".PaymentSection");
 
-    paymentContainer.innerHTML=`<p>Payment</p>
+    paymentContainer.innerHTML = `<p>Payment</p>
     <select name="Payment" id="PaymentOption">
         <option value="">Select</option>
         <option value="Cash on Delivery">Cash on Delivery</option>
         <option value="Online">Internet Banking</option>
     </select>
     <div>
-        <p>Use <span id="Special_Code">Masai</span> as coupon code to get extra 20% off </p>
+        <p>Use <span id="Special_Code">Jai Shree Ram</span> as coupon code to get extra 40% off </p>
         <input type="text" placeholder="Coupon Code" id="coupon_box">
         <button id="discount_reward">Apply</button>
     </div>
     <button id="Place_Order">Place Order</button>`
 }
 
-function PlaceNewOrder(obj){
 
-    let placeorderbtn=document.getElementById("Place_Order");
-    let paymentoption=document.getElementById("PaymentOption");
+function PlaceNewOrder(Address) {
 
-    placeorderbtn.addEventListener("click",function (e){
+    let placeorderbtn = document.getElementById("Place_Order");
+    let paymentoption = document.getElementById("PaymentOption");
+
+    placeorderbtn.addEventListener("click", function (e) {
         e.preventDefault()
-        if(paymentoption.value===""){
+        if (paymentoption.value === "") {
             alert("kindly select a valid payment option !")
         }
-        else if(paymentoption.value==="Cash on Delivery"){
-           
-            Shooping(obj);
-            alert("Order has been Placed Successfully !");
+        else if (paymentoption.value === "Cash on Delivery") {
+
+            Shooping(Address);
+
         }
-        else{
-            setTimeout(function (){
-                Shooping(obj);
-                alert("Transaction Successfull ! Order has been placed Successfully !");
-            },5000)
+        else {
+            setTimeout(function () {
+                Shooping(Address);
+                alert("Transaction Successfull !!");
+            }, 3000)
         }
     })
 }
 
 
-function Shooping(obj){
-    
-    if(Products_Cart.length!==0){
-        
-        for(let id of Products_Cart){
-            fetch(`https://63c63ce0d307b76967351ede.mockapi.io/product/${id}`)
-                .then((res)=>{
-                    return res.json()
-                })
-                .then((data)=>{
-                    
-                    obj.image=data.image;
-                    obj.title=data.title;
-                    obj.price=data.price;
 
-                    UpdateBEServer(obj);
+function Shooping(Address) {
 
-                    Customer_History_product=Products_Cart;
-                    localStorage.clear()
-                    localStorage.setItem("CustomerHistory",JSON.stringify(Customer_History_product));
-                    
-                })
+    const MyOrders = {};
+
+    const Orders = []
+
+    for (let item of ProductData) {
+
+        let order = {}
+
+        order.Address = Address;
+        order.Quantity = item.Quantity;
+        order.ProductID = item.product._id;
+
+        Orders.push(order)
+
         
-        }
+
     }
 
+    MyOrders.Orders=Orders;
+
+    console.log(MyOrders)
+
+    UpdateBEServer(MyOrders);
+
 
 }
 
 
-function UpdateBEServer(obj){
-    fetch(`https://63ca7e2e4f53a00420242ac5.mockapi.io/User`,{
-        method:'POST',
-        headers:{
-            'content-type':'application/json'
+function UpdateBEServer(MyOrders) {
+
+    console.log("kya order aaya yhan : ", MyOrders);
+
+    fetch(`${BaseUrL}/order/place`, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+            'authorization':`Bearer ${token}`
         },
-        body:JSON.stringify(obj)
+        body: JSON.stringify(MyOrders)
     })
-        .then((res)=>{
+    .then((res) => {
+        return res.json()
+    })
+    .then((data) => {
+
+        console.log(data)
+
+        if(data.Success){
+
+            alert(data.msg)
+
+            ClearCart()
+
+            window.location = "../index.html";
+
+        }
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+
+}
+
+
+
+function fetchAndRenderCart() {
+
+    console.log("hyy")
+
+    fetch(`${BaseUrL}/cart/get`, {
+        method: 'GET',
+        headers: {
+            'content-type': 'application/json',
+            'authorization': `Bearer ${token}`
+        }
+    })
+        .then((res) => {
             return res.json()
         })
-        .then((data)=>{
-            window.location="/cart.html"
+        .then((data) => {
+
+            console.log(data.CartItem.Products)
+
+            if (data.Success) {
+
+                ProductData = data.CartItem.Products;
+
+                RenderCartItem(ProductData)
+
+            }
+
+            else {
+                alert(data.msg)
+            }
+
         })
-}
+        .catch((err) => {
+            alert(err)
+        })
 
-
-fetchAndRenderCart()
-
-function fetchAndRenderCart(){
-
-    if(Products_Cart.length!==0){
-        
-        for(let id of Products_Cart){
-            fetch(`https://63c63ce0d307b76967351ede.mockapi.io/product/${id}`)
-                .then((res)=>{
-                    return res.json()
-                })
-                .then((data)=>{
-                    ProductData.push(data)
-                    RenderCartItem(ProductData,data.id,data.price)
-                    
-                })
-        
-        }
-    }
 }
 
 
 
-function RenderCartItem(data,id,amt){
+function RenderCartItem(data) {
 
-    let Cards=data.map((item)=>{
-        return getCards(item.image,item.title,item.category,item.price)
+    let Cards = data.map((item) => {
+        return getCards(item.product.Image, item.product.Title, item.product.Category, item.Quantity, item.product.Price)
     }).join("")
 
 
-    CustomerCart.innerHTML=`${Cards}<p>Total :- <span> </span></p>`
+    CustomerCart.innerHTML = `${Cards}<p>Total :- <span> </span></p>`
 
-    let Total_Amount=document.querySelector("#Customer_Cart_items  > p > span");
+    let Total_Amount = document.querySelector("#Customer_Cart_items  > p > span");
 
-    for(let i in Quantity_item){
-        if(i===id){
-            Cart_Amount+=Quantity_item[i]*amt;
-            Total_Amount.textContent=Cart_Amount+" Rs";
-        }
-    }
 
-   
+    calculateCartTotal();
+
+    console.log("cart ka amount -->", Cart_Amount)
+
+    Total_Amount.textContent = Cart_Amount + " Rs";
+
+
 }
 
 
-function getCards(image,title,cat,price){
+function getCards(image, title, cat, quant, price) {
 
 
     return `<div>
@@ -227,7 +264,8 @@ function getCards(image,title,cat,price){
                 <div>
                     <p>${title}</p>
                     <p>${cat}</p>
-                    <p>${price} Rs</p>
+                    <p>Quantity : ${quant}</p>
+                    <p>Price : ${price} Rs</p>
                 </div>
 
             </div>`
@@ -235,33 +273,80 @@ function getCards(image,title,cat,price){
 }
 
 
-function DiscountPrice(){
-    let count=0;
-
-    let discountCode=document.getElementById("coupon_box");
-
-    let discountapplybtn=document.getElementById("discount_reward");
 
 
-    discountapplybtn.addEventListener("click",function(e){
+function DiscountPrice() {
+
+    let count = 0;
+
+    let discountCode = document.getElementById("coupon_box");
+
+    let discountapplybtn = document.getElementById("discount_reward");
+
+
+    discountapplybtn.addEventListener("click", function (e) {
 
         e.preventDefault()
-        
 
-        if(discountCode.value==="Masai" && count==0){
 
-            let Total_Amount=document.querySelector("#Customer_Cart_items  > p > span");
+        if (discountCode.value === "Jai Shree Ram" && count == 0) {
 
-            let finalPrice=parseInt(Total_Amount.textContent);
+            let Total_Amount = document.querySelector("#Customer_Cart_items  > p > span");
 
-            finalPrice=finalPrice*0.8;
+            let finalPrice = parseInt(Total_Amount.textContent);
 
-            Total_Amount.textContent=finalPrice+" Rs";
+            finalPrice = finalPrice * 0.6;
+
+            Cart_Amount = finalPrice;
+
+            Total_Amount.textContent = finalPrice + " Rs";
 
             count++;
 
         }
 
+    })
+
+}
+
+
+function calculateCartTotal() {
+
+    Cart_Amount = 0;
+
+    if (ProductData.length !== 0) {
+
+        for (let item of ProductData) {
+
+            Cart_Amount += (item.Quantity) * (item.product.Price);
+
+        }
+
+
+    }
+}
+
+
+
+function ClearCart(){
+
+    console.log("cart khali karo")
+
+    fetch(`${BaseUrL}/cart/empty`,{
+        method:'delete',
+        headers:{
+            'Content-type':'application/json',
+            'authorization':`Bearer ${token}`
+        }
+    })
+    .then((res)=>{
+        return res.json()
+    })
+    .then((data)=>{
+        console.log("@@@----->",data)
+    })
+    .catch((err)=>{
+        console.log(err)
     })
 
 }

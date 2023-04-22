@@ -71,7 +71,7 @@ const AddNewUserToDB = async (payload) => {
 
             alert(data.msg)
 
-            // location.href = 'login.html';
+            location.href = '../view/user.login.html';
 
         }
 

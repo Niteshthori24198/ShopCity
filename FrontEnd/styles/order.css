@@ -1,0 +1,51 @@
+
+.ordersection{
+    display: flex;
+    width: 60%;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid red;
+    margin: auto;
+}
+
+#serchyourorder{
+    height: 25px;
+    width: 400px;
+    border: none;
+    text-align: center;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-radius: 10px;
+}
+
+#ordertable{
+    border: 1px solid black;
+    text-align: center;
+    border-collapse: separate;
+    width: 80%;
+    margin: 50px auto;
+
+}
+
+.cancelbtn{
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    color: black;
+    border: 1px solid #666;
+    
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 15px;
+}
+.cancelbtn:hover{
+    color: aqua;
+    background-color:rgb(55, 54, 54);
+}
+
+.orderimage{
+    width: 100px;
+}
+th,td,tr{
+    border: 1px solid #666;
+}

@@ -3,7 +3,7 @@ const Baseurl = `http://localhost:3000`
 
 let productID = localStorage.getItem("productID");
 
-let token = localStorage.getItem("usertoken");
+let token = localStorage.getItem("usertoken") || null;
 
 let productdetailcont = document.getElementById("productdetailcont");
 
@@ -24,7 +24,7 @@ function fetchAndRenderItem(){
 
             ShowProduct(data.Products);
             
-            EvebtHandler()
+            EventHandler()
 
         }
         else{
@@ -86,7 +86,7 @@ function  ShowProduct(data){
 }
 
 
-function EvebtHandler(){
+function EventHandler(){
 
     let addtocartbtn = document.querySelector(".niteshcartbutton");
 
@@ -98,7 +98,8 @@ function EvebtHandler(){
 
         }
         else{
-            alert("Kindly Login yourself First for Adding items into cart.")
+            alert("Kindly Login yourself First for Adding items into cart.");
+            location.href = "../view/user.login.html"
         }
 
 
@@ -111,6 +112,8 @@ function EvebtHandler(){
 
 function AddItemToCart(token){
 
+    console.log("token aaya ", token)
+
     let quantitysel = document.getElementById("niteshproductquantity");
 
     let payload = {
@@ -119,14 +122,15 @@ function AddItemToCart(token){
         Quantity:+quantitysel.value
     }
 
+    console.log(")))))))",payload)
 
     fetch(`${Baseurl}/cart/addToCart`,{
         method:'POST',
         headers:{
             'Content-type':'application/json',
-            'Authorization':`Bearer ${token}`
+            'authorization':`Bearer ${token}`
         },
-        body:payload
+        body:JSON.stringify(payload)
     })
     .then((res)=>{
         return res.json()
