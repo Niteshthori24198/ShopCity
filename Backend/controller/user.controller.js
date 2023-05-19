@@ -69,6 +69,11 @@ const RegisterNewUser = async (req, res) => {
 
                 const user = new UserModel({ Email, Name, Password: hash, Location, Gender, Contact, isAdmin });
 
+
+                // user will get an email then after verification of otp he will get's registered
+
+
+
                 await user.save();
 
                 return res.status(200).send({
@@ -252,9 +257,9 @@ const updateUserData = async (req,res) => {
 
             payload.isAdmin = user.isAdmin;
 
-            if(payload.Email === 'admin@gmail.com'){
+            if(payload.Email === 'admin.shopcity@gmail.com'){
 
-                payload.Email = 'admin@gmail.com';
+                payload.Email = 'admin.shopcity@gmail.com';
 
             }
     
@@ -316,10 +321,10 @@ const deleteUserProfile = async (req,res) => {
         if(user){
 
 
-            if(user.Email === 'admin@gmail.com'){
+            if(user.Email === 'admin.shopcity@gmail.com'){
                 
                 return res.status(400).send({
-                    "msg":"Access Denied. Can't remove standard Crendentials.",
+                    "msg":"Access Denied. You Can't remove standard Crendentials.",
                     "Success":false,
                     "Code":400
 
@@ -374,7 +379,7 @@ const updateUserRole = async (req,res) => {
         
         const user = await UserModel.findById( { _id : UserID } );
 
-        if(user.Email === 'admin@gmail.com'){
+        if(user.Email === 'admin.shopcity@gmail.com'){
 
             return res.status(400).send({
 
