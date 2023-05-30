@@ -1,67 +1,87 @@
-
-.niteshfiltersection{
-    /* border: 2px solid red; */
-    margin: 150px auto auto 25px;
-    width: 20%;
-    padding: 10px 10px 25px 10px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    float: left;
-   
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
-
-.niteshfiltersection > div:nth-child(1) > input{
-    border: none;
+.niteshfiltersection {
+    margin: 50px auto;
+    width: 80%;
     border-radius: 10px;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
-    text-align: center;
-    width: 75%;
-    height: 25px;
-}
-
-.niteshfiltersection > div{
-    text-align: center;
-
-}
-
-
-#Niteshcategoryselect{
-    border: none;
-    border-radius: 10px;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
-    text-align: center;
-    width: 75%;
-    height: 25px;
-}
-
-#NiteshsortbyPrice{
-    border: none;
-    border-radius: 10px;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
-    text-align: center;
-    width: 75%;
-    height: 25px;
-}
-
-#Niteshproductscontainer{
-    /* border: 2px solid red; */
-    width: 70%;
-    margin: 75px auto;
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
+    background-color: rgb(230, 229, 229);
+    padding: 10px;
+}
+
+.niteshfiltersection>div {
+    font-size: 18px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.niteshfiltersection>div:nth-child(1)>input {
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    border-bottom: 1px solid #666;
+    border-top: 1px solid #666;
+    text-align: center;
+    width: 50%;
+    font-size: 18px;
+}
+
+
+
+#Niteshcategoryselect {
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    border-bottom: 1px solid #666;
+    border-top: 1px solid #666;
+    text-align: center;
+    width: 50%;
+}
+
+#NiteshsortbyPrice {
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    border-bottom: 1px solid #666;
+    border-top: 1px solid #666;
+    text-align: center;
+    width: 50%;
+}
+
+
+
+
+
+
+#Niteshproductscontainer {
+    border-radius: 10px;
+    width: 80%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 15px;
 }
 
 
-.myproductcontainer{
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+.myproductcontainer {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
     padding: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.myproductcontainer:hover{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
-.mySeedetailbutton{
+.mySeedetailbutton {
     background-color: brown;
     border: none;
     width: 150px;
@@ -71,34 +91,126 @@
     border-radius: 15px;
 }
 
-.myproductimage > img{
+.myproductimage>img {
     width: 100%;
 }
+.myproductimage>img:hover{
+    border-radius: 10px;
+    transform: scale(1.25);
+    transition: transform 1.3s ease;
+}
 
-.myproductdetails{
+.myproductdetails {
     text-align: justify;
 }
 
-.mydivbutton{
+.mydivbutton {
     text-align: center;
-    margin-top: 15px;
+    /* margin-top: 15px; */
+    line-height: 10px;
+    letter-spacing: 1px;
 }
 
 
-#pagination-wrapper{
-    width: 20%;
-    margin: -50px 45px auto auto;
-    float: right;
-    /* border: 2px solid red; */
+#pagination-wrapper {
+    width: 80%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    margin: 50px auto;
+
 }
 
-.pagination-button{
+.pagination-button {
     border: none;
-    border-radius: 100%;
+    font-size: 20px;
     color: white;
+    width: 50px;
     background-color: brown;
-    font-size: 15px;
     cursor: pointer;
+    border-radius: 2px;
+}
+
+.pagination-button:hover {
+    background-color: rgb(184, 62, 62);
+}
+
+
+
+
+
+@media screen and (max-width:1050px) and (min-width:750px) {
+
+    .niteshfiltersection {
+        grid-template-columns: repeat(1, 1fr);
+        padding: 10px;
+    }
+
+    .niteshfiltersection>div {
+        justify-content: space-between;
+        align-items: center;
+        margin: 5px;
+    }
+
+    .niteshfiltersection>div:nth-child(1)>input {
+        width: 70%;
+    }
+
+    #Niteshcategoryselect {
+        width: 70%;
+    }
+
+    #NiteshsortbyPrice {
+        width: 70%;
+    }
+
+
+
+
+
+    #Niteshproductscontainer {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}
+
+
+
+
+
+
+@media screen and (max-width:750px){
+
+    .niteshfiltersection {
+        grid-template-columns: repeat(1, 1fr);
+        padding: 10px;
+    }
+
+    .niteshfiltersection>div {
+        justify-content: space-between;
+        align-items: center;
+        margin: 5px;
+    }
+
+    .niteshfiltersection>div:nth-child(1)>input {
+        width: 50%;
+    }
+
+    #Niteshcategoryselect {
+        width: 50%;
+    }
+
+    #NiteshsortbyPrice {
+        width: 50%;
+    }
+
+
+
+
+
+    #Niteshproductscontainer {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
 }
