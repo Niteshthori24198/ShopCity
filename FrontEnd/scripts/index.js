@@ -5,6 +5,10 @@ let usertoken = localStorage.getItem('usertoken') || null;
 
 let loggedInUser = {};
 
+let LogedInBtn = document.getElementById('LogedInBtn');
+let showUserName = document.getElementById('ShowUserName');
+let logedOutBtn = document.getElementById('logedOutBtn');
+
 
 if (usertoken) {
 
@@ -39,7 +43,11 @@ async function fetchUserDetails() {
 
             // console.log(loggedInUser)
 
+            // Remove Login Button
+            LogedInBtn.style.display = 'none'
+
             renderUserName();
+
             
 
         }
@@ -47,6 +55,7 @@ async function fetchUserDetails() {
         else {
 
             localStorage.removeItem('usertoken');
+            LogedInBtn.style.display = 'block'
            
 
         }
@@ -63,39 +72,26 @@ async function fetchUserDetails() {
 
 
 
-let signin_up_button = document.getElementById('signin_up_button');
 
-
-let showUserName = document.getElementById('ShowUserName');
-
-let UsernameShow = document.getElementById("UsernameShow")
 
 
 function renderUserName(){
     
-    showUserName.innerHTML = `<i class="fa-solid fa-user"></i> ${loggedInUser.UserData.Name}` ;
+    showUserName.innerHTML = `${loggedInUser.UserData.Name}` ;
 
-    showUserName.style.display = 'inline';
-
-    signin_up_button.innerHTML = `<i class="fa-solid fa-user"></i> Logout`;
-
-    document.getElementById("ShowUserName").style.marginRight='12px';
-    document.getElementById("ShowUserName").style.fontSize='15px';
-
-
-
+    document.getElementById('dropdownForProfile').style.display = 'inline-block'
 
 }
 
 
 
-// signin_up_button.addEventListener('click', ()=>{
 
-//     if(signin_up_button.innerHTML === '<i class="fa-solid fa-user"></i> Logout'){
 
-//         localStorage.removeItem('usertoken');
 
-//         location.reload();
-//     }
+logedOutBtn.addEventListener('click', ()=>{
+    localStorage.removeItem('usertoken');
 
-// })
+    location.reload();
+
+})
+

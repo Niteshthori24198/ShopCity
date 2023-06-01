@@ -1,54 +1,75 @@
-
-#productdetailcont{
+#productdetailcont {
     width: 75%;
-    margin: 100px auto;
+    margin: 30px auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-    /* border: 2px solid red; */
     padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-#productdetailcont > div{
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+#productdetailcont>div {
     text-align: center;
 }
 
-/* .productdetailcont > div:nth-child(2) > div{
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    border: 2px solid black;
-} */
 
-
-#productdetailcont > div:nth-child(1) > img{
-    width: 75%;
+#productdetailcont>div:nth-child(1) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.nitesh_product_detail{
-    text-align: justify;
+#productdetailcont img {
+    width: 80%;
+    border-radius: 5px;
+    margin: auto;
+}
+
+.nitesh_product_detail {
+    /* text-align: center; */
+    line-height: 40px;
     padding: 10px 30px;
 }
 
-.niteshcartbutton{
+.niteshcartbutton {
     border: none;
-    color:white;
+    color: white;
     font-size: 20px;
     background-color: cadetblue;
-    border-radius: 20px;
+    border-radius: 5px;
     width: 200px;
     height: 35px;
     margin-top: 35px;
     cursor: pointer;
-   
+
+}
+
+.niteshcartbutton:hover {
+    border: 1px solid black;
+    color: black;
+    background-color: transparent;
+
 }
 
 
-
-
-
-footer{
-    width: 100%;
+.shop-nav-header{
+    z-index: 100;
 }
-footer img{
-    width: 100%;
+
+
+@media screen and (max-width:750px) {
+    #productdetailcont {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    #productdetailcont img {
+        width: 90%;
+        border-radius: 5px;
+        margin: auto;
+    }
+
+
 }

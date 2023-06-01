@@ -66,14 +66,14 @@
 
             <!-- /* drop down */ -->
 
-            <div class="dropdown">
+            <div class="dropdown" id="dropdownForProfile">
                 <!-- <button class="dropbtn">Dropdown</button> -->
                 <a href="#" class="fa fa-user-circle-o dropbtn"></a>
                 <div class="dropdown-content">
-                    <p>Name</p>
+                    <p id="ShowUserName">Name</p>
                     <a href="#">Profile</a>
                     <a href="#">Dashboard</a>
-                    <a href="#">Logout</a>
+                    <a href="#" id="logedOutBtn">Logout</a>
                 </div>
             </div>
 
@@ -93,9 +93,9 @@
 
         <a href="../index.html">Home</a>
         <a href="./products.html">Store</a>
-        <a href="#">About</a>
+        <a href="./about.html">About</a>
         <a href="#">Contact</a>
-        <a href="./user.login.html">Login</a>
+        <a href="./user.login.html" id="LogedInBtn">Login</a>
 
     </div>
 
@@ -130,12 +130,45 @@
 
     <!-- Register form -->
 
-    <footer>
-        <div>
-            <img src="../Images/Fim.png" alt="Error">
-        </div>
-    </footer>
-
+    <footer class="shop-footer">
+		<div class="shop-city-container">
+			<div class="shop-row">
+				<div class="shop-footer-col">
+					<h4>Company</h4>
+					<ul>
+						<li><a href="./about.html">About us</a></li>
+						<li><a href="#">Our Services</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+					</ul>
+				</div>
+				<div class="shop-footer-col">
+					<h4>Get Help</h4>
+					<ul>
+						<li><a href="#">FAQ</a></li>
+						<li><a href="#">Shipping</a></li>
+						<li><a href="#">Order Status</a></li>
+					</ul>
+				</div>
+				<div class="shop-footer-col">
+					<h4>Online Shop</h4>
+					<ul>
+						<li><a href="#">Men</a></li>
+						<li><a href="#">Women</a></li>
+						<li><a href="#">Kids</a></li>
+					</ul>
+				</div>
+				<div class="shop-footer-col">
+					<h4>Follow us</h4>
+					<div class="shop-social-links">
+						<a href="#"><i class="fab fa-facebook-f"></i></a>
+						<a href="#"><i class="fab fa-instagram"></i></a>
+						<a href="#"><i class="fab fa-linkedin-in"></i></a>
+						<a href="#"><i class="fa-brands fa-github"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
 
 
 </body>
@@ -146,11 +179,4 @@
 
 <script src="../scripts/index.js"></script>
 
-
-<script>
-
-    document.getElementsByClassName("fa")[3].addEventListener("click", function () {
-        document.getElementsByClassName("shop-city-links")[0].classList.toggle("nav-ham-showmylinks")
-    })
-
-</script>
+<script src="../scripts/navbar.js"></script>

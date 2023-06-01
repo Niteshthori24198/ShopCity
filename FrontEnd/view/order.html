@@ -6,10 +6,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Page</title>
     <link rel="stylesheet" href="../styles/order.css">
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
+    <!-- nav section -->
+    <div class="shop-nav-header">
 
+        <div class="shop-city-logo">
+
+            <a href="../index.html"><img src="../shopcity.png" alt=""></a>
+
+        </div>
+
+        <div class="shopcity-nav-search">
+
+            <form>
+
+                <input type="text" placeholder="Search Here">
+
+            </form>
+
+        </div>
+
+        <div class="shop-nav-icons">
+
+
+            <!-- /* drop down */ -->
+
+            <div class="dropdown" id="dropdownForProfile">
+                <!-- <button class="dropbtn">Dropdown</button> -->
+                <a href="#" class="fa fa-user-circle-o dropbtn"></a>
+                <div class="dropdown-content">
+                    <p id="ShowUserName">Name</p>
+                    <a href="#">Profile</a>
+                    <a href="#">Dashboard</a>
+                    <a href="#" id="logedOutBtn">Logout</a>
+                </div>
+            </div>
+
+
+
+
+
+            <a href="./cart.html" class="fa fa-shopping-cart"><sup></sup></a>
+            <a href="./order.html" class="fa fa-truck"></a>
+            <a href="#" class="fa fa-bars"></a>
+        </div>
+
+    </div>
+
+
+    <div class="shop-city-links">
+
+        <a href="../index.html">Home</a>
+        <a href="./products.html">Store</a>
+        <a href="./about.html">About</a>
+        <a href="#">Contact</a>
+        <a href="./user.login.html" id="LogedInBtn">Login</a>
+
+    </div>
+
+
+    <!-- nav section -->
 
 
     <div class="ordersection">
@@ -42,9 +102,53 @@
     </tbody>
    </table>
 
+
+   <!-- <footer section> -->
+
+    <footer class="shop-footer">
+		<div class="shop-city-container">
+			<div class="shop-row">
+				<div class="shop-footer-col">
+					<h4>Company</h4>
+					<ul>
+						<li><a href="./about.html">About us</a></li>
+						<li><a href="#">Our Services</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+					</ul>
+				</div>
+				<div class="shop-footer-col">
+					<h4>Get Help</h4>
+					<ul>
+						<li><a href="#">FAQ</a></li>
+						<li><a href="#">Shipping</a></li>
+						<li><a href="#">Order Status</a></li>
+					</ul>
+				</div>
+				<div class="shop-footer-col">
+					<h4>Online Shop</h4>
+					<ul>
+						<li><a href="#">Men</a></li>
+						<li><a href="#">Women</a></li>
+						<li><a href="#">Kids</a></li>
+					</ul>
+				</div>
+				<div class="shop-footer-col">
+					<h4>Follow us</h4>
+					<div class="shop-social-links">
+						<a href="#"><i class="fab fa-facebook-f"></i></a>
+						<a href="#"><i class="fab fa-instagram"></i></a>
+						<a href="#"><i class="fab fa-linkedin-in"></i></a>
+						<a href="#"><i class="fa-brands fa-github"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
     
 </body>
 </html>
 
 <script src="../scripts/order.js"></script>
 <script src="../scripts/index.js"></script>
+<script src="../scripts/navbar.js"></script>

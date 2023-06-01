@@ -5,16 +5,60 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Page</title>
+    <title>About Us</title>
+    <!-- <link rel="stylesheet" href="../styles/navbar.css"> -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-    <!-- detail style sheet -->
+        header {
+            /* background-color: #333; */
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
 
-    <link rel="stylesheet" href="../styles/navbar.css">
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
 
-    <link rel="stylesheet" href="../styles/product.details.css">
+        h1 {
+            color: #333;
+        }
 
-    <!-- detail style sheet -->
+        h2 {
+            color: #666;
+            margin-top: 30px;
+        }
 
+        p {
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .developer-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .developer-info img {
+            width: 100px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .developer-info .info {
+            flex: 1;
+        }
+    </style>
+
+    
     <!-- Google fonts -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,21 +75,12 @@
 
     <!-- font awesome icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
-
-    <!-- Magnifier -->
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnify/2.3.3/css/magnify.min.css"
-        integrity="sha512-wzhF4/lKJ2Nc8mKHNzoFP4JZsnTcBOUUBT+lWPcs07mz6lK3NpMH1NKCKDMarjaw8gcYnSBNjjllN4kVbKedbw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link rel="stylesheet" href="../styles/navbar.css">
 
 </head>
 
 <body>
 
-    <!-- Nav section -->
     <div class="shop-nav-header">
 
         <div class="shop-city-logo">
@@ -96,25 +131,45 @@
 
         <a href="../index.html">Home</a>
         <a href="./products.html">Store</a>
-        <a href="./about.html">About</a>
+        <a href="#">About</a>
         <a href="#">Contact</a>
         <a href="./user.login.html" id="LogedInBtn">Login</a>
 
     </div>
 
+    <header>
+        <h1>About Us</h1>
+    </header>
 
+    <div class="container">
+        <h2>Welcome to My E-commerce Website!</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat metus sed lectus auctor, nec
+            ultrices ligula varius. Phasellus sit amet nibh eu augue euismod pulvinar. Ut efficitur rutrum turpis, at
+            laoreet metus laoreet ac. Nulla id sem felis. Mauris non tortor nisl. Sed vestibulum massa sit amet velit
+            commodo, non fringilla sapien congue. Curabitur consequat rutrum neque, eu feugiat neque ullamcorper nec.
+            Sed ac libero fermentum, scelerisque nunc nec, posuere neque.</p>
 
-    <!-- Nav section -->
+        <h2>Developer Information</h2>
 
+        <div class="developer-info">
+            <img src="developer.jpg" alt="Developer">
+            <div class="info">
+                <h3>Your Name</h3>
+                <p>Full Stack Web Developer</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat metus sed lectus auctor, nec
+                    ultrices ligula varius.</p>
+                <p>Technologies Used: HTML, CSS, JavaScript, Node.js, Express.js, MongoDB, Mongoose, JWT, Bcrypt</p>
+            </div>
+        </div>
 
-    <!-- product detail section -->
-
-    <div id="productdetailcont">
-
-
+        <h2>Project Overview</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat metus sed lectus auctor, nec
+            ultrices ligula varius. Phasellus sit amet nibh eu augue euismod pulvinar. Ut efficitur rutrum turpis, at
+            laoreet metus laoreet ac. Nulla id sem felis. Mauris non tortor nisl. Sed vestibulum massa sit amet velit
+            commodo, non fringilla sapien congue. Curabitur consequat rutrum neque, eu feugiat neque ullamcorper nec.
+            Sed ac libero fermentum, scelerisque nunc nec, posuere neque.</p>
     </div>
 
-    <!-- product detail section -->
 
     <footer class="shop-footer">
         <div class="shop-city-container">
@@ -122,7 +177,7 @@
                 <div class="shop-footer-col">
                     <h4>Company</h4>
                     <ul>
-                        <li><a href="./about.html">About us</a></li>
+                        <li><a href="#">About us</a></li>
                         <li><a href="#">Our Services</a></li>
                         <li><a href="#">Privacy Policy</a></li>
                     </ul>
@@ -155,33 +210,11 @@
             </div>
         </div>
     </footer>
-
-
-
-
-
-
 </body>
 
 </html>
 
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"
-    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/magnify/2.3.3/js/jquery.magnify.min.js"
-    integrity="sha512-YKxHqn7D0M5knQJO2xKHZpCfZ+/Ta7qpEHgADN+AkY2U2Y4JJtlCEHzKWV5ZE87vZR3ipdzNJ4U/sfjIaoHMfw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-<!-- <script>
-
-    $(document).ready(function () {
-        $(".zoom").magnify();
-    });
-
-</script> -->
-
-<script src="../scripts/detail.js"></script>
 
 <script src="../scripts/index.js"></script>
+
 <script src="../scripts/navbar.js"></script>

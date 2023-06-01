@@ -30,6 +30,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- font awesome icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 
@@ -39,65 +40,62 @@
 
 
     <!-- Nav section -->
+    <div class="shop-nav-header">
 
-    <nav>
+        <div class="shop-city-logo">
 
-        <div id="mylogo">
-
-            <a href="../index.html"><img src="../shopcity.png" alt="Error"></a>
+            <a href="../index.html"><img src="../shopcity.png" alt=""></a>
 
         </div>
 
-        <div id="mynavsection">
+        <div class="shopcity-nav-search">
 
-            <!-- top section of nav -->
+            <form>
 
-            <div>
+                <input type="text" placeholder="Search Here">
 
-                <div>
-                    <input type="text" placeholder="Search Here">
+            </form>
+
+        </div>
+
+        <div class="shop-nav-icons">
+
+
+            <!-- /* drop down */ -->
+
+            <div class="dropdown" id="dropdownForProfile">
+                <!-- <button class="dropbtn">Dropdown</button> -->
+                <a href="#" class="fa fa-user-circle-o dropbtn"></a>
+                <div class="dropdown-content">
+                    <p id="ShowUserName">Name</p>
+                    <a href="#">Profile</a>
+                    <a href="#">Dashboard</a>
+                    <a href="#" id="logedOutBtn">Logout</a>
                 </div>
-
-                <div id="UsernameShow">
-                    <a href="#" id="ShowUserName"></a>
-                    <a href="./user.login.html" id="signin_up_button"> Sign In </a>
-                </div>
-
-                <div>
-                    <a href="./cart.html"><i class="fa-solid fa-cart-shopping fa-2xl"></i> <span>Cart</span> </a>
-
-
-                </div>
-
-                <div>
-                    <a href="#"> <i class="fa-sharp fa-solid fa-truck-fast fa-2xl"></i> <span>Orders</span> </a>
-
-                </div>
-
-            </div>
-
-            <!-- all references -->
-
-            <div>
-
-                <div>
-                    <a href="../index.html">Home</a>
-                    <a href="./products.html">Products</a>
-                    <a href="./products.html">Men's</a>
-                    <a href="./products.html">Women's</a>
-                    <a href="./products.html">Kids</a>
-                    <a href="./products.html">Store</a>
-                    <a href="./products.html">About</a>
-                </div>
-
             </div>
 
 
 
+
+
+            <a href="./cart.html" class="fa fa-shopping-cart"><sup></sup></a>
+            <a href="./order.html" class="fa fa-truck"></a>
+            <a href="#" class="fa fa-bars"></a>
         </div>
 
+    </div>
 
-    </nav>
+
+    <div class="shop-city-links">
+
+        <a href="../index.html">Home</a>
+        <a href="./products.html">Store</a>
+        <a href="./about.html">About</a>
+        <a href="#">Contact</a>
+        <a href="./user.login.html" id="LogedInBtn">Login</a>
+
+    </div>
+
 
 
     <!-- Nav section -->
@@ -200,11 +198,45 @@
     </div>
 
     
-    <footer>
-        <div>
-            <img src="../Images/Fim.png" alt="Error">
-        </div>
-    </footer>
+    <footer class="shop-footer">
+		<div class="shop-city-container">
+			<div class="shop-row">
+				<div class="shop-footer-col">
+					<h4>Company</h4>
+					<ul>
+						<li><a href="./about.html">About us</a></li>
+						<li><a href="#">Our Services</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+					</ul>
+				</div>
+				<div class="shop-footer-col">
+					<h4>Get Help</h4>
+					<ul>
+						<li><a href="#">FAQ</a></li>
+						<li><a href="#">Shipping</a></li>
+						<li><a href="#">Order Status</a></li>
+					</ul>
+				</div>
+				<div class="shop-footer-col">
+					<h4>Online Shop</h4>
+					<ul>
+						<li><a href="#">Men</a></li>
+						<li><a href="#">Women</a></li>
+						<li><a href="#">Kids</a></li>
+					</ul>
+				</div>
+				<div class="shop-footer-col">
+					<h4>Follow us</h4>
+					<div class="shop-social-links">
+						<a href="#"><i class="fab fa-facebook-f"></i></a>
+						<a href="#"><i class="fab fa-instagram"></i></a>
+						<a href="#"><i class="fab fa-linkedin-in"></i></a>
+						<a href="#"><i class="fa-brands fa-github"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
 
 
 </body>
@@ -214,3 +246,5 @@
 <script src="../scripts/checkout.js"></script>
 
 <script src="../scripts/index.js"></script>
+
+<script src="../scripts/navbar.js"></script>

@@ -31,13 +31,13 @@
     border-top: 1px solid #666;
     text-align: center;
     width: 50%;
-    font-size: 18px;
+    font-size: 15px;
 }
 
 
 
 #Niteshcategoryselect {
-    font-size: 18px;
+    font-size: 15px;
     border: none;
     border-radius: 5px;
     border-bottom: 1px solid #666;
@@ -47,7 +47,7 @@
 }
 
 #NiteshsortbyPrice {
-    font-size: 18px;
+    font-size: 15px;
     border: none;
     border-radius: 5px;
     border-bottom: 1px solid #666;
@@ -153,6 +153,13 @@
         margin: 5px;
     }
 
+    .niteshfiltersection p{
+        font-size: 15px;
+        width: 40%;
+        text-align: start;
+
+    }
+
     .niteshfiltersection>div:nth-child(1)>input {
         width: 70%;
     }
@@ -192,25 +199,38 @@
         align-items: center;
         margin: 5px;
     }
+    .niteshfiltersection p{
+        font-size: 12px;
+        width: 40%;
+        text-align: start;
+
+    }
 
     .niteshfiltersection>div:nth-child(1)>input {
         width: 50%;
+        font-size: 12px;
     }
+    
 
     #Niteshcategoryselect {
         width: 50%;
+        font-size: 12px;
     }
 
     #NiteshsortbyPrice {
         width: 50%;
+        font-size: 12px;
     }
 
 
 
-
+    .myproductdetails {
+        text-align: center;
+    }
 
     #Niteshproductscontainer {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
     }
+
 
 }
