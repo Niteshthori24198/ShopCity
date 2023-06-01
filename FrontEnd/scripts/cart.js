@@ -98,10 +98,21 @@ function Emptycart() {
 
 function RenderCartItem(data) {
 
-    console.log("data--->",data)
+    let len = data.length;
+    let totalCartCount = document.getElementById('totalCartCount')
+
+    if(len==0){
+        totalCartCount.innerText = `Empty Cart`
+    }else if(len==1){
+        totalCartCount.innerText = `1 Item`
+    }else{
+        totalCartCount.innerText = `${len} Item's`
+    }
 
     let Cards = data.map((item) => {
-        return getCards(item.product.Image, item.product.Title, item.product.Category, item.product.Description, item.product.Price, item.Quantity,item.product._id)
+        
+        return getCards(item.product.Image, item.product.Title, item.product.Category, item.product.Description, item.product.Price, item.Quantity,item.product._id, item.product.Quantity
+            )
     }).join("")
 
 
@@ -150,29 +161,38 @@ function RenderCartItem(data) {
 }
 
 
-function getCards(Image, Title, Category, Description, Price , Quantity, id) {
+function getCards(Image, Title, Category, Description, Price , Quantity, id, totalAvailbleQuantity) {
 
 
     return `<div>
-            <img src="${Image}" alt="Error">
+            <img src="${Image}" alt="Error" onclick="goToDetailPage('${id}')">
             <h5>${Title}</h5>
             <p>${Category}</p>
             <p>${Description.substring(0, 50)} Rs</p>
             <p>Price : ${Price} Rs</p>
-            <select name="quantity" id="${id}">
-            <option value="1" ${Quantity=='1' ? "Selected" : ""}>Quantity :- 1</option>
-            <option value="2" ${Quantity=='2' ? "Selected" : ""}>Quantity :- 2</option>
-            <option value="3" ${Quantity=='3' ? "Selected" : ""}>Quantity :- 3</option>
-            <option value="4" ${Quantity=='4' ? "Selected" : ""}>Quantity :- 4</option>
-            <option value="5" ${Quantity=='5' ? "Selected" : ""}>Quantity :- 5</option>
-            <option value="6" ${Quantity=='6' ? "Selected" : ""}>Quantity :- 6</option>
-            <option value="7" ${Quantity=='7' ? "Selected" : ""}>Quantity :- 7</option>
-            <option value="8" ${Quantity=='8' ? "Selected" : ""}>Quantity :- 8</option>
-            <option value="9" ${Quantity=='9' ? "Selected" : ""}>Quantity :- 9</option>
-            <option value="10" ${Quantity=='10' ? "Selected" : ""}>Quantity :- 10</option>
-            </select>
+            ${totalAvailbleQuantity > 0 ? getQuantitySelect(totalAvailbleQuantity,Quantity,id) : "<p>Out Of Stock</p>"}
+            
             <button id="${id}">Remove</button>
         </div>`
+
+}
+
+function goToDetailPage(id){
+    console.log(id);
+    localStorage.setItem('productID', id);
+    location.href = '../view/details.html'
+}
+
+function getQuantitySelect(totalavailbe, selectedQuantity,id){
+    let otpions = ''
+    for(let i=0; i<totalavailbe && i<10; i++){
+        otpions += `<option value="${i+1}" ${selectedQuantity==(i+1) ? "Selected" : ""}>Quantity :- ${i+1}</option>`
+    }
+    return `
+        <select name="quantity" id="${id}">
+            ${otpions}
+        </select>
+    `;
 
 }
 
