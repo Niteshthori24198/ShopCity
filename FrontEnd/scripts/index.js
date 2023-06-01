@@ -89,13 +89,13 @@ function renderUserName(){
 
 
 
-signin_up_button.addEventListener('click', ()=>{
+// signin_up_button.addEventListener('click', ()=>{
 
-    if(signin_up_button.innerHTML === '<i class="fa-solid fa-user"></i> Logout'){
+//     if(signin_up_button.innerHTML === '<i class="fa-solid fa-user"></i> Logout'){
 
-        localStorage.removeItem('usertoken');
+//         localStorage.removeItem('usertoken');
 
-        location.reload();
-    }
+//         location.reload();
+//     }
 
-})
+// })
