@@ -31,6 +31,7 @@
 
     <!-- font awesome icon library -->
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 </head>
@@ -41,64 +42,62 @@
 
     <!-- Nav section -->
 
-    <nav>
+    <div class="shop-nav-header">
 
-        <div id="mylogo">
+        <div class="shop-city-logo">
 
-            <a href="./index.html"><img src="./shopcity.png" alt="Error"></a>
+            <a href="./index.html"><img src="./shopcity.png" alt=""></a>
 
         </div>
 
-        <div id="mynavsection">
+        <div class="shopcity-nav-search">
 
-            <!-- top section of nav -->
+            <form>
 
-            <div>
+                <input type="text" placeholder="Search Here">
 
-                <div>
-                    <input type="text" placeholder="Search Here">
+            </form>
+
+        </div>
+
+        <div class="shop-nav-icons">
+
+
+            <!-- /* drop down */ -->
+
+            <div class="dropdown">
+                <!-- <button class="dropbtn">Dropdown</button> -->
+                <a href="#" class="fa fa-user-circle-o dropbtn"></a>
+                <div class="dropdown-content">
+                    <p>Name</p>
+                    <a href="#">Profile</a>
+                    <a href="#">Dashboard</a>
+                    <a href="#">Logout</a>
                 </div>
-
-                <div id="UsernameShow">
-                    <a href="#" id="ShowUserName"></a>
-                    <a href="./view/user.login.html" id="signin_up_button"> Sign In </a>
-                </div>
-
-                <div>
-                    <a href="./view/cart.html"><i class="fa-solid fa-cart-shopping fa-2xl"></i> <span>Cart</span> </a>
-
-
-                </div>
-
-                <div>
-                    <a href="./view/order.html"> <i class="fa-sharp fa-solid fa-truck-fast fa-2xl"></i> <span>Orders</span> </a>
-
-                </div>
-
-            </div>
-
-            <!-- all references -->
-
-            <div>
-
-                <div>
-                    <a href="./index.html">Home</a>
-                    <a href="./view/products.html">Products</a>
-                    <a href="./view/products.html">Men's</a>
-                    <a href="./view/products.html">Women's</a>
-                    <a href="./view/products.html">Kids</a>
-                    <a href="#">Store</a>
-                    <a href="#">About</a>
-                </div>
-
             </div>
 
 
 
+
+
+            <a href="./view/cart.html" class="fa fa-shopping-cart"><sup></sup></a>
+            <a href="./view/order.html" class="fa fa-truck"></a>
+            <a href="#" class="fa fa-bars"></a>
         </div>
 
+    </div>
 
-    </nav>
+
+    <div class="shop-city-links">
+
+        <a href="./index.html">Home</a>
+        <a href="./view/products.html">Store</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="./view/user.login.html">Login</a>
+
+    </div>
+
 
 
     <!-- Nav section -->
@@ -316,3 +315,22 @@
 </html>
 
 <script src="./scripts/index.js"></script>
+
+<script>
+
+    document.getElementsByClassName("fa")[3].addEventListener("click", function (e) {
+        document.getElementsByClassName("shop-city-links")[0].classList.toggle("nav-ham-showmylinks")
+        console.log(document.getElementsByClassName("shop-city-links")[0].classList.value)
+        if(document.getElementsByClassName("shop-city-links")[0].classList.value=='shop-city-links'){
+            document.getElementsByClassName("shop-city-links")[0].style.display = 'none'
+        }else{
+            document.getElementsByClassName("shop-city-links")[0].style.display = 'block'
+
+        }
+        // document.querySelectorAll('.shop-city-links a').forEach((e)=>{
+        //     e.style.color='white';
+        //     e.style.display='inline'
+        // })
+    })
+
+</script>
