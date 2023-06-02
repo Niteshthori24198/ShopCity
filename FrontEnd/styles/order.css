@@ -4,20 +4,24 @@
     width: 60%;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid red;
-    margin: auto;
+    margin: 25px auto;
 }
 
-#serchyourorder{
-    height: 25px;
-    /* width: 400px; */
-    border: none;
+
+
+.ordersection > div{
+
     text-align: center;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    border-radius: 10px;
+    width: 100%;
+    font-size: 21px;
+    letter-spacing: 1px;
 }
 
+.ordersection > div > h3:hover{
+    letter-spacing: 2px;
+    color: aquamarine;
+    cursor:pointer;
+}
 
 
 
@@ -62,6 +66,10 @@
 }
 .cancelbtn:hover{
     background-color:rgb(0, 0, 0);
+    transition: 0.6s;
+    background: transparent;
+    color: black;
+    border: 1px solid;
 }
 
 

@@ -9,9 +9,11 @@
     width: 80%;
     border-radius: 10px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    background-color: rgb(230, 229, 229);
+    grid-template-columns: 1fr 1fr 1fr;
+    /* background-color: rgb(245, 242, 242); */
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     padding: 10px;
+    font-size: 18px;
 }
 
 .niteshfiltersection>div {
@@ -21,6 +23,7 @@
     justify-content: center;
     align-items: center;
     gap: 20px;
+
 }
 
 .niteshfiltersection>div:nth-child(1)>input {
@@ -30,7 +33,7 @@
     border-bottom: 1px solid #666;
     border-top: 1px solid #666;
     text-align: center;
-    width: 50%;
+    width: 80%;
     font-size: 15px;
 }
 
@@ -43,7 +46,7 @@
     border-bottom: 1px solid #666;
     border-top: 1px solid #666;
     text-align: center;
-    width: 50%;
+    width: 60%;
 }
 
 #NiteshsortbyPrice {
@@ -53,7 +56,7 @@
     border-bottom: 1px solid #666;
     border-top: 1px solid #666;
     text-align: center;
-    width: 50%;
+    width: 60%;
 }
 
 
@@ -118,12 +121,10 @@
     justify-content: start;
     /* gap: 20px; */
     align-items: center;
-    
     margin: 50px auto;
     overflow-x: scroll;
     scroll-behavior: smooth;
-    scrollbar-base-color: palegoldenrod;
-    /* border: 1px solid red; */
+    /* background-color: blue; */
 
 }
 #pagination-wrapper  > div{
@@ -163,7 +164,7 @@
     }
 
     .niteshfiltersection>div {
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         margin: 5px;
     }
@@ -210,7 +211,7 @@
     }
 
     .niteshfiltersection>div {
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         margin: 5px;
     }
@@ -222,18 +223,18 @@
     }
 
     .niteshfiltersection>div:nth-child(1)>input {
-        width: 50%;
+        width: 80%;
         font-size: 12px;
     }
     
 
     #Niteshcategoryselect {
-        width: 50%;
+        width: 80%;
         font-size: 12px;
     }
 
     #NiteshsortbyPrice {
-        width: 50%;
+        width: 80%;
         font-size: 12px;
     }
 

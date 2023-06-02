@@ -79,7 +79,7 @@ window.addEventListener('resize', fixTheSizeOfNavDrop)
 window.addEventListener('load', fixTheSizeOfNavDrop)
 
 function fixTheSizeOfNavDrop(){
-    // console.log(screen.width)
+    console.log(screen.width)
     if(screen.width <= 600){
         if(LogedInSuccess){
             document.getElementsByClassName("shop-city-links")[0].style.height = '250px'

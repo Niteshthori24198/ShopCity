@@ -156,6 +156,8 @@ function AddItemToCart(token) {
                 alert(data.msg)
             }
 
+            location.reload()
+
         })
         .catch((err) => {
             alert(data.msg)

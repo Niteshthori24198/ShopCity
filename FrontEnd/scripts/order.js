@@ -56,9 +56,9 @@ function fetchAndRenderOrders(){
 
 // ***
 function RenderOrdersinPage(Orders){
-    console.log("---->",Orders);
+    // console.log("---->",Orders);
 
-    Orders = Orders.Products;
+    Orders = Orders.Products.reverse();
 
     allOrdersHere.innerHTML = ''
 
@@ -66,7 +66,7 @@ function RenderOrdersinPage(Orders){
         return getordersBox(item._id,item.Date,item.Address , item.Status , item.product.Image, item.product.Title , item.product.Category , item.product.Price,item.Quantity)
     }).join('')
 
-    allOrdersHere.innerHTML = orderHTML+orderHTML+orderHTML+orderHTML+orderHTML+orderHTML
+    allOrdersHere.innerHTML = orderHTML;
 }
 
 // ***
@@ -85,7 +85,7 @@ function getordersBox(id,date,add,status,img,title,cat,price,quant){
                     <p>Total Price :- ${quant*price} Rs</p>
                     <p>Order Status :- ${status}</p>
                     <p>Shipping Address :- ${add}</p>
-                    <button onclick="handleCancel('${id}')" class="cancelbtn" ${((status=='Delivered')|| (status=='Cancelled'))? "Disabled" : ""}>Cancel</button>
+                    <button onclick="handleCancel('${id}')" class="cancelbtn" ${((status=='Delivered')|| (status=='Cancelled'))? "Disabled" : ""}>Cancel Order</button>
                 </div>
             </div>
         `
