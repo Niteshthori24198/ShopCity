@@ -1,0 +1,37 @@
+body , *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.admin-container{
+    display: grid;
+    width: 90%;
+    grid-template-columns: 1fr 4fr;
+    gap: 15px;
+    border: 1px solid red;
+    margin: 35px auto;
+}
+
+
+.admin-container > div{
+    border: 2px solid green;
+}
+
+.admin-container > div:nth-child(1){
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+    /* margin: auto; */
+    line-height: 50px;
+}
+
+.admin-container a{
+    text-decoration: none;
+}
+
+.admin-container a:hover{
+    color: gray;
+}

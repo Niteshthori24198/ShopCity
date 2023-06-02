@@ -166,14 +166,14 @@ function productfilterFunc() {
 
     if (Category !== '') {
 
-        let url = `${BaseURL}/product/getbycategory/${Category}?search=${SearchProduct.value}&price=${pricerange}`
+        let url = `${BaseURL}/product/getbycategory/${Category}?search=${SearchProduct.value}&price=${pricerange}&page=1&limit=12`
 
         // FilterAndSearchProduct(url)
         FetchAndDisplayProducts(1,url)
     }
     else {
         
-        let url = `${BaseURL}/product/getall?search=${SearchProduct.value}&price=${pricerange}`
+        let url = `${BaseURL}/product/getall?search=${SearchProduct.value}&price=${pricerange}&page=1&limit=12`
         
         // FilterAndSearchProduct(url)
         FetchAndDisplayProducts(1,url)
@@ -214,7 +214,7 @@ async function FilterAndSearchProduct(url) {
 
 function mainHandleNavSearchBar(searchValue){
     console.log(searchValue);
-    let url = `${BaseURL}/product/getall?search=${searchValue}`
+    let url = `${BaseURL}/product/getall?search=${searchValue}&page=1&limit=12`
 
     // FilterAndSearchProduct(url)
     FetchAndDisplayProducts(1,url)

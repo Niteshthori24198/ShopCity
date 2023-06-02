@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin User Details</title>
+
+
+    <!-- Google fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <!-- Google fonts -->
+
+    <!-- font awesome icon library -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- font awesome icon library -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+    <link rel="stylesheet" href="./AdminCSS/userdetails.css">
+
+    <link rel="stylesheet" href="../styles/navbar.css">
+
+</head>
+
+<body>
+
+
+    <!-- Nav section -->
+
+    <div class="shop-nav-header">
+
+        <div class="shop-city-logo">
+
+            <a href="../index.html"><img src="../shopcity.png" alt=""></a>
+
+        </div>
+
+        <div class="shopcity-nav-search">
+
+            <form>
+
+                <input type="text" placeholder="Search Here" oninput="handleNavSearchBarAdmin(value)">
+
+            </form>
+
+        </div>
+
+        <div class="shop-nav-icons">
+
+
+            <!-- /* drop down */ -->
+
+            <div class="dropdown" id="dropdownForProfile">
+                <!-- <button class="dropbtn">Dropdown</button> -->
+                <a href="#" class="fa fa-user-circle-o dropbtn"></a>
+                <div class="dropdown-content">
+                    <p id="ShowUserName">Name</p>
+                    <a href="#">Profile</a>
+                    <a href="#">Dashboard</a>
+                    <a href="#" id="logedOutBtn">Logout</a>
+                </div>
+            </div>
+
+            <a href="../view/cart.html" class="fa fa-shopping-cart"><sup></sup></a>
+            <a href="../view/order.html" class="fa fa-truck"></a>
+            <a href="#" class="fa fa-bars"></a>
+        </div>
+
+    </div>
+
+
+    <div class="shop-city-links">
+
+        <a href="../index.html">Home</a>
+        <a href="../view/products.html">Store</a>
+        <a href="../view/about.html">About</a>
+        <a href="#">Contact</a>
+        <a href="../view/user.login.html" id="LogedInBtn">Login</a>
+
+    </div>
+
+
+
+    <!-- Nav section -->
+
+
+
+
+    <!-- Admin section -->
+
+
+    <div class="admin-container">
+
+        <div>
+            
+            <a href="">Dashboard</a>
+            <a href="" style="font-weight: bold;">User Section</a>
+            <a href="">Product Section</a>
+            <a href="">Order Section</a>
+
+        </div>
+
+
+        <div id="adminusercontainer">
+
+            <!-- data render here -->
+
+        </div>
+
+    </div>
+
+
+    <!-- Admin section -->
+
+
+
+
+
+
+
+</body>
+
+</html>
+
+<script src="../Admin/AdminScript/userdetails.js"></script>
+
+<script src="../scripts/navbar.js"></script>

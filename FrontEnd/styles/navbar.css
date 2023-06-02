@@ -149,6 +149,13 @@
 }
 
 /* Links inside the dropdown */
+
+
+.dropdown-content > p{
+    margin-bottom: 7px;
+}
+
+
 .dropdown-content a {
     color: black;
     padding: 12px 16px;

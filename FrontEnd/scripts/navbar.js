@@ -33,7 +33,7 @@ if (token_nav) {
                 }
 
                 else {
-                    document.querySelector('.shop-nav-icons sup').innerHTML=cartitems.length;
+                    document.querySelector('.shop-nav-icons sup').innerHTML='';
                 }
             }
 
