@@ -42,7 +42,13 @@ const GetAllProducts = async (req,res)=>{
 
         const searchFilter = new RegExp(search, 'i');
 
+        // while Pagination
+        const totalProducts = await ProductModel.find().count()
+        res.append('X-Total-Count', totalProducts);
+        res.append('Access-Control-Expose-Headers', 'X-Total-Count');
+
         if(pricerange){
+            
 
             console.log("hello",searchFilter,pricerange)
 
