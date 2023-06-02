@@ -73,3 +73,24 @@ document.getElementsByClassName("fa")[3].addEventListener("click", function () {
 })
 
 
+
+
+
+// Navabar Search bar
+
+function handleNavSearchBar(e){
+    console.log(e);
+    console.log(location.href.includes('products.html'));
+    if(!location.href.includes('products.html')){
+        location.href = './products.html'
+    }
+}
+
+
+function handleNavSearchBarHome(e){
+    console.log(e);
+    console.log(location.href.includes('products.html'));
+    if(!location.href.includes('products.html')){
+        location.href = './view/products.html'
+    }   
+}

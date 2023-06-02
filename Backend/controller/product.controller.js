@@ -4,9 +4,11 @@ const ProductModel = require('../model/product.model');
 
 const GetAllProducts = async (req,res)=>{
 
-    const { search, limit, page, price } = req.query;
+    let { search, limit, page, price } = req.query;
 
     console.log("--->",search,limit,page,price)
+    
+    limit = limit || 12;
 
     let pricerange;
 
@@ -46,6 +48,7 @@ const GetAllProducts = async (req,res)=>{
         const totalProducts = await ProductModel.find().count()
         res.append('X-Total-Count', totalProducts);
         res.append('Access-Control-Expose-Headers', 'X-Total-Count');
+
 
         if(pricerange){
             
@@ -136,9 +139,11 @@ const GetProductByCategory = async (req,res)=>{
 
     const { Category } = req.params;
 
-    const {search, limit, page, price} = req.query;
+    let {search, limit, page, price} = req.query;
 
     console.log(search,limit,page,price,Category)
+
+    limit = limit || 12;
 
     let pricerange;
 
@@ -170,6 +175,10 @@ const GetProductByCategory = async (req,res)=>{
     try {
 
         const searchFilter = new RegExp(search, 'i');
+        
+        const totalProducts = await ProductModel.find().count()
+        res.append('X-Total-Count', totalProducts);
+        res.append('Access-Control-Expose-Headers', 'X-Total-Count');
 
         if(pricerange){
 

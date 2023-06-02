@@ -10,10 +10,14 @@ FetchAndDisplayProducts();
 // AppendPaginationButton();
 
 
-function FetchAndDisplayProducts(page = 1) {
+function FetchAndDisplayProducts(page = 1, urlPass=false) {
 
-
-    const url = `${BaseURL}/product/getall?limit=12&page=${page}`
+    let url;
+    if(urlPass){
+        url = urlPass
+    }else{
+        url = `${BaseURL}/product/getall?limit=12&page=${page}`
+    }
 
     fetch(url)
         .then((res) => {
@@ -164,13 +168,15 @@ function productfilterFunc() {
 
         let url = `${BaseURL}/product/getbycategory/${Category}?search=${SearchProduct.value}&price=${pricerange}`
 
-        FilterAndSearchProduct(url)
+        // FilterAndSearchProduct(url)
+        FetchAndDisplayProducts(1,url)
     }
     else {
-
+        
         let url = `${BaseURL}/product/getall?search=${SearchProduct.value}&price=${pricerange}`
-
-        FilterAndSearchProduct(url)
+        
+        // FilterAndSearchProduct(url)
+        FetchAndDisplayProducts(1,url)
     }
 
 
@@ -199,4 +205,18 @@ async function FilterAndSearchProduct(url) {
         console.log(res)
         alert(res.msg)
     }
+}
+
+
+
+
+// nav search bar
+
+function mainHandleNavSearchBar(searchValue){
+    console.log(searchValue);
+    let url = `${BaseURL}/product/getall?search=${searchValue}`
+
+    // FilterAndSearchProduct(url)
+    FetchAndDisplayProducts(1,url)
+    
 }
