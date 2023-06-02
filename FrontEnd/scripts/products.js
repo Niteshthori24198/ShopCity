@@ -7,7 +7,7 @@ let paginationbtn = document.getElementById("pagination-wrapper")
 
 FetchAndDisplayProducts();
 
-AppendPaginationButton();
+// AppendPaginationButton();
 
 
 function FetchAndDisplayProducts(page = 1) {
@@ -17,6 +17,12 @@ function FetchAndDisplayProducts(page = 1) {
 
     fetch(url)
         .then((res) => {
+
+            // Dyanmic Pagination
+            let totalProductCount = res.headers.get('X-Total-Count')
+            // console.log('totalProduct==>', totalProductCount);
+            AppendPaginationButton(Math.floor(totalProductCount/12));
+
             return res.json()
         })
         .then((data) => {
@@ -27,7 +33,7 @@ function FetchAndDisplayProducts(page = 1) {
         })
         .catch((err) => {
 
-            alert(data.msg)
+            console.log(err);
         })
 
 }
@@ -46,19 +52,6 @@ function RenderProducts(data) {
 
     productcont.innerHTML = products;
 
-    // let Seedetailbutton = document.querySelectorAll(".mySeedetailbutton");
-
-    // for (let i of Seedetailbutton) {
-    //     i.addEventListener("click", function (e) {
-
-    //         let pid = e.target.dataset.id;
-
-    //         localStorage.setItem("productID", pid);
-
-    //         location.href = "../view/details.html"
-
-    //     })
-    // }
 
 
 
@@ -85,11 +78,6 @@ function getProductCard(product) {
 
 }
 
-/*
-<div class="mydivbutton">
-    <button id="${product._id}" data-id=${product._id} class = "mySeedetailbutton">See Details</button>
-</div>
-*/
 
 function goTODetailPage(pid) {
 
@@ -99,43 +87,28 @@ function goTODetailPage(pid) {
 }
 
 
-function AppendPaginationButton() {
+function AppendPaginationButton(n) {
+
 
     let btn = "";
 
-    for (let i = 1; i <= 6; i++) {
+    for (let i = 1; i <= n; i++) {
         btn = btn + getbutton(i, i)
     }
 
+    paginationbtn.innerHTML = '';
     paginationbtn.innerHTML = btn;
 
 }
 
 
 function getbutton(pno, text) {
-    return `<button class="pagination-button" data-page-number="${pno}">${text}</button>`
+    return `<div><button class="pagination-button" data-page-number="${pno}" onclick={cahngeBtn('${pno}')}>${text}</button></div>`
 }
 
-
-
-let buttonsel = document.querySelectorAll("button");
-
-
-paginatedata();
-
-
-function paginatedata() {
-
-    for (let btn of buttonsel) {
-
-        btn.addEventListener("click", function (e) {
-
-            let pagenumber = e.target.dataset.pageNumber;
-
-            FetchAndDisplayProducts(pagenumber);
-
-        })
-    }
+function cahngeBtn(pn){
+    console.log(pn);
+    FetchAndDisplayProducts(pn);
 }
 
 

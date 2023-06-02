@@ -8,7 +8,7 @@ body{
 
 .register-form{
     width: 35%;
-    margin: 100px auto;
+    margin: 50px auto;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     text-align: center;
     display: flex;
@@ -16,32 +16,62 @@ body{
     align-items: center;
     justify-content: center;
     padding: 10px;
+    border-radius: 20px;
+    padding: 20px 0px 0px 0px;
 }
 
 .register-form input{
-    width: 60%;
+    width: 70%;
     height: 30px;
     margin: 10px auto;
     padding-left: 10px;
     border: none;
-    border-bottom: 2px solid black;
-    /* border-top: 1px solid black; */
-    border-radius: 10px; 
+    outline: none;
+    /* border-bottom: 2px solid black; */
+    border-bottom: 1px solid #666;
+    /* border-top: 1px solid #333; */
+    border-radius: 6px; 
     text-align: center;
+}
+
+.register-form input:nth-child(1){
+    margin-top: 30px;
 }
 
 .register-form input:nth-child(8){
     background-color: rgb(24, 22, 22);
-    color: aqua;
+    color: white;
     border: none;
     font-size: 15px;
-    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-bottom: 30px;
     cursor: pointer;
 }
-
-footer{
-    width: 100%;
+.register-form input:nth-child(8):hover{
+    background-color: rgb(5, 5, 5);
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    letter-spacing: 1px;
 }
-footer img{
-    width: 100%;
+
+@media screen and (max-width:1000px) and (min-width:750px) {
+    .register-form{
+        width: 60%;
+        margin: 10vh auto;
+    }
+    .register-form input{
+        width: 60%;
+    }
+    
+}
+
+@media screen and (max-width:850px) {
+    .register-form{
+        width: 80%;
+        /* margin: 10vh auto; */
+    }
+    .register-form input{
+        width: 80%;
+    }
 }

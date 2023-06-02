@@ -2,7 +2,7 @@
 
 const baseUrl = `http://localhost:3000`
 
-let tbodyelement = document.querySelector('tbody');
+let allOrdersHere = document.getElementById('allOrdersHere');
 
 let token = localStorage.getItem("usertoken") || null;
 
@@ -36,10 +36,7 @@ function fetchAndRenderOrders(){
 
             console.log(data)
 
-            console.log(data.Orders.Products)
-
-
-            RenderOrders(data.Orders)
+            RenderOrdersinPage(data.Orders)
 
         }
         else{
@@ -54,39 +51,48 @@ function fetchAndRenderOrders(){
 }
 
 
-function  RenderOrders(Orders){
 
+
+
+// ***
+function RenderOrdersinPage(Orders){
     console.log("---->",Orders);
 
     Orders = Orders.Products;
 
-    tbodyelement.innerHTML = ''
+    allOrdersHere.innerHTML = ''
 
-    const order = Orders.map((item)=>{
-
-        return getorderRow(item._id,item.Date,item.Address , item.Status , item.product.Image, item.product.Title , item.product.Category , item.product.Price,item.Quantity)
+    const orderHTML = Orders.map((item)=>{
+        return getordersBox(item._id,item.Date,item.Address , item.Status , item.product.Image, item.product.Title , item.product.Category , item.product.Price,item.Quantity)
     }).join('')
 
-    tbodyelement.innerHTML = order
+    allOrdersHere.innerHTML = orderHTML+orderHTML+orderHTML+orderHTML+orderHTML+orderHTML
+}
+
+// ***
+function getordersBox(id,date,add,status,img,title,cat,price,quant){
+
+    return (
+        `
+            <div>
+                <div>
+                    <img src="${img}" alt="error">
+                </div>
+                <div>
+                    <h3>Product :- ${title} [${cat}]</h3>
+                    <p>Order Date :- ${date}</p>
+                    <p>Quantity :- ${quant}</p>
+                    <p>Total Price :- ${quant*price} Rs</p>
+                    <p>Order Status :- ${status}</p>
+                    <p>Shipping Address :- ${add}</p>
+                    <button onclick="handleCancel('${id}')" class="cancelbtn" ${((status=='Delivered')|| (status=='Cancelled'))? "Disabled" : ""}>Cancel</button>
+                </div>
+            </div>
+        `
+    )
 
 }
 
-
-function getorderRow(id,date,add,status,img,title,cat,price,quant){
-
-
-    return ` <tr>
-                <td><img src="${img}" alt="error" class = "orderimage"></td>
-                <td>${title} [${cat}]</td>
-                <td>${quant}</td>
-                <td>${quant*price} Rs</td>
-                <td>${date}</td>
-                <td>${add}</td>
-                <td>${status}</td>
-                <td><button onclick="handleCancel('${id}')" class="cancelbtn" ${((status=='Delivered')|| (status=='Cancelled'))? "Disabled" : ""}>Cancel</button></td>
-            </tr>`
-
-}
 
 
 

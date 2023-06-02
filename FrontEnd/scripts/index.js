@@ -9,6 +9,7 @@ let LogedInBtn = document.getElementById('LogedInBtn');
 let showUserName = document.getElementById('ShowUserName');
 let logedOutBtn = document.getElementById('logedOutBtn');
 
+let LogedInSuccess = false;
 
 if (usertoken) {
 
@@ -46,6 +47,8 @@ async function fetchUserDetails() {
             // Remove Login Button
             LogedInBtn.style.display = 'none'
 
+            LogedInSuccess = true
+
             renderUserName();
 
             
@@ -56,7 +59,7 @@ async function fetchUserDetails() {
 
             localStorage.removeItem('usertoken');
             LogedInBtn.style.display = 'block'
-           
+            LogedInSuccess = false
 
         }
 
@@ -66,12 +69,27 @@ async function fetchUserDetails() {
     catch (error) {
     
         console.log(error)
+        LogedInSuccess = false
 
     }
 }
 
 
+window.addEventListener('resize', fixTheSizeOfNavDrop)
+window.addEventListener('load', fixTheSizeOfNavDrop)
 
+function fixTheSizeOfNavDrop(){
+    // console.log(screen.width)
+    if(screen.width <= 600){
+        if(LogedInSuccess){
+            document.getElementsByClassName("shop-city-links")[0].style.height = '250px'
+        }else{
+            document.getElementsByClassName("shop-city-links")[0].style.height = '300px'
+        }
+    }else{
+        document.getElementsByClassName("shop-city-links")[0].style.height = '35px'
+    }
+}
 
 
 

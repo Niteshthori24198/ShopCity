@@ -113,23 +113,38 @@
 
 
 #pagination-wrapper {
-    width: 80%;
+    width: 50%;
     display: flex;
-    justify-content: center;
-    gap: 10px;
+    justify-content: start;
+    /* gap: 20px; */
     align-items: center;
+    
     margin: 50px auto;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scrollbar-base-color: palegoldenrod;
+    /* border: 1px solid red; */
 
+}
+#pagination-wrapper  > div{
+
+    margin: 10px;
+    width: 60px;
+    padding: 5px 10px;
+    max-width: 50px;
 }
 
 .pagination-button {
+    box-sizing:content-box;
     border: none;
-    font-size: 20px;
+    font-size: 15px;
+    text-overflow: ellipsis;
     color: white;
-    width: 50px;
     background-color: brown;
+    /* width: 100px; */
+    width: 40px;
+    max-width: 40px;
     cursor: pointer;
-    border-radius: 2px;
 }
 
 .pagination-button:hover {
@@ -232,5 +247,8 @@
         grid-template-columns: repeat(1, 1fr);
     }
 
+    #pagination-wrapper{
+        width: 80%;
+    }
 
 }
