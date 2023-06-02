@@ -8,7 +8,7 @@ const GetAllProducts = async (req,res)=>{
 
     console.log("--->",search,limit,page,price)
     
-    limit = limit || 12;
+    // limit = limit || 12;
 
     let pricerange;
 
@@ -143,7 +143,7 @@ const GetProductByCategory = async (req,res)=>{
 
     console.log(search,limit,page,price,Category)
 
-    limit = limit || 12;
+    // limit = limit || 12;
 
     let pricerange;
 
