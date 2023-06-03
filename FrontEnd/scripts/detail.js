@@ -20,7 +20,7 @@ function fetchAndRenderItem() {
             console.log(data);
 
             if (data.Success) {
-                console.log("hlo")
+                // console.log("hlo")
 
                 ShowProduct(data.Products);
 

@@ -24,8 +24,9 @@ body , *{
 .admin-container > div:nth-child(1){
     display: flex;
     flex-direction: column;
-    padding: 25px 30px;
+    padding: 25px 50px;
     /* margin: auto; */
+    text-align: justify;
     line-height: 50px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
@@ -127,6 +128,11 @@ body , *{
         
     }
 
+    .admin-container > div:nth-child(1){
+        padding: 25px 40%;
+    }
+    
+
 
 }
 
@@ -149,5 +155,24 @@ body , *{
         text-align: justify;
     }
 
+    .admin-container > div:nth-child(1){
+        padding: 25px 110px;
+    }
+    
 
+
+}
+
+
+
+#addProductBtn_item{
+    background-color: transparent;
+    color: blue;
+    /* border: none; */
+    /* text-align: start; */
+    margin-top: 10px;
+    margin-left: -10px;
+    display: inline;
+    text-align: start;
+    border: none;
 }

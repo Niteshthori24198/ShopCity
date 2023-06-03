@@ -303,6 +303,8 @@ const UpdateProduct = async (req,res)=>{
 
     const { productID } = req.params;
 
+    console.log('update route pe request--->',productID);
+
     const payload = req.body;
 
     try {
