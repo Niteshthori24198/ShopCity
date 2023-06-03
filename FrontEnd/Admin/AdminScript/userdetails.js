@@ -42,19 +42,19 @@ function fetchAndRenderUsers() {
 
 function RenderUsers(users) {
 
-    document.getElementById("adminusercontainer").innerHTML=''
+    document.getElementById("adminusercontainer").innerHTML = ''
 
-    const usercard = users.map((user)=>{
-        return GetUserCard({...user})
+    const usercard = users.map((user) => {
+        return GetUserCard({ ...user })
     }).join('')
 
-    document.getElementById("adminusercontainer").innerHTML=usercard;
+    document.getElementById("adminusercontainer").innerHTML = usercard;
 
 
 }
 
 
-function GetUserCard({isAdmin,Location,Gender,Contact,Email,Name,_id}) {
+function GetUserCard({ isAdmin, Location, Gender, Contact, Email, Name, _id }) {
 
 
     return `
@@ -73,13 +73,13 @@ function GetUserCard({isAdmin,Location,Gender,Contact,Email,Name,_id}) {
 
             <p>Address : ${Location}</p>
             <p>Contact : ${Contact}</p>
-            <p>Role : ${isAdmin?"Admin":"User"}</p>
+            <p>Role : ${isAdmin ? "Admin" : "User"}</p>
 
         </div>
 
         <div>
             <button onclick="handleUpdateRole('${_id}','${isAdmin}')">Update Role</button>
-            <button>Announcement</button>
+            <button onclick="SentEmailAnnouncement('${Email}', '${Name}')">Announcement</button>
         </div>
        
     </div>
@@ -92,44 +92,61 @@ function GetUserCard({isAdmin,Location,Gender,Contact,Email,Name,_id}) {
 
 
 
-function handleUpdateRole(userid,isAdmin){
+function handleUpdateRole(userid, isAdmin) {
 
-    console.log("---> click data",userid,isAdmin, typeof isAdmin)
-    
-   if(isAdmin==='true'){
-    isAdmin=false
-   }
-   else{
-    isAdmin=true
-   }
-    
-    console.log("---> click data",userid,isAdmin, typeof isAdmin)
+    // console.log("---> click data",userid,isAdmin, typeof isAdmin)
 
-    const payload={
-        UserID:`${userid}`,
-        isAdmin:isAdmin
+    if (isAdmin === 'true') {
+        isAdmin = false
     }
-    
+    else {
+        isAdmin = true
+    }
+
+    // console.log("---> click data",userid,isAdmin, typeof isAdmin)
+
+    const payload = {
+        UserID: `${userid}`,
+        isAdmin: isAdmin
+    }
+
     fetch(`${admin_baseurl}/user/updateRole`, {
-        method:'PUT',
-        headers:{
+        method: 'PUT',
+        headers: {
             'content-type': 'application/json',
             'authorization': `Bearer ${adminusertoken}`
         },
-        body:JSON.stringify(payload)
+        body: JSON.stringify(payload)
     })
-    .then((res)=>{
-        return res.json()
-    })
-    .then((data)=>{
-        console.log(data)
-        alert(data)
-        location.reload()
-    })
-    .catch((err)=>{
-        alert(data)
-        console.log(err)
-    })
+        .then((res) => {
+            return res.json()
+        })
+        .then((data) => {
+
+            if (data.Success) {
+                alert(data.msg)
+                location.reload()
+            }
+            else {
+                alert(data.msg)
+            }
+        })
+        .catch((err) => {
+            alert(data)
+            console.log(err)
+        })
 
 
+}
+
+
+
+function SentEmailAnnouncement(email, name) {
+
+    let subject = 'Important Announcement from Shop City'
+    name = name.split(' ').join('%20')
+    let body = `Dear%20${name}`
+    const url = `mailto:${email}?subject=${subject}&body=${body}`
+    // console.log(url);
+    window.location.href = url
 }

@@ -376,7 +376,7 @@ const updateUserRole = async (req,res) => {
     
     const {UserID, isAdmin} = req.body
 
-    console.log("userid and role mile ---> ",UserID,isAdmin)
+    // console.log("userid and role mile ---> ",UserID,isAdmin)
 
     try {
         
@@ -400,7 +400,7 @@ const updateUserRole = async (req,res) => {
 
             "Success": true,
            
-            "msg" : "User Role has been Updated Successfully.User Promoted to be admin"
+            "msg" : "User Role has been Updated Successfully !"
 
         })
 

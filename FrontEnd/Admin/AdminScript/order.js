@@ -104,9 +104,9 @@ function formateOrdersData(Orders) {
     }, []);
 
 
-    console.log(OrderData);
+    console.log("---> ", OrderData);
 
-    OrderData.sort((a,b)=>{
+    OrderData.reverse().sort((a, b) => {
         return (new Date(b.orderDate) - new Date(a.orderDate))
     })
 
@@ -122,18 +122,41 @@ function RenderOrders(OrderData) {
 
     const ordercard = OrderData.map((item) => {
 
-        return GetOrderCard({...item});
+        return GetOrderCard({ ...item });
 
     }).join('')
 
     document.getElementById("adminordercontainer").innerHTML = ordercard;
 
 
+    const ordersstatus = document.querySelectorAll('.orderstatuscolor')
+
+
+    for (let i = 0; i < ordersstatus.length; i++) {
+       
+        const statuscheck = ordersstatus[i].innerText.split(': ')
+
+        console.log(statuscheck)
+
+        if (statuscheck[0] === 'Delivered') {
+            ordersstatus[i].style.color='green'
+        }
+
+        else if (statuscheck[0] === 'Confirmed') {
+            ordersstatus[i].style.color='blue'
+        }
+        else {
+            ordersstatus[i].style.color='red'
+        }
+
+    }
+
+
 }
 
 
-function GetOrderCard( { _id, Customer, Product, customerId, orderDate, orderQuantity, orderStatus, shippingAddress } ) {
-    console.log(Product);
+function GetOrderCard({ _id, Customer, Product, customerId, orderDate, orderQuantity, orderStatus, shippingAddress }) {
+    // console.log(Product);
 
 
     return `
@@ -170,8 +193,8 @@ function GetOrderCard( { _id, Customer, Product, customerId, orderDate, orderQua
         </div>
 
         <div>
-            <p> Status : ${orderStatus} </p>
-            ${orderStatus=='Confirmed' ? '<button> Delevered </button>' : ''}
+            <p > Status : <span class="orderstatuscolor"> ${orderStatus} </span></p>
+            ${orderStatus == 'Confirmed' ? `<button onclick="handleDeveivery('${_id}')"> Delevered </button>` : ''}
         </div>
        
     </div>
@@ -179,4 +202,34 @@ function GetOrderCard( { _id, Customer, Product, customerId, orderDate, orderQua
     `
 
 }
+
+
+
+
+function handleDeveivery(ID) {
+
+    fetch(`${admin_baseurl}/order/updatestatus/${ID}`, {
+        method: 'PATCH',
+        headers: {
+            'content-type': 'application/json',
+            'authorization': `Bearer ${adminusertoken}`
+        }
+    })
+        .then((res) => {
+            return res.json()
+        })
+        .then((data) => {
+            console.log(data)
+            if (data.Success) {
+                alert(data.msg)
+                location.reload()
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+
+
+}
+
 
