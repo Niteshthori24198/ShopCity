@@ -27,7 +27,11 @@ const PlaceNewOrder = async (req,res) => {
 
         return {
 
-            product: ele.ProductID, Quantity:ele.Quantity, Address:ele.Address, Status:"Confirmed" , Date:`${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}`
+            product: ele.ProductID, 
+            Quantity:ele.Quantity, 
+            Address:ele.Address, 
+            Status:"Confirmed" , 
+            Date:`${d.getMonth()+1}-${d.getDate()}-${d.getFullYear()}`
         }
 
     })
