@@ -42,7 +42,7 @@ userRouter.delete("/delete" , Auth, deleteUserProfile)
 userRouter.get("/getall", AdminAuth, getAllUsersData )
 
 
-userRouter.patch("/updateRole" , AdminAuth , updateUserRole )
+userRouter.put("/updateRole" , AdminAuth , updateUserRole )
 
 
 

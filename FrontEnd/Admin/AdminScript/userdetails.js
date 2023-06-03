@@ -56,6 +56,7 @@ function RenderUsers(users) {
 
 function GetUserCard({isAdmin,Location,Gender,Contact,Email,Name,_id}) {
 
+
     return `
    
     <div>
@@ -77,7 +78,7 @@ function GetUserCard({isAdmin,Location,Gender,Contact,Email,Name,_id}) {
         </div>
 
         <div>
-            <button>Update Role</button>
+            <button onclick="handleUpdateRole('${_id}','${isAdmin}')">Update Role</button>
             <button>Announcement</button>
         </div>
        
@@ -87,3 +88,48 @@ function GetUserCard({isAdmin,Location,Gender,Contact,Email,Name,_id}) {
 
 }
 
+
+
+
+
+function handleUpdateRole(userid,isAdmin){
+
+    console.log("---> click data",userid,isAdmin, typeof isAdmin)
+    
+   if(isAdmin==='true'){
+    isAdmin=false
+   }
+   else{
+    isAdmin=true
+   }
+    
+    console.log("---> click data",userid,isAdmin, typeof isAdmin)
+
+    const payload={
+        UserID:`${userid}`,
+        isAdmin:isAdmin
+    }
+    
+    fetch(`${admin_baseurl}/user/updateRole`, {
+        method:'PUT',
+        headers:{
+            'content-type': 'application/json',
+            'authorization': `Bearer ${adminusertoken}`
+        },
+        body:JSON.stringify(payload)
+    })
+    .then((res)=>{
+        return res.json()
+    })
+    .then((data)=>{
+        console.log(data)
+        alert(data)
+        location.reload()
+    })
+    .catch((err)=>{
+        alert(data)
+        console.log(err)
+    })
+
+
+}

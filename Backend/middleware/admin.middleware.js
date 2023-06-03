@@ -27,6 +27,8 @@ const AdminAuth = async (req,res,next)=>{
 
     }
 
+    console.log("---~~~~~~ Admin auth MW >>> token ", authToken)
+
     const token = authToken.trim().split(' ')[1];
 
     try {

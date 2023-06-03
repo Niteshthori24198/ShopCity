@@ -373,7 +373,10 @@ const deleteUserProfile = async (req,res) => {
 
 const updateUserRole = async (req,res) => {
 
+    
     const {UserID, isAdmin} = req.body
+
+    console.log("userid and role mile ---> ",UserID,isAdmin)
 
     try {
         

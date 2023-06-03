@@ -9,7 +9,7 @@ const Auth = (req,res,next)=>{
 
     const authToken = req.headers['authorization'];
 
-    console.log("---~~~~~~ >>> token ", authToken)
+    console.log("---~~~~~~ auth MW >>> token ", authToken)
 
     if(!authToken){
 
