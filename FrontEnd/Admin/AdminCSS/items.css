@@ -24,11 +24,10 @@ body , *{
 .admin-container > div:nth-child(1){
     display: flex;
     flex-direction: column;
-    padding: 25px 50px;
-    /* margin: auto; */
-    text-align: justify;
+    padding: 25px 30px;
     line-height: 50px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+    background-color: rgba(168, 195, 222, 0.15);
 }
 
 .admin-container a{
@@ -128,9 +127,7 @@ body , *{
         
     }
 
-    .admin-container > div:nth-child(1){
-        padding: 25px 40%;
-    }
+
     
 
 
@@ -155,24 +152,50 @@ body , *{
         text-align: justify;
     }
 
-    .admin-container > div:nth-child(1){
-        padding: 25px 110px;
+    .itemFilterSections{
+        display: flex;
+        flex-direction: column;
     }
+
+    .itemFilterSections button, .itemFilterSections select{
+        width: 80%;
+    } 
     
 
+  
 
 }
 
 
 
 #addProductBtn_item{
+    width: 200px;
+    margin: 25px 0px 20px 0px;
+}
+
+#addProductBtn_item:hover, .itemFilterSections select:hover{
     background-color: transparent;
     color: blue;
-    /* border: none; */
-    /* text-align: start; */
-    margin-top: 10px;
-    margin-left: -10px;
-    display: inline;
-    text-align: start;
-    border: none;
+    font-weight: bold;
+}
+
+
+.itemFilterSections{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 10px;
+    border-radius: 5px;
+     box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
+     /* background-color: rgba(168, 195, 222, 0.15); */
+}
+
+.itemFilterSections select{
+    background-color: #007bff;
+    color: white;
+    width: 200px;
+    padding: 6px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
 }

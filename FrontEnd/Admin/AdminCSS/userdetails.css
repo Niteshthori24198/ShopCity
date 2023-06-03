@@ -25,9 +25,9 @@ body , *{
     display: flex;
     flex-direction: column;
     padding: 25px 30px;
-    /* margin: auto; */
     line-height: 50px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+    background-color: rgba(168, 195, 222, 0.15);
 }
 
 .admin-container a{
