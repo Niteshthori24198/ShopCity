@@ -11,11 +11,11 @@ if (!adminusertoken) {
 
 let allProductsDataDB = []
 
-fetchAndRenderUsers()
+fetchAndRenderPro()
 
 
 
-function fetchAndRenderUsers() {
+function fetchAndRenderPro() {
 
     fetch(`${admin_baseurl}/product/getall`, {
         method: 'GET',
@@ -28,7 +28,7 @@ function fetchAndRenderUsers() {
             return res.json()
         })
         .then((data) => {
-            console.log("user data fetched ", data.Products)
+            console.log("products data fetched ", data.Products)
 
             data.Products.reverse()
 

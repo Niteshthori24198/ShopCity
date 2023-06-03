@@ -105,11 +105,13 @@
     <div class="admin-container">
 
         <div>
+            <div>
+                <a href="./dashboard.html" style="font-weight: bolder; color: black;">Dashboard</a>
+                <a href="./userdetail.html">User Section</a>
+                <a href="./items.html">Product Section</a>
+                <a href="./order.html">Order Section</a>
 
-            <a href="./dashboard.html" style="font-weight: bolder; color: black;">Dashboard</a>
-            <a href="./userdetail.html">User Section</a>
-            <a href="./items.html">Product Section</a>
-            <a href="./order.html">Order Section</a>
+            </div>
 
         </div>
 
@@ -120,39 +122,45 @@
             <div>
                 <div>
                     <p> Total Customers </p>
-                    <p> - </p>
+                    <p id="totalCustomersCount"> - </p>
                 </div>
 
                 <div>
                     <p> Total Products </p>
-                    <p> - </p>
+                    <p id="totalProductsCount"> - </p>
                 </div>
 
                 <div>
                     <p> Total Revenue </p>
-                    <p> - </p>
+                    <p id="totalRevenue"> - </p>
                 </div>
 
                 <div>
                     <p> Total Delivered Order </p>
-                    <p> - </p>
+                    <p id="totalDeliveredCount"> - </p>
                 </div>
 
                 <div>
                     <p> Total Confirmed Order </p>
-                    <p> - </p>
+                    <p id="totalConfirmedCount"> - </p>
                 </div>
 
                 <div>
                     <p> Total Canceled Order </p>
-                    <p> - </p>
+                    <p id="totalCanceledCount"> - </p>
                 </div>
                 
             </div>
 
             <div>
-                <div>Pie Chart</div>
-                <div>Pie Chart</div>
+                <div class="chart-container">
+                    <h3>Product Category Composition</h3>
+                    <canvas id="pie-chart1"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Sales Composition by Category</h3>
+                    <canvas id="pie-chart2"></canvas>
+                </div>
             </div>
 
         </div>
@@ -171,6 +179,9 @@
 
 </html>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script src="./AdminScript/dashboard.js"></script>
+<script src="../scripts/index.js"></script>
 
 <script src="../scripts/navbar.js"></script>

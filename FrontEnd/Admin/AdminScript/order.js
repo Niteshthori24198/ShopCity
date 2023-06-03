@@ -194,7 +194,7 @@ function GetOrderCard({ _id, Customer, Product, customerId, orderDate, orderQuan
 
         <div>
             <p > Status : <span class="orderstatuscolor"> ${orderStatus} </span></p>
-            ${orderStatus == 'Confirmed' ? `<button onclick="handleDeveivery('${_id}')"> Delevered </button>` : ''}
+            ${orderStatus == 'Confirmed' ? `<button onclick="handleDeveivery('${_id}')"> Delivered </button>` : ''}
         </div>
        
     </div>

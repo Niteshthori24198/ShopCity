@@ -1,4 +1,5 @@
-body , *{
+body,
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -6,7 +7,7 @@ body , *{
 }
 
 
-.admin-container{
+.admin-container {
     display: grid;
     width: 90%;
     grid-template-columns: 1fr 4fr;
@@ -16,38 +17,42 @@ body , *{
 }
 
 
-.admin-container > div{
+.admin-container>div {
     /* border: 2px solid green; */
     border-radius: 7px;
 }
 
-.admin-container > div:nth-child(1){
+.admin-container>div:nth-child(1) {
     display: flex;
     flex-direction: column;
     padding: 25px 30px;
     line-height: 50px;
-    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
     background-color: rgba(168, 195, 222, 0.15);
 }
 
-.admin-container a{
+.admin-container>div:nth-child(1)>div {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-container a {
     text-decoration: none;
 }
 
-.admin-container a:hover{
+.admin-container a:hover {
     color: gray;
 }
 
 
 
-#admindashcontainer > div:nth-child(1) {
+#admindashcontainer>div:nth-child(1) {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 40px;
     text-align: center;
 }
 
-#admindashcontainer > div:nth-child(1) > div {
+#admindashcontainer>div:nth-child(1)>div {
     background-color: rgb(10, 116, 236);
     height: 80px;
     display: flex;
@@ -58,43 +63,162 @@ body , *{
     letter-spacing: 1px;
 }
 
-#admindashcontainer > div:nth-child(2) {
+#admindashcontainer>div:nth-child(2) {
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 40px;
     text-align: center;
     margin: 50px auto;
 }
 
 
-#admindashcontainer > div:nth-child(2) > div {
-    background-color: rgb(22, 23, 24);
-    height: 300px;
-    color: white;
+#admindashcontainer>div:nth-child(2)>div {
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 
 
 
 
+/* Pie Chart */
+
+.chart-container {
+    width: 400px;
+    height: 400px;
+    margin: 0 auto;
+}
 
 
-@media only screen and (min-width:750px) and (max-width:1000px){
+/* Pie Chart */
 
-    .admin-container{
+
+
+
+@media only screen and (min-width:750px) and (max-width:1000px) {
+
+    .admin-container {
         grid-template-columns: 1fr;
-        
+        margin: 35px auto;
     }
 
 
+    .admin-container>div:nth-child(1) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .admin-container>div:nth-child(1)>div {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+
+    #admindashcontainer>div:nth-child(1) {
+        grid-template-columns: repeat(2, 1fr);
+        margin: auto;
+        padding-left: 20px;
+
+    }
+
+    #admindashcontainer>div:nth-child(1)>div {
+        background-color: rgb(10, 116, 236);
+        height: 70px;
+        width: 90%;
+    }
+
+
+    #admindashcontainer>div:nth-child(2) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    #admindashcontainer>div:nth-child(2) h3 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+
+    #admindashcontainer>div:nth-child(2)>div {
+        margin: 50px auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+
 }
 
 
 
 
-@media only screen and (max-width:750px){
+@media only screen and (max-width:750px) {
+    .admin-container {
+        grid-template-columns: 1fr;
+    }
 
+
+    .admin-container>div:nth-child(1) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 25px 0px;
+        width: 90%;
+        margin: auto;
+    }
+
+    .admin-container>div:nth-child(1)>div {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+
+    #admindashcontainer>div:nth-child(1) {
+        grid-template-columns: repeat(1, 1fr);
+        margin: auto;
+        padding-left: 20px;
+        width: 90%;
+
+    }
+
+    #admindashcontainer>div:nth-child(1)>div {
+        background-color: rgb(10, 116, 236);
+        height: 70px;
+        width: 90%;
+    }
+
+
+    #admindashcontainer>div:nth-child(2) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    #admindashcontainer>div:nth-child(2) h3 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+
+    #admindashcontainer>div:nth-child(2)>div {
+        margin: 50px auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+    }
+
+
+    /* #admindashcontainer>div:nth-child(2)>div canva{
+        height: 250px;
+        width: 300px;
+    } */
 
 
 }
-
