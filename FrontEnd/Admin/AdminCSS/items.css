@@ -155,6 +155,7 @@ body , *{
     .itemFilterSections{
         display: flex;
         flex-direction: column;
+        padding-bottom: 18px;
     }
 
     .itemFilterSections button, .itemFilterSections select{

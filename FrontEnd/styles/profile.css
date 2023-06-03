@@ -1,31 +1,33 @@
-body{
+body {
     margin: 0;
     padding: 0;
 }
 
-#userprofilecont{
-    border: 1px solid red;
+
+#userprofilecont {
+    /* border: 1px solid red; */
 
     display: grid;
     grid-template-columns: 1fr;
     gap: 15px;
     width: 50%;
     margin: 50px auto;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 
-#userprofilecont > div:nth-child(1){
+#userprofilecont>div:nth-child(1) {
     text-align: center;
-    border: 2px solid green;
+    /* border: 2px solid green; */
 }
 
-#userprofilecont img{
+#userprofilecont img {
     width: 15%;
     margin: auto;
 }
 
 
-#userprofilecont > div:nth-child(2){
+#userprofilecont>div:nth-child(2) {
     display: flex;
     flex-direction: column;
     margin: auto;
@@ -33,18 +35,93 @@ body{
     align-items: center;
 }
 
-#userprofilecont > div:nth-child(2) > input{
+#userprofilecont>div:nth-child(2)>input {
     width: 70%;
     border: 1px solid;
     margin: 7px;
     height: 30px;
     border-radius: 7px;
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
 }
 
-#userprofilecont > div:nth-child(3){
+#userprofilecont>div:nth-child(3) {
     width: 70%;
     display: flex;
     justify-content: space-around;
     margin: 10px auto;
-   
+
+}
+
+#userprofilecont>div:nth-child(3)>button {
+    background-color: #007bff;
+    width: 150px;
+    padding: 7px 10px;
+    color: whitesmoke;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+
+}
+
+
+
+#userprofilecont>div:nth-child(3)>button:hover {
+    background-color: whitesmoke;
+    border: 1px solid;
+    background: local;
+    color: #007bff;
+    font-weight: bolder;
+    cursor: pointer;
+
+}
+
+
+
+
+
+@media screen and (min-width: 750px) and (max-width: 1000px) {
+
+    #userprofilecont {
+        width: 80%;
+        margin: 100px auto;
+    }
+
+    
+    #userprofilecont>div:nth-child(3)>button {
+        padding: 10px 12px;
+    }
+
+    #userprofilecont>div:nth-child(2)>input {
+        width: 80%;
+    }
+
+
+}
+
+
+@media screen and (max-width:750px) {
+
+    #userprofilecont {
+        width: 90%;
+        margin: 100px auto;
+    }
+
+
+    #userprofilecont>div:nth-child(3)>button {
+        width: 135px;
+        padding: 6px 4px;
+    }
+
+    #userprofilecont>div:nth-child(3) {
+        width: 90%;
+    }
+
+
+    #userprofilecont>div:nth-child(2)>input {
+        width: 85%;
+    }
+
+
 }
