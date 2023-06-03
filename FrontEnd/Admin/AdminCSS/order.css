@@ -1,4 +1,5 @@
-body , *{
+body,
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -6,7 +7,7 @@ body , *{
 }
 
 
-.admin-container{
+.admin-container {
     display: grid;
     width: 90%;
     grid-template-columns: 1fr 4fr;
@@ -16,33 +17,34 @@ body , *{
 }
 
 
-.admin-container > div{
+.admin-container>div {
     /* border: 2px solid green; */
     border-radius: 7px;
 }
 
-.admin-container > div:nth-child(1){
+.admin-container>div:nth-child(1) {
     display: flex;
     flex-direction: column;
     padding: 25px 30px;
-    /* margin: auto; */
     line-height: 50px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+    background-color: rgba(0,123,255, 0.15);
+
 }
 
-.admin-container a{
+.admin-container a {
     text-decoration: none;
 }
 
-.admin-container a:hover{
+.admin-container a:hover {
     color: gray;
 }
 
 
-#adminitemscontainer > div{
+#adminordercontainer>div {
 
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 15px;
     margin: 0px auto 10px auto;
     padding: 15px;
@@ -52,29 +54,45 @@ body , *{
 
 }
 
-#adminitemscontainer > div > div:nth-child(1){
+#adminordercontainer>div>div {
+    /* border: 1px solid red; */
+    border-right: 1px solid #ccc;
+}
+
+#adminordercontainer>div>div span {
+    font-weight: bolder;
+    margin-right: 5px;
+    color: #333;
+}
+
+#adminordercontainer>div>div:nth-child(1) {
     /* border: 1px solid red; */
     margin: auto;
     display: flex;
 }
 
-#adminitemscontainer img{
+#adminordercontainer img {
     width: 50%;
     margin: auto;
 }
-#adminitemscontainer img:hover{
+
+#adminordercontainer img:hover {
     transform: scale(1.3);
     transition: 2s;
     cursor: pointer;
 }
 
-#adminitemscontainer > div > div:nth-child(3){
-    display: flex;
+#adminordercontainer>div>div:nth-child(3) {
+    /* display: flex; */
     margin: auto;
 }
 
+#adminordercontainer>div>div:nth-child(4) {
+    text-align: center;
+}
 
-#adminitemscontainer > div button{
+
+#adminordercontainer>div button {
     margin: 10px;
     border: none;
     background-color: #007bff;
@@ -83,7 +101,7 @@ body , *{
     padding: 5px 10px;
 }
 
-#adminitemscontainer > div button:hover{
+#adminordercontainer>div button:hover {
     background: transparent;
     border: 1px solid black;
     color: rgb(22, 22, 190);
@@ -99,55 +117,76 @@ body , *{
 /*  media querires */
 
 
-@media only screen and (min-width:750px) and (max-width:1000px){
+@media only screen and (min-width:750px) and (max-width:1000px) {
 
 
-    .admin-container{
+    .admin-container {
         grid-template-columns: 1fr;
         text-align: center;
     }
 
 
 
-
-    #adminitemscontainer > div{
-        grid-template-columns: repeat(2,1fr);
-        text-align: justify;
+    #adminordercontainer>div {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
     }
 
-    #adminitemscontainer > div > div:nth-child(3){
-        grid-area: 2/1/3/3;
+    #adminordercontainer>div >div:nth-child(2){
+        /* border-bottom: 1px solid #d5d5d5; */
+        margin-top: 20px;
+        padding-bottom: 5px;
     }
-       
-    #adminitemscontainer > div button{
-        margin: 18px;
-        border: none;
-        border-radius: 4px;
-        padding: 6px 25px;
+
+    #adminordercontainer>div >div:nth-child(2) , #adminordercontainer>div >div:nth-child(3){
+        text-align: start;
+        /* border: 1px solid red; */
+        width: 80%;
+        margin: auto;
         
     }
 
+    #adminordercontainer>div>div {
+        /* border: 1px solid red; */
+        border:none;
+    }
 
 }
 
 
 
 
-@media only screen and (max-width:750px){
+@media only screen and (max-width:750px) {
 
 
-    .admin-container{
+    .admin-container {
         grid-template-columns: 1fr;
         text-align: center;
     }
 
 
-
-
-    #adminitemscontainer > div{
-        grid-template-columns: repeat(1,1fr);
-        text-align: justify;
+    #adminordercontainer>div {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 15px;
+        /* text-align: justify; */
     }
+
+    
+    
+    #adminordercontainer>div >div:nth-child(2) , #adminordercontainer>div >div:nth-child(3){
+        text-align: start;
+        /* border: 1px solid red; */
+        width: 80%;
+        margin: auto;
+        
+    }
+
+    #adminordercontainer>div>div {
+        /* border: 1px solid red; */
+        border:none;
+    }
+
+
 
 
 }
