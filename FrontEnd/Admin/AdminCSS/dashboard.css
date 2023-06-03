@@ -11,21 +11,23 @@ body , *{
     width: 90%;
     grid-template-columns: 1fr 4fr;
     gap: 15px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     margin: 35px auto;
 }
 
 
 .admin-container > div{
-    border: 2px solid green;
+    /* border: 2px solid green; */
+    border-radius: 7px;
 }
 
 .admin-container > div:nth-child(1){
     display: flex;
     flex-direction: column;
-    padding-left: 15px;
-    /* margin: auto; */
+    padding: 25px 30px;
     line-height: 50px;
+    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+    background-color: rgba(168, 195, 222, 0.15);
 }
 
 .admin-container a{

@@ -116,21 +116,31 @@
 
             <a href="./dashboard.html">Dashboard</a>
             <a href="./userdetail.html">User Section</a>
-            <a href="./items.html" style="font-weight: bold;">Product Section</a>
+            <a href="./items.html" style="font-weight: bolder; color: black;">Product Section</a>
             <a href="./order.html">Order Section</a>
 
-            <button id="addProductBtn_item" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                data-bs-target="#addProduct" data-bs-whatever="@mdo">
-                <span>Add Product</span>
-            </button>
-
+            
         </div>
+        
+        <div>
+            <div class="itemFilterSections">
+                <button id="addProductBtn_item" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#addProduct" data-bs-whatever="@mdo">
+                    <span>Add Product</span>
+                </button>
+                <select id="shop_categoryselect" onchange="handleFilterByCategory(event)">
+                    <option value="">Filter By Category</option>
+                    <option value="Men">Men</option>
+                    <option value="Women">Women</option>
+                    <option value="Kids">Kids</option>
+                </select>
+            </div>
 
-
-        <div id="adminitemscontainer">
-
-            <!-- data render here -->
-
+            <div id="adminitemscontainer">
+    
+                <!-- data render here -->
+    
+            </div>
         </div>
 
     </div>
@@ -150,17 +160,23 @@
                 <div class="modal-header">
                     <img src="../shopcity.png" alt="ShopCity" class="modal-title" style="width: 100px;">
                     <h5 class="modal-title" style="margin-left: 35px;">Enter Product Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="addd_close_btn"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="addProductForm">
+                    <form id="addProductForm" onsubmit="handleAddProduct(event)">
                         <div class="mb-2">
                             <label for="recipient-name" class="col-form-label">Title:</label>
                             <input type="text" class="form-control" id="productTitle" required>
                         </div>
                         <div class="mb-2">
                             <label for="recipient-name" class="col-form-label">Category:</label>
-                            <input type="text" class="form-control" id="productCategory" required>
+                            <!-- <input type="text" class="form-control" id="productCategory" required> -->
+                            <select class="form-control" id="productCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="Men">Men</option>
+                                <option value="Women">Women</option>
+                                <option value="Kids">Kids</option>
+                            </select>
                         </div>
                         <div class="mb-2">
                             <label for="recipient-name" class="col-form-label">Quantity:</label>

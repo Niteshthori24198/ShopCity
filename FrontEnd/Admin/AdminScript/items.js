@@ -9,6 +9,8 @@ if (!adminusertoken) {
 }
 
 
+let allProductsDataDB = []
+
 fetchAndRenderUsers()
 
 
@@ -27,6 +29,11 @@ function fetchAndRenderUsers() {
         })
         .then((data) => {
             console.log("user data fetched ", data.Products)
+
+            data.Products.reverse()
+
+            allProductsDataDB = data.Products
+
             RenderProducts(data.Products)
 
         })
@@ -41,6 +48,7 @@ function fetchAndRenderUsers() {
 
 
 function RenderProducts(products) {
+
 
     document.getElementById("adminitemscontainer").innerHTML = ''
 
@@ -84,7 +92,7 @@ function GetItemCard({ _id, Category, Description, Image, Price, Quantity, Ratin
                 <span>Edit Product</span>
             </button>
 
-            <button> Delete Product </button>
+            <button onclick="handleDeleteProduct('${_id}')"> Delete Product </button>
         </div>
        
     </div>
@@ -131,6 +139,12 @@ async function autoFillProductDetails(productID) {
 async function handleEditProduct(event) {
     event.preventDefault()
     console.log('submitted');
+
+    if(!confirm('Do You Want To Edit Product ?')){
+        return
+    }
+
+
     const data = {}
 
     let editProductForm = document.getElementById('editProductForm');
@@ -147,18 +161,108 @@ async function handleEditProduct(event) {
 
     console.log(productID);
 
+    
     let res = await fetch(`${admin_baseurl}/product/update/${productID}`, {
-        method : "PATCH",
-        headers : {
+        method: "PATCH",
+        headers: {
             'Content-type': 'application/json',
             'authorization': `Bearer ${adminusertoken}`
         },
-        body : JSON.stringify(data)
+        body: JSON.stringify(data)
     }).then(r => r.json())
 
     console.log(res);
     alert(res.msg);
     document.getElementById('edit_close_btn').click()
     fetchAndRenderUsers()
+
+}
+
+
+async function handleAddProduct(event) {
+    event.preventDefault()
+    console.log('submitted');
+
+    if(!confirm('Do You Want To Add Product ?')){
+        return
+    }
+
+
+    const data = {}
+
+    let addProductForm = document.getElementById('addProductForm');
+
+
+    data.Title = addProductForm.productTitle.value;
+    data.Category = addProductForm.productCategory.value;
+    data.Quantity = addProductForm.productQuantity.value;
+    data.Image = addProductForm.productImage.value;
+    data.Price = addProductForm.productPrice.value;
+    data.Rating = addProductForm.productRating.value;
+    data.Description = addProductForm.productDesc.value;
+
+    console.log(data);
+
+
+    let res = await fetch(`${admin_baseurl}/product/add`, {
+        method: "POST",
+        headers: {
+            'Content-type': 'application/json',
+            'authorization': `Bearer ${adminusertoken}`
+        },
+        body: JSON.stringify(data)
+    }).then(r => r.json())
+
+    console.log(res);
+
+    alert(res.msg);
+    document.getElementById('addd_close_btn').click()
+    fetchAndRenderUsers()
+
+    addProductForm.productTitle.value  =  ''  ;
+    addProductForm.productCategory.value  =  ''  ;
+    addProductForm.productQuantity.value  =  ''  ;
+    addProductForm.productImage.value  =  ''  ;
+    addProductForm.productPrice.value  =  ''  ;
+    addProductForm.productRating.value  =  ''  ;
+    addProductForm.productDesc.value  =  ''  ;
+
+}
+
+
+
+async function handleDeleteProduct(productID) {
+    console.log(productID);
+
+    if(!confirm('Do You Want To Delete Product ?')){
+        return
+    }
+
+    let res = await fetch(`${admin_baseurl}/product/delete/${productID}`, {
+        method: "DELETE",
+        headers: {
+            'Content-type': 'application/json',
+            'authorization': `Bearer ${adminusertoken}`
+        }
+    }).then(r => r.json())
+
+    console.log(res);
+    alert(res.msg);
+    fetchAndRenderUsers()
+
+}
+
+
+
+function handleFilterByCategory(event) {
+    console.log(event.target.value);
+    const filterby = event.target.value;
+
+    if (filterby) {
+        const FilterdData = allProductsDataDB.filter((product) => (product.Category == filterby))
+        RenderProducts(FilterdData)
+    } else {
+        RenderProducts(allProductsDataDB)
+    }
 
 }
