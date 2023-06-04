@@ -151,6 +151,12 @@
 /* Links inside the dropdown */
 
 
+.dropdown-content > a:nth-child(3){
+    display: none;
+}
+
+
+
 .dropdown-content > p{
     margin-bottom: 7px;
 }
