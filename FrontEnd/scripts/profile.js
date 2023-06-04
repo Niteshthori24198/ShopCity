@@ -19,6 +19,10 @@ const usercontact = document.getElementById('user_contact_disp');
 
 const userdataeditbtn = document.getElementById('updateUserInfobtn');
 
+const passdiv = document.getElementById('Updateuserpass')
+
+
+
 
 const users_token = localStorage.getItem('usertoken') || null;
 
@@ -27,6 +31,7 @@ if (!users_token) {
     location.href = "../view/user.login.html"
 }
 else {
+    
     FetchUserInformation()
 }
 
@@ -85,6 +90,10 @@ userdataeditbtn.addEventListener("click", () => {
 
     }
 
+    if(!confirm('Do you Want to Update Your Profile ?')){
+        location.reload()
+        return
+    }
 
     UpdateUserInfo(userpayload)
 
@@ -92,6 +101,7 @@ userdataeditbtn.addEventListener("click", () => {
 
 
 function UpdateUserInfo(userpayload) {
+
 
 
     fetch(`${profile_baseurl}/user/update`, {
@@ -111,7 +121,7 @@ function UpdateUserInfo(userpayload) {
 
                 alert(data.msg)
 
-                RenderUserdata(data.UserData)
+                location.reload()
             }
             else {
                 alert(data.msg)
@@ -126,6 +136,78 @@ function UpdateUserInfo(userpayload) {
 }
 
 
-// function UpdatePassword() {
+function UpdatePassword() {
 
-// }
+    passdiv.style.display = 'flex'
+
+}
+
+function closePassUpdateBox() {
+
+
+    document.getElementById('user_old_password').value=''
+    document.getElementById('user_new_password').value=''
+    document.getElementById('user_new_password_confirm').value=''
+
+    passdiv.style.display = 'none'
+}
+
+
+
+function UpdateUserNewPassword() {
+
+    const currpass = document.getElementById('user_old_password').value;
+    const newpass = document.getElementById('user_new_password').value;
+    const confirmpass = document.getElementById('user_new_password_confirm').value;
+
+
+    if (!currpass || !newpass || !confirmpass) {
+        alert('Kindly Enter All Required feilds.')
+        return
+    }
+
+    if (newpass !== confirmpass) {
+        alert("Password Mismatch Occur. Kindly re-enter Password !")
+        return
+    }
+
+
+    const payload= {
+        currpass,newpass
+    }
+
+
+    if(!confirm('Do you Want to Update Your Password ?')){
+        return
+    }
+
+
+    fetch(`${profile_baseurl}/user/changepass`, {
+        method: 'PATCH',
+        headers: {
+            'content-type': 'application/json',
+            'authorization': `Bearer ${users_token}`
+        },
+        body: JSON.stringify(payload)
+    })
+        .then((res) => {
+            return res.json()
+        })
+        .then((data) => {
+
+            if (data.Success) {
+
+                alert(data.msg)
+                location.reload()
+            }
+            else {
+                alert(data.msg)
+            }
+
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+
+
+}

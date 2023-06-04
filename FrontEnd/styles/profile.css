@@ -79,6 +79,57 @@ body {
 
 
 
+#Updateuserpass {
+    /* border: 5px solid red; */
+    width: 70%;
+    display: none;
+    flex-direction: column;
+    margin: 15px auto;
+}
+
+
+#Updateuserpass > div{
+    width: 60%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* border: 1px solid red; */
+    margin: auto;
+}
+
+
+#Updateuserpass>input {
+    width: 60%;
+    margin: 10px auto;
+    text-align: center;
+    height: 28px;
+    border-radius: 7px;
+}
+
+
+#Updateuserpass button {
+    width: 25%;
+    margin: 10px auto;
+    text-align: center;
+    border-radius: 7px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    outline: none;
+    padding: 5px 0px;
+}
+
+
+#Updateuserpass button:hover {
+    cursor: pointer;
+    background: transparent;
+    color: #007bff;
+    border: 1px solid;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+
 
 
 @media screen and (min-width: 750px) and (max-width: 1000px) {
@@ -88,13 +139,17 @@ body {
         margin: 100px auto;
     }
 
-    
+
     #userprofilecont>div:nth-child(3)>button {
         padding: 10px 12px;
     }
 
     #userprofilecont>div:nth-child(2)>input {
         width: 80%;
+    }
+
+    #Updateuserpass button {
+        width: 40%;
     }
 
 
@@ -122,6 +177,22 @@ body {
     #userprofilecont>div:nth-child(2)>input {
         width: 85%;
     }
+
+
+    #Updateuserpass>input {
+        width: 90%;
+    }
+
+
+    #Updateuserpass button {
+        width: 40%;
+    }
+
+
+    #Updateuserpass > div{
+        width: 90%;
+    }
+
 
 
 }
