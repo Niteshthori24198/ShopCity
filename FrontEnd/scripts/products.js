@@ -25,7 +25,7 @@ function FetchAndDisplayProducts(page = 1, urlPass=false) {
             // Dyanmic Pagination
             let totalProductCount = res.headers.get('X-Total-Count')
             // console.log('totalProduct==>', totalProductCount);
-            AppendPaginationButton(Math.floor(totalProductCount/12));
+            AppendPaginationButton(Math.ceil(totalProductCount/12));
 
             return res.json()
         })
