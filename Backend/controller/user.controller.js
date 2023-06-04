@@ -19,7 +19,7 @@ const RegisterNewUser = async (req, res) => {
         return res.status(400).send({
 
             "error": "Kindly Provide All Required Details for Registration.",
-           
+
             "Success": false
 
         })
@@ -31,20 +31,20 @@ const RegisterNewUser = async (req, res) => {
         return res.status(400).send({
 
             "msg": "Kindly Provide a Valid Gender details as : { Male/Female } only.",
-          
+
             "Success": false
 
         })
     }
 
 
-    /* don't touch this line */ 
+    /* don't touch this line */
 
-    
+
     const isAdmin = false;
 
 
-    /* don't touch this line */ 
+    /* don't touch this line */
 
 
     bcrypt.hash(Password, 7, async (err, hash) => {
@@ -57,8 +57,8 @@ const RegisterNewUser = async (req, res) => {
 
                 "error": err.message,
 
-                "Success":false,
-              
+                "Success": false,
+
             })
 
         }
@@ -131,7 +131,7 @@ const LoginUser = async (req, res) => {
                     return res.status(400).send({
 
                         "msg": "Kindly Enter correct Password. Password entered is Invalid !",
-                        
+
                         "Success": false
                     })
 
@@ -142,7 +142,7 @@ const LoginUser = async (req, res) => {
                     return res.status(200).send({
 
                         "msg": "Login has been Successfull.",
-                       
+
                         "Success": true,
 
                         "token": jwt.sign({ UserID: verifyuser._id }, process.env.SecretKey, { expiresIn: '24h' })
@@ -161,10 +161,10 @@ const LoginUser = async (req, res) => {
             return res.status(400).send({
 
                 "msg": "Kindly Register yourself First. User Doesn't Exists at all.",
-               
+
                 "error": "User Not Found! ",
 
-                "Success":false
+                "Success": false
 
             })
 
@@ -190,32 +190,32 @@ const LoginUser = async (req, res) => {
 
 
 
-const GetUserData = async (req,res)=>{
+const GetUserData = async (req, res) => {
 
     const { UserID } = req.body;
 
     try {
-        
-        const user = await UserModel.findById({_id:UserID});
+
+        const user = await UserModel.findById({ _id: UserID });
 
         res.status(200).send({
 
-            "Success":true,
-            "Code":200,
-            "UserData":user
+            "Success": true,
+            "Code": 200,
+            "UserData": user
 
         })
 
 
-    } 
-    
+    }
+
     catch (error) {
-        
+
         res.status(400).send({
-            "error":error.message,
-            "Code":400,
-            "Success":false,
-            "msg":"Something Went Wrong!"
+            "error": error.message,
+            "Code": 400,
+            "Success": false,
+            "msg": "Something Went Wrong!"
         })
 
     }
@@ -226,20 +226,20 @@ const GetUserData = async (req,res)=>{
 
 
 
-const updateUserData = async (req,res) => {
+const updateUserData = async (req, res) => {
 
     const { UserID } = req.body;
 
     const payload = req.body;
 
-    if(payload.Gender || payload.Gender=='' || payload.Gender===null){
+    if (payload.Gender || payload.Gender == '' || payload.Gender === null) {
 
         if (!(payload.Gender == "Male" || payload.Gender == "Female")) {
 
             return res.status(400).send({
 
                 "msg": "Gender provided must be either Male or Female",
-               
+
                 "Success": false
 
             })
@@ -247,60 +247,66 @@ const updateUserData = async (req,res) => {
         }
 
     }
-    
+
 
     try {
 
-        const user = await UserModel.findById( { _id : UserID } );
+        if (payload.Password) {
+            const hashpass = bcrypt.hashSync(payload.Password, 7);
+            payload.Password = hashpass;
+        }
 
-        if(user){
+
+        const user = await UserModel.findById({ _id: UserID });
+
+        if (user) {
 
             payload.isAdmin = user.isAdmin;
 
-            if(payload.Email === 'admin.shopcity@gmail.com'){
+            if (payload.Email === 'admin.shopcity@gmail.com') {
 
                 payload.Email = 'admin.shopcity@gmail.com';
 
             }
-    
-            await UserModel.findByIdAndUpdate( { _id : UserID }, payload )
-    
-            const updatedUser = await UserModel.findById( { _id : UserID } )
-    
+
+            await UserModel.findByIdAndUpdate({ _id: UserID }, payload)
+
+            const updatedUser = await UserModel.findById({ _id: UserID })
+
             return res.status(200).send({
 
-                "Success":true,
+                "Success": true,
 
                 "msg": "User Details has been updated Successfully.",
 
-                "UserData" : updatedUser
+                "UserData": updatedUser
             })
-            
+
         }
-        
-        else{
-            
+
+        else {
+
             return res.status(404).send({
 
-                "Success":false,
+                "Success": false,
 
                 "msg": "User Doesn't Exits."
 
             })
 
         }
-        
+
     }
-    
+
     catch (error) {
 
         return res.status(400).send({
 
-            "Success":false,
+            "Success": false,
 
             "msg": "Something Went Wrong",
 
-            "error" : error.message
+            "error": error.message
         })
 
     }
@@ -310,57 +316,57 @@ const updateUserData = async (req,res) => {
 
 
 
-const deleteUserProfile = async (req,res) => {
+const deleteUserProfile = async (req, res) => {
 
     const { UserID } = req.body;
 
     try {
 
-        const user = await UserModel.findById( { _id : UserID } );
+        const user = await UserModel.findById({ _id: UserID });
 
-        if(user){
+        if (user) {
 
 
-            if(user.Email === 'admin.shopcity@gmail.com'){
-                
+            if (user.Email === 'admin.shopcity@gmail.com') {
+
                 return res.status(400).send({
-                    "msg":"Access Denied. You Can't remove standard Crendentials.",
-                    "Success":false,
-                    "Code":400
+                    "msg": "Access Denied. You Can't remove standard Crendentials.",
+                    "Success": false,
+                    "Code": 400
 
                 })
             }
-    
-            const deletedUser = await UserModel.findByIdAndDelete( { _id : UserID } )
-    
+
+            const deletedUser = await UserModel.findByIdAndDelete({ _id: UserID })
+
             return res.status(200).send({
-                "Code":200,
-                "Success":true,
+                "Code": 200,
+                "Success": true,
                 "msg": "User has been deleted Successfully.",
                 "UserData": deletedUser
             })
-            
+
         }
-        
-        else{
-            
+
+        else {
+
             return res.status(404).send({
-                "Code":404,
-                "Success":false,
+                "Code": 404,
+                "Success": false,
                 "msg": "User Doesn't Exits."
             })
 
         }
-        
-    } 
-    
+
+    }
+
     catch (error) {
 
         return res.status(400).send({
-            "Code":400,
-            "Success":false,
+            "Code": 400,
+            "Success": false,
             "msg": "Something Went Wrong",
-            "error" : error.message
+            "error": error.message
         })
 
     }
@@ -371,50 +377,50 @@ const deleteUserProfile = async (req,res) => {
 
 
 
-const updateUserRole = async (req,res) => {
+const updateUserRole = async (req, res) => {
 
-    
-    const {UserID, isAdmin} = req.body
+
+    const { UserID, isAdmin } = req.body
 
     // console.log("userid and role mile ---> ",UserID,isAdmin)
 
     try {
-        
-        const user = await UserModel.findById( { _id : UserID } );
 
-        if(user.Email === 'admin.shopcity@gmail.com'){
+        const user = await UserModel.findById({ _id: UserID });
+
+        if (user.Email === 'admin.shopcity@gmail.com') {
 
             return res.status(400).send({
 
                 "Success": false,
-               
-                "msg" : "Access Denied !! ---> You can't update this account as it's Standard crendentials."
+
+                "msg": "Access Denied !! ---> You can't update this account as it's Standard crendentials."
 
             })
 
         }
 
-        await UserModel.findByIdAndUpdate( {_id : UserID }, { isAdmin } )
+        await UserModel.findByIdAndUpdate({ _id: UserID }, { isAdmin })
 
         return res.status(200).send({
 
             "Success": true,
-           
-            "msg" : "User Role has been Updated Successfully !"
+
+            "msg": "User Role has been Updated Successfully !"
 
         })
 
-    } 
-    
+    }
+
     catch (error) {
-        
+
         return res.status(400).send({
 
             "Success": false,
-           
-            "msg" : "Something Went Wrong",
 
-            "error" : error.message
+            "msg": "Something Went Wrong",
+
+            "error": error.message
         })
 
     }
@@ -427,9 +433,9 @@ const updateUserRole = async (req,res) => {
 
 const getAllUsersData = async (req, res) => {
 
-    let {search, limit, page, isAdmin} = req.query;
+    let { search, limit, page, isAdmin } = req.query;
 
-    if(!limit){
+    if (!limit) {
 
         limit = 10
     }
@@ -438,52 +444,120 @@ const getAllUsersData = async (req, res) => {
 
         const searchFilter = new RegExp(search, 'i');
 
-        if(isAdmin === undefined){
+        if (isAdmin === undefined) {
 
-            const users = await UserModel.find( { Name : searchFilter } ).skip(limit*(page-1)).limit(limit)
+            const users = await UserModel.find({ Name: searchFilter }).skip(limit * (page - 1)).limit(limit)
 
             return res.status(200).send({
 
-                "Success" : true,
+                "Success": true,
 
-                "UsersData" : users ,
+                "UsersData": users,
 
-                "msg" : "User data fetched Successfully."
-            })
-
-        }
-        
-        else{
-
-            const users = await UserModel.find( { Name : searchFilter, isAdmin } ).skip(limit*(page-1)).limit(limit)
-    
-            return res.status(200).send({
-
-                "Success" : true,
-                
-                "UsersData" : users ,
-
-                "msg" : "User data fetched Successfully."
+                "msg": "User data fetched Successfully."
             })
 
         }
 
-    } 
-    
+        else {
+
+            const users = await UserModel.find({ Name: searchFilter, isAdmin }).skip(limit * (page - 1)).limit(limit)
+
+            return res.status(200).send({
+
+                "Success": true,
+
+                "UsersData": users,
+
+                "msg": "User data fetched Successfully."
+            })
+
+        }
+
+    }
+
     catch (error) {
-        
+
         return res.status(400).send({
 
             "error": error.message,
 
             "msg": "Something Went Wrong!",
-           
+
             "Success": false
         })
 
     }
 
 }
+
+
+
+const updateUserPassword = async (req, res) => {
+
+    const { UserID, currpass, newpass } = req.body;
+
+    try {
+
+        const user = await UserModel.findById({ _id: UserID })
+
+        if (user) {
+
+
+            const decryptoldpass = bcrypt.compareSync(currpass ,user.Password)
+
+            if(decryptoldpass){
+
+                const hashnewpass = bcrypt.hashSync(newpass,7);
+
+                const user = await UserModel.findByIdAndUpdate({_id:UserID}, {Password:hashnewpass})
+
+                return res.status(200).send({
+
+                    "Success" : true,
+    
+                    "UsersData" : user ,
+    
+                    "msg" : "User Password has been Updated Successfully."
+                })
+
+            }
+            else{
+                return res.status(400).send({
+
+                    "msg": "Kindly Enter Correct Current Password !",
+                   
+                    "Success": false
+                })
+            }
+
+
+        }
+        else {
+            return res.status(404).send({
+
+                "Success": false,
+
+                "msg": "User Doesn't Exists !"
+            })
+        }
+
+    }
+    catch (error) {
+        return res.status(400).send({
+
+            "error": error.message,
+
+            "msg": "Something Went Wrong!",
+
+            "Success": false
+        })
+    }
+
+
+}
+
+
 
 
 
@@ -496,6 +570,7 @@ module.exports = {
     updateUserData,
     deleteUserProfile,
     updateUserRole,
-    getAllUsersData
+    getAllUsersData,
+    updateUserPassword
 
 }

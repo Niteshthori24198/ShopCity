@@ -7,7 +7,7 @@ const Auth = require('../middleware/auth.middleware');
 
 const AdminAuth = require('../middleware/admin.middleware');
 
-const { RegisterNewUser, LoginUser, GetUserData , updateUserData, deleteUserProfile, getAllUsersData, updateUserRole} = require('../controller/user.controller')
+const { RegisterNewUser, LoginUser, GetUserData , updateUserData, deleteUserProfile, getAllUsersData, updateUserRole,updateUserPassword} = require('../controller/user.controller')
 
 
 
@@ -29,6 +29,9 @@ userRouter.get("/get", Auth , GetUserData)
 
 
 userRouter.patch("/update", Auth, updateUserData)
+
+
+userRouter.patch("/changepass", Auth,updateUserPassword)
 
 
 userRouter.delete("/delete" , Auth, deleteUserProfile)
