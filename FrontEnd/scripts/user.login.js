@@ -77,3 +77,12 @@ function LoginNewUser(user){
    
 
 }
+
+
+
+function HandleGoogleSignup(){
+
+    document.getElementById('niteshgoogleauth').innerHTML = `<i class="fa fa-refresh fa-spin"></i> Google`;
+    window.location.href = `${BaseURL}/user/auth/google`;
+
+}

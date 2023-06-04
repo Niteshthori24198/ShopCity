@@ -68,6 +68,29 @@ body{
 
 
 
+.login-form > button {
+    border: none;
+    background-color: #007bff;
+    width: 120px;
+    color: white;
+    border-radius: 7px;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 7px 10px;
+    margin: 15px auto 0px auto;
+}
+
+.login-form > button:hover {
+   background: transparent;
+    color: #007bff;
+    font-weight: bold;
+    border: 1px solid;
+    letter-spacing: 1px;
+}
+
+
+
+
 @media screen and (max-width:1000px) and (min-width:750px) {
     .login-form{
         width: 60%;
