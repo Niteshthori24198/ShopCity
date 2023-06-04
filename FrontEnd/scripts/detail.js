@@ -56,7 +56,7 @@ function ShowProduct(data) {
             <p>Category : ${data.Category}</p>
             <p>Details : ${data.Description}</p>
             <p>Rating : ${data.Rating} ⭐ / 5</p>
-            <p>Price : ${data.Price} Rs</p>
+            <p>Price : <i class="fa-solid fa-indian-rupee-sign"></i> ${data.Price} </p>
             
             ${data.Quantity <= 0 ? '<p> Out Of Stock <p>' : `Quantity : ${getQuantitySelectTag(data.Quantity)}`}        
            
@@ -64,7 +64,7 @@ function ShowProduct(data) {
         </div>
 
         <div>
-            <button id="${data._id}" class="niteshcartbutton" ${data.Quantity <= 0 && 'disabled'}>Add to Cart</button>
+            <button id="addToCartBtnhai" class="niteshcartbutton" ${data.Quantity <= 0 && 'disabled'}>Add To Cart</button>
         </div>
 
     </div>
@@ -120,7 +120,9 @@ function EventHandler() {
 
 function AddItemToCart(token) {
 
-    console.log("token aaya ", token)
+    console.log('-------');
+
+    document.getElementById('addToCartBtnhai').innerHTML = '<i class="fa fa-refresh fa-spin"></i> Add To Cart'
 
     let quantitysel = document.getElementById("niteshproductquantity");
 
@@ -130,7 +132,6 @@ function AddItemToCart(token) {
         Quantity: +quantitysel.value
     }
 
-    console.log(")))))))", payload)
 
     fetch(`${Baseurl}/cart/addToCart`, {
         method: 'POST',
@@ -146,20 +147,21 @@ function AddItemToCart(token) {
         .then((data) => {
 
             console.log(data);
+            document.getElementById('addToCartBtnhai').innerHTML = 'Add To Cart'
 
             if (data.Success) {
                 alert(data.msg)
+                location.reload()
             }
 
             else {
 
                 alert(data.msg)
             }
-
-            location.reload()
-
+            
         })
         .catch((err) => {
+            document.getElementById('addToCartBtnhai').innerHTML = 'Add To Cart'
             alert(data.msg)
         })
 

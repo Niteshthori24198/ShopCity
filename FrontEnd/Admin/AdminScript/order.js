@@ -5,10 +5,11 @@ const admin_baseurl = `http://localhost:3000`
 const adminusertoken = localStorage.getItem('usertoken') || null;
 
 if (!adminusertoken) {
-    location.href = "../../view/user.login.html"
+    location.href = "../view/user.login.html"
 }
 
 let fetchedUserData = []
+let orderPage_OrderData = []
 
 fetchUsersData();
 
@@ -110,6 +111,8 @@ function formateOrdersData(Orders) {
         return (new Date(b.orderDate) - new Date(a.orderDate))
     })
 
+    orderPage_OrderData = OrderData
+
     RenderOrders(OrderData);
 }
 
@@ -136,7 +139,7 @@ function RenderOrders(OrderData) {
        
         const statuscheck = ordersstatus[i].innerText.split(': ')
 
-        console.log(statuscheck)
+        // console.log(statuscheck)
 
         if (statuscheck[0] === 'Delivered') {
             ordersstatus[i].style.color='green'
@@ -194,7 +197,7 @@ function GetOrderCard({ _id, Customer, Product, customerId, orderDate, orderQuan
 
         <div>
             <p > Status : <span class="orderstatuscolor"> ${orderStatus} </span></p>
-            ${orderStatus == 'Confirmed' ? `<button onclick="handleDeveivery('${_id}')"> Delivered </button>` : ''}
+            ${orderStatus == 'Confirmed' ? `<button onclick="handleDeveivery('${_id}')" id="${_id}"> Delivered </button>` : ''}
         </div>
        
     </div>
@@ -208,6 +211,10 @@ function GetOrderCard({ _id, Customer, Product, customerId, orderDate, orderQuan
 
 function handleDeveivery(ID) {
 
+    if(!confirm('Are you sure you want to mark the product as delivered?')) return
+
+    document.getElementById(ID).innerHTML = '<i class="fa fa-refresh fa-spin"></i> Delivered'
+    
     fetch(`${admin_baseurl}/order/updatestatus/${ID}`, {
         method: 'PATCH',
         headers: {
@@ -215,10 +222,13 @@ function handleDeveivery(ID) {
             'authorization': `Bearer ${adminusertoken}`
         }
     })
-        .then((res) => {
-            return res.json()
-        })
-        .then((data) => {
+    .then((res) => {
+        return res.json()
+    })
+    .then((data) => {
+            
+            document.getElementById(ID).innerHTML = 'Delivered'
+            
             console.log(data)
             if (data.Success) {
                 alert(data.msg)
@@ -226,6 +236,7 @@ function handleDeveivery(ID) {
             }
         })
         .catch((err) => {
+            document.getElementById(ID).innerHTML = 'Delivered'
             console.log(err)
         })
 
@@ -233,3 +244,27 @@ function handleDeveivery(ID) {
 }
 
 
+
+
+
+// searchbar
+function handleNavSearchBarOrder(value){
+    // console.log(value);
+    
+    if(value==='' || !value){
+        RenderOrders(orderPage_OrderData)
+        return
+    }
+
+    value = value.toLowerCase()
+
+
+    const filterData = orderPage_OrderData.filter((ord)=>{
+        return (ord.orderStatus.toLowerCase().includes(value) || ord.Product.Title.toLowerCase().includes(value) || ord.Customer.Email.toLowerCase().includes(value) || ord.Customer.Name.toLowerCase().includes(value) || ord.shippingAddress.toLowerCase() == value)
+    })
+
+    RenderOrders(filterData)
+
+
+    
+}

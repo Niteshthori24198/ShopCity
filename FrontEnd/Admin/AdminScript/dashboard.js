@@ -6,7 +6,7 @@ const admin_baseurl = `http://localhost:3000`
 const adminusertoken = localStorage.getItem('usertoken') || null;
 
 if (!adminusertoken) {
-    location.href = "../../view/user.login.html"
+    location.href = "../view/user.login.html"
 }
 
 
@@ -239,3 +239,4 @@ function pieChart2(obj){
 }
 
 // #4BC0C0', '#4BC0C3', '#4BC0C2', '#4BC0C1'
+

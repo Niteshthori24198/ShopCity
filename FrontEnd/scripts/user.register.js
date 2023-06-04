@@ -12,6 +12,7 @@ registerForm.addEventListener('submit',(e)=> {
     if(registerForm.new_user_conf_pass.value !== registerForm.new_user_pass.value){
 
         alert('Password Miss - Matched');
+        return
 
     }
     
@@ -23,9 +24,44 @@ registerForm.addEventListener('submit',(e)=> {
 
 })
 
+function validatePassword(password) {
+    // Minimum length of 8 characters
+    if (password.length < 8) {
+        return false;
+    }
+
+    // At least one uppercase letter, one lowercase letter, and one digit
+    var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
+    return regex.test(password);
+}
+
+function validatePhoneNumber(phoneNumber) {
+    // Regular expression for phone number validation
+    var regex = /^\d{10}$/;
+    return regex.test(phoneNumber);
+}
 
 
 const registerNewUser = () => {
+
+    document.getElementById('registerFormSubmitBtn').innerHTML = '<i class="fa fa-refresh fa-spin"></i> Register'
+
+    const pass = registerForm.new_user_pass.value
+    const phone = registerForm.new_user_contact.value
+    
+    if(!validatePhoneNumber(phone)){
+        document.getElementById('registerFormSubmitBtn').innerHTML = 'Register'
+        alert('Please enter a valid phone number!')
+        return
+    }
+
+    if(!validatePassword(pass)){
+        document.getElementById('registerFormSubmitBtn').innerHTML = 'Register'
+        alert('Please enter a strong password! ( At least one uppercase letter, one lowercase letter, and one digit )')
+        return
+    }
+
+
 
     let payload = {
 
@@ -67,6 +103,8 @@ const AddNewUserToDB = async (payload) => {
 
         console.log(data)
 
+        document.getElementById('registerFormSubmitBtn').innerHTML = 'Register'
+
         if(data.Success){
 
             alert(data.msg)
@@ -83,6 +121,8 @@ const AddNewUserToDB = async (payload) => {
 
     })
     .catch((err)=>{
+
+        document.getElementById('registerFormSubmitBtn').innerHTML = 'Register'
 
         alert(data.msg);
 

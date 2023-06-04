@@ -21,7 +21,7 @@ body{
    
 }
 
-.login-form input{
+.login-form input, #loginBtnHai{
     width: 80%;
     height: 30px;
     /* border-color: aqua; */
@@ -35,14 +35,14 @@ body{
 }
 
 
-.login-form input:nth-child(3){
+ #loginBtnHai{
     background-color: rgb(45, 37, 37);
+    background-color: #007bff;
     color: white;
     border: none;
     font-size: 15px;
 }
-.login-form input:nth-child(3):hover{
-    background-color: rgb(5, 5, 5);
+#loginBtnHai:hover{
     color: white;
     border: none;
     font-size: 15px;
@@ -104,7 +104,7 @@ body{
         width: 80%;
         /* margin: 10vh auto; */
     }
-    .login-form input{
+    .login-form input, #loginBtnHai{
         width: 80%;
     }
 }

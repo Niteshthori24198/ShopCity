@@ -20,7 +20,7 @@ body{
     padding: 20px 0px 0px 0px;
 }
 
-.register-form input{
+.register-form input, #registerFormSubmitBtn, #new_user_gen{
     width: 70%;
     height: 30px;
     margin: 10px auto;
@@ -38,8 +38,9 @@ body{
     margin-top: 30px;
 }
 
-.register-form input:nth-child(8){
+.register-form input:nth-child(8), #registerFormSubmitBtn{
     background-color: rgb(24, 22, 22);
+    background-color: #007bff;
     color: white;
     border: none;
     font-size: 15px;
@@ -47,8 +48,7 @@ body{
     margin-bottom: 30px;
     cursor: pointer;
 }
-.register-form input:nth-child(8):hover{
-    background-color: rgb(5, 5, 5);
+.register-form input:nth-child(8):hover, #registerFormSubmitBtn:hover{
     color: white;
     font-size: 15px;
     cursor: pointer;
@@ -60,7 +60,7 @@ body{
         width: 60%;
         margin: 10vh auto;
     }
-    .register-form input{
+    .register-form input, #registerFormSubmitBtn, #new_user_gen{
         width: 60%;
     }
     
@@ -71,7 +71,7 @@ body{
         width: 80%;
         /* margin: 10vh auto; */
     }
-    .register-form input{
+    .register-form input, #registerFormSubmitBtn, #new_user_gen{
         width: 80%;
     }
 }

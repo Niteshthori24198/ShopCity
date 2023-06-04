@@ -58,11 +58,11 @@
 
         <div class="shopcity-nav-search">
 
-            <form>
+            <!-- <form> -->
 
-                <input type="text" placeholder="Search Here" oninput="handleNavSearchBarAdmin(value)">
+                <input type="text" placeholder="Search Here" oninput="handleNavSearchProducts(value)" autofocus>
 
-            </form>
+            <!-- </form> -->
 
         </div>
 
@@ -76,8 +76,8 @@
                 <a href="#" class="fa fa-user-circle-o dropbtn"></a>
                 <div class="dropdown-content">
                     <p id="ShowUserName">Name</p>
-                    <a href="#">Profile</a>
-                    <a href="#">Dashboard</a>
+                    <a href="../view/profile.html">Profile</a>
+                    <a href="./dashboard.html">Dashboard</a>
                     <a href="#" id="logedOutBtn">Logout</a>
                 </div>
             </div>
@@ -236,7 +236,13 @@
                         </div>
                         <div class="mb-2">
                             <label for="recipient-name" class="col-form-label">Category:</label>
-                            <input type="text" class="form-control" id="productCategoryEdit" required>
+                            <select class="form-control" id="productCategoryEdit" required>
+                                <option value="">Select Category</option>
+                                <option value="Men">Men</option>
+                                <option value="Women">Women</option>
+                                <option value="Kids">Kids</option>
+                            </select>
+                            <!-- <input type="text" class="form-control" id="productCategoryEdit" required> -->
                         </div>
                         <div class="mb-2">
                             <label for="recipient-name" class="col-form-label">Quantity:</label>

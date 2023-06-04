@@ -38,7 +38,7 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border-radius: 10px;
     padding: 10px 0px ;
-    text-align: center;
+    /* text-align: center; */
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -53,7 +53,8 @@
 .cancelbtn{
     border: none;
     cursor: pointer;
-    background-color: rgb(42, 40, 40);
+    background-color: #007bff;
+
     color: white;
     border: none;
     outline: none;
@@ -65,10 +66,10 @@
     width: 150px;
 }
 .cancelbtn:hover{
-    background-color:rgb(0, 0, 0);
     transition: 0.6s;
     background: transparent;
-    color: black;
+    color: #007bff;
+    font-weight: bold;
     border: 1px solid;
 }
 

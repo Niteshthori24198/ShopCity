@@ -5,12 +5,15 @@ const admin_baseurl = `http://localhost:3000`
 const adminusertoken = localStorage.getItem('usertoken') || null;
 
 if (!adminusertoken) {
-    location.href = "../../view/user.login.html"
+    location.href = "../view/user.login.html"
 }
+
+
 
 
 fetchAndRenderUsers()
 
+let allUserData_userDetails = []
 
 
 function fetchAndRenderUsers() {
@@ -27,11 +30,15 @@ function fetchAndRenderUsers() {
         })
         .then((data) => {
             console.log("user data fetched ", data.UsersData)
+
+            allUserData_userDetails = data.UsersData
+
             RenderUsers(data.UsersData)
 
         })
         .catch((err) => {
             console.log(err)
+            alert('Something Went Wrong!')
         })
 
 
@@ -78,8 +85,8 @@ function GetUserCard({ isAdmin, Location, Gender, Contact, Email, Name, _id }) {
         </div>
 
         <div>
-            <button onclick="handleUpdateRole('${_id}','${isAdmin}')">Update Role</button>
-            <button onclick="SentEmailAnnouncement('${Email}', '${Name}')">Announcement</button>
+            <button onclick="handleUpdateRole('${_id}','${isAdmin}')" id="${_id}">Update Role</button>
+            <button onclick="SentEmailAnnouncement('${Email}', '${Name}')" id="${Email}">Announcement</button>
         </div>
        
     </div>
@@ -95,6 +102,14 @@ function GetUserCard({ isAdmin, Location, Gender, Contact, Email, Name, _id }) {
 function handleUpdateRole(userid, isAdmin) {
 
     // console.log("---> click data",userid,isAdmin, typeof isAdmin)
+
+    if(!confirm("Are you sure you want to update the user's role?")){
+        return
+    }
+
+    document.getElementById(userid).innerHTML ='<i class="fa fa-refresh fa-spin"></i> Update Role'
+
+    
 
     if (isAdmin === 'true') {
         isAdmin = false
@@ -123,6 +138,8 @@ function handleUpdateRole(userid, isAdmin) {
         })
         .then((data) => {
 
+            document.getElementById(userid).innerHTML ='Update Role'
+
             if (data.Success) {
                 alert(data.msg)
                 location.reload()
@@ -132,6 +149,7 @@ function handleUpdateRole(userid, isAdmin) {
             }
         })
         .catch((err) => {
+            document.getElementById(userid).innerHTML ='Update Role'
             alert(data)
             console.log(err)
         })
@@ -143,10 +161,39 @@ function handleUpdateRole(userid, isAdmin) {
 
 function SentEmailAnnouncement(email, name) {
 
+    document.getElementById(email).innerHTML = '<i class="fa fa-refresh fa-spin"></i> Announcement'
+    
+    setTimeout(()=>{
+        document.getElementById(email).innerHTML = 'Announcement'
+    },3000)
+
     let subject = 'Important Announcement from Shop City'
     name = name.split(' ').join('%20')
     let body = `Dear%20${name}`
     const url = `mailto:${email}?subject=${subject}&body=${body}`
     // console.log(url);
     window.location.href = url
+}
+
+
+
+function handleSearchNav_users(value){
+    // console.log(value);
+    
+    if(value==='' || !value){
+        RenderUsers(allUserData_userDetails)
+        return
+    }
+
+    value = value.toLowerCase()
+
+
+    const filterData = allUserData_userDetails.filter((user)=>{
+        return (user.Name.toLowerCase().includes(value) || user.Email.toLowerCase().includes(value) || user.Location.toLowerCase().includes(value) || user.Gender.toLowerCase() == value)
+    })
+
+    RenderUsers(filterData)
+
+
+    
 }

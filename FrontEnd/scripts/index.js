@@ -107,9 +107,13 @@ function renderUserName(){
 
 
 logedOutBtn.addEventListener('click', ()=>{
-    localStorage.removeItem('usertoken');
 
-    location.reload();
+    if(confirm('Are you sure you want to log out?')){
+        localStorage.removeItem('usertoken');
+    
+        location.reload();
+    }
+
 
 })
 

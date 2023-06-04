@@ -19,6 +19,8 @@ body {
 #userprofilecont>div:nth-child(1) {
     text-align: center;
     /* border: 2px solid green; */
+    background-color:rgba(50, 80, 203, 0.1);
+    padding: 10px 0px;
 }
 
 #userprofilecont img {

@@ -10,6 +10,8 @@ const userpass = document.getElementById("userpass");
 loginform.addEventListener("submit", function (e){
 
     e.preventDefault();
+
+    document.getElementById('loginBtnHai').innerHTML = `<i class="fa fa-refresh fa-spin"></i> Login`
     
     userLogin();
 
@@ -52,6 +54,7 @@ function LoginNewUser(user){
     .then((data)=>{
 
         console.log(data);
+        document.getElementById('loginBtnHai').innerHTML = `Login`
 
         if(data.Success){
 
@@ -70,6 +73,8 @@ function LoginNewUser(user){
 
     })
     .catch((err)=>{
+
+        document.getElementById('loginBtnHai').innerHTML = `Login`
 
         alert(data.error);
         

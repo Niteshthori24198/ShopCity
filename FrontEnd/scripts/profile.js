@@ -19,7 +19,10 @@ const usercontact = document.getElementById('user_contact_disp');
 
 const userdataeditbtn = document.getElementById('updateUserInfobtn');
 
+const savePasswordBTN = document.getElementById('savePasswordBTN');
+
 const passdiv = document.getElementById('Updateuserpass')
+
 
 
 
@@ -34,6 +37,30 @@ else {
     
     FetchUserInformation()
 }
+
+
+
+
+
+function validatePassword(password) {
+    // Minimum length of 8 characters
+    if (password.length < 8) {
+        return false;
+    }
+
+    // At least one uppercase letter, one lowercase letter, and one digit
+    var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
+    return regex.test(password);
+}
+
+function validatePhoneNumber(phoneNumber) {
+    // Regular expression for phone number validation
+    var regex = /^\d{10}$/;
+    return regex.test(phoneNumber);
+}
+
+
+
 
 
 
@@ -75,10 +102,13 @@ function RenderUserdata(UserData) {
     usergen.value = UserData.Gender
 
 
+
 }
 
 
 userdataeditbtn.addEventListener("click", () => {
+
+    
 
 
     const userpayload = {
@@ -89,6 +119,13 @@ userdataeditbtn.addEventListener("click", () => {
         Gender: usergen.value
 
     }
+
+    if(!validatePhoneNumber(usercontact.value)){
+        alert('Please enter a valid phone number!')
+        return
+    }
+
+  
 
     if(!confirm('Do you Want to Update Your Profile ?')){
         location.reload()
@@ -102,8 +139,7 @@ userdataeditbtn.addEventListener("click", () => {
 
 function UpdateUserInfo(userpayload) {
 
-
-
+    userdataeditbtn.innerHTML = '<i class="fa fa-refresh fa-spin"></i> Save'
     fetch(`${profile_baseurl}/user/update`, {
         method: 'PATCH',
         headers: {
@@ -117,18 +153,20 @@ function UpdateUserInfo(userpayload) {
         })
         .then((data) => {
 
+            userdataeditbtn.innerHTML = 'Save'
             if (data.Success) {
-
+                
                 alert(data.msg)
-
+                
                 location.reload()
             }
             else {
                 alert(data.msg)
             }
-
+            
         })
         .catch((err) => {
+            userdataeditbtn.innerHTML = 'Save'
             console.log(err)
         })
 
@@ -149,6 +187,8 @@ function closePassUpdateBox() {
     document.getElementById('user_new_password').value=''
     document.getElementById('user_new_password_confirm').value=''
 
+ 
+
     passdiv.style.display = 'none'
 }
 
@@ -159,6 +199,11 @@ function UpdateUserNewPassword() {
     const currpass = document.getElementById('user_old_password').value;
     const newpass = document.getElementById('user_new_password').value;
     const confirmpass = document.getElementById('user_new_password_confirm').value;
+
+    if(!validatePassword(newpass)){
+        alert('Please enter a strong password! ( At least one uppercase letter, one lowercase letter, and one digit )')
+        return
+    }
 
 
     if (!currpass || !newpass || !confirmpass) {
@@ -181,6 +226,7 @@ function UpdateUserNewPassword() {
         return
     }
 
+    savePasswordBTN.innerHTML = '<i class="fa fa-refresh fa-spin"></i> Save'
 
     fetch(`${profile_baseurl}/user/changepass`, {
         method: 'PATCH',
@@ -195,17 +241,20 @@ function UpdateUserNewPassword() {
         })
         .then((data) => {
 
+            savePasswordBTN.innerHTML = 'Save'
+            
             if (data.Success) {
-
+                
                 alert(data.msg)
                 location.reload()
             }
             else {
                 alert(data.msg)
             }
-
+            
         })
         .catch((err) => {
+            savePasswordBTN.innerHTML = 'Save'
             console.log(err)
         })
 

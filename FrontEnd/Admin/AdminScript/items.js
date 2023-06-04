@@ -5,7 +5,7 @@ const admin_baseurl = `http://localhost:3000`
 const adminusertoken = localStorage.getItem('usertoken') || null;
 
 if (!adminusertoken) {
-    location.href = "../../view/user.login.html"
+    location.href = "../view/user.login.html"
 }
 
 
@@ -92,7 +92,7 @@ function GetItemCard({ _id, Category, Description, Image, Price, Quantity, Ratin
                 <span>Edit Product</span>
             </button>
 
-            <button onclick="handleDeleteProduct('${_id}')"> Delete Product </button>
+            <button onclick="handleDeleteProduct('${_id}')" id="${_id}"> Delete Product </button>
         </div>
        
     </div>
@@ -108,7 +108,7 @@ function GetItemCard({ _id, Category, Description, Image, Price, Quantity, Ratin
 function editBtnClicked(productID) {
     if (!adminusertoken) {
         alert('Kindly Login First')
-        location.href = "../../view/user.login.html"
+        location.href = "../view/user.login.html"
         return
     } else {
         console.log(productID);
@@ -140,10 +140,7 @@ async function handleEditProduct(event) {
     event.preventDefault()
     console.log('submitted');
 
-    if(!confirm('Do You Want To Edit Product ?')){
-        return
-    }
-
+   
 
     const data = {}
 
@@ -161,7 +158,8 @@ async function handleEditProduct(event) {
 
     console.log(productID);
 
-    
+    if(!confirm('Are you sure you want to update the product?')) return
+
     let res = await fetch(`${admin_baseurl}/product/update/${productID}`, {
         method: "PATCH",
         headers: {
@@ -174,7 +172,7 @@ async function handleEditProduct(event) {
     console.log(res);
     alert(res.msg);
     document.getElementById('edit_close_btn').click()
-    fetchAndRenderUsers()
+    fetchAndRenderPro()
 
 }
 
@@ -183,9 +181,6 @@ async function handleAddProduct(event) {
     event.preventDefault()
     console.log('submitted');
 
-    if(!confirm('Do You Want To Add Product ?')){
-        return
-    }
 
 
     const data = {}
@@ -203,6 +198,7 @@ async function handleAddProduct(event) {
 
     console.log(data);
 
+    if(!confirm('Are you sure you want to Add the product?')) return
 
     let res = await fetch(`${admin_baseurl}/product/add`, {
         method: "POST",
@@ -217,7 +213,7 @@ async function handleAddProduct(event) {
 
     alert(res.msg);
     document.getElementById('addd_close_btn').click()
-    fetchAndRenderUsers()
+    fetchAndRenderPro()
 
     addProductForm.productTitle.value  =  ''  ;
     addProductForm.productCategory.value  =  ''  ;
@@ -234,10 +230,10 @@ async function handleAddProduct(event) {
 async function handleDeleteProduct(productID) {
     console.log(productID);
 
-    if(!confirm('Do You Want To Delete Product ?')){
-        return
-    }
+    if(!confirm('Are you sure you want to delete the product?')) return
 
+    document.getElementById(productID).innerHTML = '<i class="fa fa-refresh fa-spin"></i> Delete Product'
+    
     let res = await fetch(`${admin_baseurl}/product/delete/${productID}`, {
         method: "DELETE",
         headers: {
@@ -245,10 +241,11 @@ async function handleDeleteProduct(productID) {
             'authorization': `Bearer ${adminusertoken}`
         }
     }).then(r => r.json())
-
+    
+    document.getElementById(productID).innerHTML = 'Delete Product'
     console.log(res);
     alert(res.msg);
-    fetchAndRenderUsers()
+    fetchAndRenderPro()
 
 }
 
@@ -265,4 +262,27 @@ function handleFilterByCategory(event) {
         RenderProducts(allProductsDataDB)
     }
 
+}
+
+
+
+function handleNavSearchProducts(value){
+    // console.log(value);
+    
+    if(value==='' || !value){
+        RenderProducts(allProductsDataDB)
+        return
+    }
+
+    value = value.toLowerCase()
+
+
+    const filterData = allProductsDataDB.filter((prod)=>{
+        return (prod.Title.toLowerCase().includes(value) || prod.Description.toLowerCase().includes(value) || prod.Category.toLowerCase() == value )
+    })
+
+    RenderProducts(filterData)
+
+
+    
 }

@@ -73,7 +73,7 @@ function getProductCard(product) {
                     <h3>Title : ${product.Title}</h3>
                     <p>Category : ${product.Category}</p>
                     <p>Description : ${product.Description.substring(0, 5)}</p>
-                    <p>Price : ${product.Price} Rs.</p>
+                    <p>Price : <i class="fa-solid fa-indian-rupee-sign"></i> ${product.Price} </p>
                     <p>Rating : ${product.Rating} ⭐</p>
                     
                 </div>

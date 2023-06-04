@@ -85,7 +85,8 @@ function getordersBox(id,date,add,status,img,title,cat,price,quant){
                     <p>Total Price :- ${quant*price} Rs</p>
                     <p>Order Status :- ${status}</p>
                     <p>Shipping Address :- ${add}</p>
-                    <button onclick="handleCancel('${id}')" class="cancelbtn" ${((status=='Delivered')|| (status=='Cancelled'))? "Disabled" : ""}>Cancel Order</button>
+                    ${((status=='Delivered')|| (status=='Cancelled')) ? '' : `<button onclick="handleCancel('${id}')" class="cancelbtn" >Cancel Order</button>`}
+                   
                 </div>
             </div>
         `
@@ -97,7 +98,14 @@ function getordersBox(id,date,add,status,img,title,cat,price,quant){
 
 
 function handleCancel(id){
-    console.log(id)
+    // console.log(id)
+
+    if(!confirm('Are you sure you want to cancel the order?')){
+        return
+    }
+
+    document.querySelector('.cancelbtn').innerHTML = '<i class="fa fa-refresh fa-spin"></i> Cancel Order'
+
     fetch(`${baseUrl}/order/cancel/${id}`,{
         method:'DELETE',
         headers:{
@@ -110,19 +118,22 @@ function handleCancel(id){
     })
     .then((data)=>{
 
+        document.querySelector('.cancelbtn').innerHTML = 'Cancel Order'
+        
         if(data.Success){
-
+            
             console.log(data.msg)
             location.reload()
             
-           
+            
         }
         else{
             alert(data.msg)
         }
-       
+        
     })
     .catch((err)=>{
+        document.querySelector('.cancelbtn').innerHTML = 'Cancel Order'
         console.log(err)
     })
 

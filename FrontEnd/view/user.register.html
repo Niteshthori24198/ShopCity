@@ -53,11 +53,11 @@
 
         <div class="shopcity-nav-search">
 
-            <form>
+            <!-- <form> -->
 
                 <input type="text" placeholder="Search Here" oninput="handleNavSearchBar(value)">
                 
-            </form>
+            <!-- </form> -->
 
         </div>
 
@@ -115,13 +115,22 @@
 
             <input type="email" placeholder="Enter your Email-id" id="new_user_email" required>
             <input type="text" placeholder="Enter your Name" id="new_user_name" required>
-            <input type="text" placeholder="Enter your Gender" id="new_user_gen" required>
+
+            <!-- <input type="text" placeholder="Enter your Gender" id="new_user_gen" required> -->
+            <select name="" id="new_user_gen" required>
+                <option value="">Select your Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+
             <input type="text" placeholder="Enter your Location" id="new_user_address" required>
             <input type="number" placeholder="Enter your Contact Number" id="new_user_contact" required>
             <input type="password" placeholder="Enter your Password" id="new_user_pass" required>
             <input type="password" placeholder="Re-enter your Password" id="new_user_conf_pass" required>
 
-            <input type="submit" value="Register">
+            <!-- <input type="submit" value="Register"> -->
+            <button type="submit" id="registerFormSubmitBtn"> Register </button>
 
 
         </form>

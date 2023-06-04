@@ -50,11 +50,11 @@
 
         <div class="shopcity-nav-search">
 
-            <form>
+            <!-- <form> -->
 
-                <input type="text" placeholder="Search Here" oninput="handleNavSearchBarAdmin(value)">
+                <input type="text" placeholder="Search Here" oninput="handleNavSearchBarAdmin()">
 
-            </form>
+            <!-- </form> -->
 
         </div>
 
@@ -68,8 +68,8 @@
                 <a href="#" class="fa fa-user-circle-o dropbtn"></a>
                 <div class="dropdown-content">
                     <p id="ShowUserName">Name</p>
-                    <a href="#">Profile</a>
-                    <a href="#">Dashboard</a>
+                    <a href="../view/profile.html">Profile</a>
+                    <a href="./dashboard.html">Dashboard</a>
                     <a href="#" id="logedOutBtn">Logout</a>
                 </div>
             </div>
@@ -224,3 +224,10 @@
 <script src="../scripts/index.js"></script>
 
 <script src="../scripts/navbar.js"></script>
+
+
+<script>
+    function handleNavSearchBarAdmin(){
+        location.href = './items.html'
+    }
+</script>
