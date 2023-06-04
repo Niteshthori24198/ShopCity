@@ -7,7 +7,9 @@ const Auth = require('../middleware/auth.middleware');
 
 const AdminAuth = require('../middleware/admin.middleware');
 
-const { RegisterNewUser, LoginUser, GetUserData , updateUserData, deleteUserProfile, getAllUsersData, updateUserRole,updateUserPassword} = require('../controller/user.controller')
+const { passport } = require("../config/google.auth")
+
+const { RegisterNewUser, LoginUser, GetUserData , updateUserData, deleteUserProfile, getAllUsersData, updateUserRole,updateUserPassword,googleAuthentication} = require('../controller/user.controller')
 
 
 
@@ -19,6 +21,17 @@ userRouter.post("/register", RegisterNewUser )
 
 
 userRouter.post("/login", LoginUser )
+
+
+
+
+// google auth
+
+
+userRouter.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+
+userRouter.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login', session:false }), googleAuthentication )
 
 
 

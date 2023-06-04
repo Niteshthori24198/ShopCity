@@ -504,29 +504,29 @@ const updateUserPassword = async (req, res) => {
         if (user) {
 
 
-            const decryptoldpass = bcrypt.compareSync(currpass ,user.Password)
+            const decryptoldpass = bcrypt.compareSync(currpass, user.Password)
 
-            if(decryptoldpass){
+            if (decryptoldpass) {
 
-                const hashnewpass = bcrypt.hashSync(newpass,7);
+                const hashnewpass = bcrypt.hashSync(newpass, 7);
 
-                const user = await UserModel.findByIdAndUpdate({_id:UserID}, {Password:hashnewpass})
+                const user = await UserModel.findByIdAndUpdate({ _id: UserID }, { Password: hashnewpass })
 
                 return res.status(200).send({
 
-                    "Success" : true,
-    
-                    "UsersData" : user ,
-    
-                    "msg" : "User Password has been Updated Successfully."
+                    "Success": true,
+
+                    "UsersData": user,
+
+                    "msg": "User Password has been Updated Successfully."
                 })
 
             }
-            else{
+            else {
                 return res.status(400).send({
 
                     "msg": "Kindly Enter Correct Current Password !",
-                   
+
                     "Success": false
                 })
             }
@@ -561,6 +561,43 @@ const updateUserPassword = async (req, res) => {
 
 
 
+// Google Authentication code
+
+const googleAuthentication = async (req, res) => {
+
+    // Successful authentication, redirect home.
+
+    console.log(req.user)
+
+    const user = req.user
+
+    let token = jwt.sign({ UserID: user._id}, process.env.SecretKey, { expiresIn: "24h" })
+
+    // const frontendURL = `https://qr-insight-craft.netlify.app/`
+
+    const frontendURL = "http://127.0.0.1:5500/FrontEnd/index.html"
+
+    res.send(`
+                <a href="${frontendURL}?token=${token}" id="myid" style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #222222; margin: 0; padding: 0; overflow: scroll;">
+                    <img src="https://i.pinimg.com/originals/2e/9c/68/2e9c6878eae5bbcdaa2d07ed4dbd79b8.gif" alt="">
+                </a>
+                <script>
+                    let a = document.getElementById('myid')
+                    setTimeout(()=>{
+                        a.click()
+                    },3000)
+                    console.log(a)
+                </script>
+        `)
+
+}
+
+
+
+
+
+
+
 
 module.exports = {
 
@@ -571,6 +608,7 @@ module.exports = {
     deleteUserProfile,
     updateUserRole,
     getAllUsersData,
-    updateUserPassword
+    updateUserPassword,
+    googleAuthentication
 
 }
