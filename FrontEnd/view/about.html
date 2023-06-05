@@ -6,59 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us</title>
-    <!-- <link rel="stylesheet" href="../styles/navbar.css"> -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
 
-        header {
-            /* background-color: #333; */
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        h2 {
-            color: #666;
-            margin-top: 30px;
-        }
-
-        p {
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .developer-info {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .developer-info img {
-            width: 100px;
-            border-radius: 50%;
-            margin-right: 20px;
-        }
-
-        .developer-info .info {
-            flex: 1;
-        }
-    </style>
-
-    
     <!-- Google fonts -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -75,6 +23,7 @@
 
     <!-- font awesome icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../styles/about.css">
     <link rel="stylesheet" href="../styles/navbar.css">
 
 </head>
@@ -91,11 +40,11 @@
 
         <div class="shopcity-nav-search">
 
-            <form>
+            <!-- <form> -->
 
-                <input type="text" placeholder="Search Here" oninput="handleNavSearchBar(value)">
+            <input type="text" placeholder="Search Here" oninput="handleNavSearchBar(value)">
 
-            </form>
+            <!-- </form> -->
 
         </div>
 
@@ -109,8 +58,8 @@
                 <a href="#" class="fa fa-user-circle-o dropbtn"></a>
                 <div class="dropdown-content">
                     <p id="ShowUserName">Name</p>
-                    <a href="#">Profile</a>
-                    <a href="#">Dashboard</a>
+                    <a href="./profile.html">Profile</a>
+                    <a href="../Admin/dashboard.html">Dashboard</a>
                     <a href="#" id="logedOutBtn">Logout</a>
                 </div>
             </div>
@@ -131,44 +80,78 @@
 
         <a href="../index.html">Home</a>
         <a href="./products.html">Store</a>
-        <a href="#">About</a>
+        <a href="./about.html">About</a>
         <a href="#">Contact</a>
         <a href="./user.login.html" id="LogedInBtn">Login</a>
 
     </div>
 
+
+
+    <!-- / about section / -->
+
+
     <header>
-        <h1>About Us</h1>
+        <h1>About Our Website</h1>
     </header>
 
-    <div class="container">
-        <h2>Welcome to My E-commerce Website!</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat metus sed lectus auctor, nec
-            ultrices ligula varius. Phasellus sit amet nibh eu augue euismod pulvinar. Ut efficitur rutrum turpis, at
-            laoreet metus laoreet ac. Nulla id sem felis. Mauris non tortor nisl. Sed vestibulum massa sit amet velit
-            commodo, non fringilla sapien congue. Curabitur consequat rutrum neque, eu feugiat neque ullamcorper nec.
-            Sed ac libero fermentum, scelerisque nunc nec, posuere neque.</p>
+    <section class="shopcity-overview">
+        <h2>About Us</h2>
+        <p>Welcome to our e-commerce website which offers a comprehensive shopping solution, empowering users to create
+            accounts, securely login, explore a diverse range of products categorized for easy navigation, add items to
+            their cart, and track order status. With a seamless end-to-end experience, we depver convenience, repabipty,
+            and personapzed user profiles. Join us today to enjoy a streampned and secure onpne shopping experience.</p>
+    </section>
 
+    <section class="shopcity-features">
+        <h2>Our Features</h2>
+        <div>
+            <p><i class="fa-solid fa-circle-check fa-fade fa-xl" style="color: #2b8221;"></i>&nbsp; User registration
+                and login</p>
+            <p><i class="fa-solid fa-circle-check fa-fade fa-xl" style="color: #2b8221;"></i>&nbsp; User Authentication
+                & Authorization</p>
+            <p><i class="fa-solid fa-circle-check fa-fade fa-xl" style="color: #2b8221;"></i>&nbsp; Third Party
+                Integration for Login</p>
+            <p><i class="fa-solid fa-circle-check fa-fade fa-xl" style="color: #2b8221;"></i>&nbsp; View all products
+            </p>
+            <p><i class="fa-solid fa-circle-check fa-fade fa-xl" style="color: #2b8221;"></i>&nbsp; Product details page
+            </p>
+            <p><i class="fa-solid fa-circle-check fa-fade fa-xl" style="color: #2b8221;"></i>&nbsp; Shopping cart
+                functionality</p>
+            <p><i class="fa-solid fa-circle-check fa-fade fa-xl" style="color: #2b8221;"></i>&nbsp; Order placement and
+                tracking</p>
+            <p><i class="fa-solid fa-circle-check fa-fade fa-xl" style="color: #2b8221;"></i>&nbsp; Real Time Payment
+            </p>
+            <p><i class="fa-solid fa-circle-check fa-fade fa-xl" style="color: #2b8221;"></i>&nbsp; User profile
+                management</p>
+
+        </div>
+    </section>
+
+    <section class="developer-info">
         <h2>Developer Information</h2>
-
-        <div class="developer-info">
-            <img src="developer.jpg" alt="Developer">
-            <div class="info">
-                <h3>Your Name</h3>
-                <p>Full Stack Web Developer</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat metus sed lectus auctor, nec
-                    ultrices ligula varius.</p>
-                <p>Technologies Used: HTML, CSS, JavaScript, Node.js, Express.js, MongoDB, Mongoose, JWT, Bcrypt</p>
+        <div class="developer-card">
+            <div id="develop-image">
+                <img src="../Images/Nitesh_Pic.JPG" alt="Developer Image">
+            </div>
+            <div class="developer-details">
+                <h3>Nitesh Kumar</h3>
+                <h5>Full Stack Developer</h5>
+                <p>Skilled and dedicated developer with a passion for innovative solutions, proficient in
+                    multiple
+                    programming languages. With a keen passion for innovation to continually enhance your knowledge and
+                    skills to deliver outstanding digital experiences.</p>
+                <p>Email : <span>niteshkumar240198@gmail.com</span> </p>
+                <p>Phone : <span>+91 742700-6856</span> </p>
             </div>
         </div>
+    </section>
 
-        <h2>Project Overview</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat metus sed lectus auctor, nec
-            ultrices ligula varius. Phasellus sit amet nibh eu augue euismod pulvinar. Ut efficitur rutrum turpis, at
-            laoreet metus laoreet ac. Nulla id sem felis. Mauris non tortor nisl. Sed vestibulum massa sit amet velit
-            commodo, non fringilla sapien congue. Curabitur consequat rutrum neque, eu feugiat neque ullamcorper nec.
-            Sed ac libero fermentum, scelerisque nunc nec, posuere neque.</p>
-    </div>
+
+    <!-- / about section / -->
+
+
+
 
 
     <footer class="shop-footer">

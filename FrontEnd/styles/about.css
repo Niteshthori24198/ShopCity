@@ -1,0 +1,123 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Basic styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+    color: #333;
+}
+
+header,
+section {
+    padding: 20px;
+    /* border: 1px solid red; */
+    width: 90%;
+    margin: auto;
+    line-height: 30px;
+
+}
+
+h1,
+h2,
+h3 {
+    margin-bottom: 10px;
+
+}
+
+
+h1 {
+    text-align: center;
+}
+
+
+.shopcity-features p {
+    margin: 10px auto;
+}
+
+.shopcity-features>div {
+    margin-top: 20px;
+}
+
+
+.shopcity-overview>p {
+    text-align: justify;
+}
+
+/* Developer information styles */
+.developer-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    width: 100%;
+
+}
+
+#develop-image>img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 40px 0px 2px;
+}
+
+#develop-image>img:hover{
+    transform:scale(1.25);
+    transition: 1s;
+}
+
+.developer-details h3 {
+    margin-bottom: 5px;
+}
+
+.developer-details p {
+    margin-bottom: 6px;
+    text-align: justify;
+}
+
+.developer-details span {
+    color: #007bff;
+    letter-spacing: 1px;
+}
+
+
+
+/* Responsive styles */
+@media (max-width: 768px) {
+
+    header,
+    section {
+        padding: 10px;
+    }
+
+    .developer-card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    h1,
+    h2,
+    h3,
+    h5
+    {
+        margin: 15px auto 10px auto;
+        text-align: center;
+
+    }
+
+    .developer-details p {
+        padding: 0px 15px;
+    }
+
+    #develop-image>img {
+        margin: auto;
+
+    }
+
+}
