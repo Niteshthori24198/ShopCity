@@ -1,0 +1,88 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+
+#contactcontainer{
+    width: 35%;
+    text-align: center;
+    margin: 50px auto;
+    padding: 55px auto;
+    /* border: 1px solid red; */
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+#contactqueryForm{
+    /* border: 2px solid green; */
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+
+#contactqueryForm > input , #query_category{
+    outline: none;
+    width: 80%;
+    height: 30px;
+    text-align: center;
+    padding: 5px;
+    border-radius: 7px;
+    margin: 10px auto;
+}
+
+#users_query_{
+    outline: none;
+    width: 80%;
+    text-align: center;
+    padding: 5px;
+    border-radius: 7px;
+    margin: 10px auto;
+}
+
+
+#contactqueryForm > input:nth-child(5){
+    background-color: #007bff;
+    color: white;
+    width: 35%;
+    outline: none;
+    border: none;
+}
+
+#contactqueryForm > input:nth-child(5):hover{
+    color: #007bff;
+    background: transparent;
+    border: 1px solid;
+    font-weight: bold;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+
+
+
+
+
+@media screen and (max-width: 750px) and (min-width: 1100px) {
+    #contactcontainer{
+        width: 90%;
+    }
+    #contactqueryForm{
+      
+        width: 85%;
+       
+    }
+}
+
+
+@media screen and (max-width: 750px){
+    #contactcontainer{
+        width: 90%;
+    }
+    #contactqueryForm{
+      
+        width: 85%;
+       
+    }
+}

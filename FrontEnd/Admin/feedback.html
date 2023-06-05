@@ -5,15 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Page</title>
+    <title>Document</title>
 
-    <!-- detail style sheet -->
-
-    <link rel="stylesheet" href="../styles/navbar.css">
-
-    <link rel="stylesheet" href="../styles/product.details.css">
-
-    <!-- detail style sheet -->
 
     <!-- Google fonts -->
 
@@ -30,22 +23,23 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- font awesome icon library -->
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 
-    <!-- Magnifier -->
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnify/2.3.3/css/magnify.min.css"
-        integrity="sha512-wzhF4/lKJ2Nc8mKHNzoFP4JZsnTcBOUUBT+lWPcs07mz6lK3NpMH1NKCKDMarjaw8gcYnSBNjjllN4kVbKedbw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./AdminCSS/feedback.css">
 
+    <link rel="stylesheet" href="../styles/navbar.css">
 
 </head>
 
 <body>
 
+
     <!-- Nav section -->
+
     <div class="shop-nav-header">
 
         <div class="shop-city-logo">
@@ -56,11 +50,11 @@
 
         <div class="shopcity-nav-search">
 
-            <form>
+            <!-- <form> -->
 
-                <input type="text" placeholder="Search Here" oninput="handleNavSearchBar(value)">
+            <input type="text" placeholder="Search Here" oninput="handleNavSearchBarAdmin()">
 
-            </form>
+            <!-- </form> -->
 
         </div>
 
@@ -74,18 +68,14 @@
                 <a href="#" class="fa fa-user-circle-o dropbtn"></a>
                 <div class="dropdown-content">
                     <p id="ShowUserName">Name</p>
-                    <a href="./profile.html">Profile</a>
-                    <a href="../Admin/dashboard.html">Dashboard</a>
+                    <a href="../view/profile.html">Profile</a>
+                    <a href="./dashboard.html">Dashboard</a>
                     <a href="#" id="logedOutBtn">Logout</a>
                 </div>
             </div>
 
-
-
-
-
-            <a href="./cart.html" class="fa fa-shopping-cart"><sup></sup></a>
-            <a href="./order.html" class="fa fa-truck"></a>
+            <a href="../view/cart.html" class="fa fa-shopping-cart"><sup></sup></a>
+            <a href="../view/order.html" class="fa fa-truck"></a>
             <a href="#" class="fa fa-bars"></a>
         </div>
 
@@ -95,10 +85,10 @@
     <div class="shop-city-links">
 
         <a href="../index.html">Home</a>
-        <a href="./products.html">Store</a>
-        <a href="./about.html">About</a>
-        <a href="./contact.html">Contact</a>
-        <a href="./user.login.html" id="LogedInBtn">Login</a>
+        <a href="../view/products.html">Store</a>
+        <a href="../view/about.html">About</a>
+        <a href="../view/contact.html">Contact</a>
+        <a href="../view/user.login.html" id="LogedInBtn">Login</a>
 
     </div>
 
@@ -107,14 +97,34 @@
     <!-- Nav section -->
 
 
-    <!-- product detail section -->
 
-    <div id="productdetailcont">
+
+    <!-- Admin section -->
+
+
+    <div class="admin-container">
+
+        <div>
+            <div>
+                <a href="./dashboard.html">Dashboard</a>
+                <a href="./userdetail.html">User Section</a>
+                <a href="./items.html">Product Section</a>
+                <a href="./order.html">Order Section</a>
+                <a href="./feedback.html" style="font-weight: bolder; color: black;">Feedback</a>
+
+            </div>
+
+        </div>
+
+
+        <div id="feedbackcontainer">
+
+            <!-- append data here -->
+
+        </div>
 
 
     </div>
-
-    <!-- product detail section -->
 
     <footer class="shop-footer">
         <div class="shop-city-container">
@@ -122,7 +132,7 @@
                 <div class="shop-footer-col">
                     <h4>Company</h4>
                     <ul>
-                        <li><a href="./about.html">About us</a></li>
+                        <li><a href="./view/about.html">About us</a></li>
                         <li><a href="#">Our Services</a></li>
                         <li><a href="#">Privacy Policy</a></li>
                     </ul>
@@ -159,29 +169,22 @@
 
 
 
-
-
 </body>
 
 </html>
 
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"
-    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/magnify/2.3.3/js/jquery.magnify.min.js"
-    integrity="sha512-YKxHqn7D0M5knQJO2xKHZpCfZ+/Ta7qpEHgADN+AkY2U2Y4JJtlCEHzKWV5ZE87vZR3ipdzNJ4U/sfjIaoHMfw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-
-<!-- <script>
-
-    $(document).ready(function () {
-        $(".zoom").magnify();
-    });
-
-</script> -->
-
-<script src="../scripts/detail.js"></script>
+<script src="./AdminScript/feedback.js"></script>
 
 <script src="../scripts/index.js"></script>
+
 <script src="../scripts/navbar.js"></script>
+
+
+<script>
+    function handleNavSearchBarAdmin(){
+        location.href = './items.html'
+    }
+</script>

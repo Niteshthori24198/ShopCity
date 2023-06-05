@@ -1,0 +1,162 @@
+body,
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.admin-container {
+    display: grid;
+    width: 90%;
+    grid-template-columns: 1fr 4fr;
+    gap: 15px;
+    /* border: 1px solid red; */
+    margin: 35px auto;
+}
+
+
+.admin-container>div {
+    /* border: 2px solid green; */
+    border-radius: 7px;
+}
+
+.admin-container>div:nth-child(1) {
+    display: flex;
+    flex-direction: column;
+    padding: 25px 30px;
+    line-height: 50px;
+    background-color: rgba(168, 195, 222, 0.15);
+}
+
+
+.admin-container>div:nth-child(1)>div {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-container a {
+    text-decoration: none;
+}
+
+.admin-container a:hover {
+    color: gray;
+}
+
+
+#feedbackcontainer > div{
+
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 15px;
+    margin: 0px auto 10px auto;
+    padding: 15px 30px;
+    align-items: center;
+    /* border: 1px solid red; */
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+}
+
+
+
+#feedbackcontainer > div button{
+    margin: 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    padding: 5px 10px;
+    width: 125px;
+}
+
+#feedbackcontainer > div button:hover{
+    background: transparent;
+    border: 1px solid black;
+    color: rgb(22, 22, 190);
+    font-weight: bold;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+
+
+
+
+
+
+
+@media only screen and (min-width:750px) and (max-width:1000px) {
+
+    .admin-container {
+        grid-template-columns: 1fr;
+        margin: 35px auto;
+    }
+
+
+    .admin-container>div:nth-child(1) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .admin-container>div:nth-child(1)>div {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+
+    #feedbackcontainer > div{
+        grid-template-columns: repeat(2,1fr);
+        text-align: justify;
+    }
+
+    #feedbackcontainer > div button{
+        margin: 18px auto;
+        border: none;
+        border-radius: 4px;
+        padding: 6px 25px;
+        
+    }
+
+}
+
+
+
+
+
+
+@media only screen and (max-width:750px) {
+    .admin-container {
+        grid-template-columns: 1fr;
+    }
+
+
+    .admin-container>div:nth-child(1) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 25px 0px;
+        width: 90%;
+        margin: auto;
+    }
+
+    .admin-container>div:nth-child(1)>div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #feedbackcontainer > div{
+        grid-template-columns: repeat(1,1fr);
+        text-align: justify;
+    }
+    
+    #feedbackcontainer > div button{
+        margin: 18px auto;
+        border: none;
+        border-radius: 4px;
+        padding: 6px 25px;
+        
+    }
+}
