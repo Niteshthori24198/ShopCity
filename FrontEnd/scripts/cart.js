@@ -83,6 +83,9 @@ function fetchAndRenderCart() {
            
         
     })
+    .catch((err)=>{
+        console.log(err)
+    })
 
 }
     
@@ -244,7 +247,8 @@ function UpdateCartStatus(ProductID,Payload){
 
     })
     .catch((err)=>{
-        alert(data.msg)
+        // alert(data.msg)
+        console.log(err)
     })
 }
 
@@ -276,7 +280,8 @@ function  RemoveItemFromCart(ProductID){
 
     })
     .catch((err)=>{
-        alert(data.msg)
+        // alert(data.msg)
+        console.log(err)
     })
 }
 
