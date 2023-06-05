@@ -1,6 +1,8 @@
 
 const UserModel = require('../model/user.model');
 
+const QueryModel = require('../model/query.model');
+
 const bcrypt = require('bcrypt');
 
 require('dotenv').config();
@@ -559,8 +561,6 @@ const updateUserPassword = async (req, res) => {
 
 
 
-
-
 // Google Authentication code
 
 const googleAuthentication = async (req, res) => {
@@ -594,6 +594,60 @@ const googleAuthentication = async (req, res) => {
 
 
 
+const UserQuery = async(req,res)=>{
+
+    const payload = req.body;
+
+    console.log("Query received from user --- > ", payload)
+
+    try {
+
+        const userquery = new QueryModel(payload)
+
+        await userquery.save()
+
+        return res.status(200).send({
+            "msg":"Your Query has been Submitted Successfully ! Our Team will contact you soon regarding your issue. Thank You",
+            "Success":true
+        })
+
+        
+    } 
+    catch (error) {
+        return res.status(400).send({
+            "error":error.message,
+            "msg":"Something Went Wrong",
+            "Success":false
+        })
+    }
+
+}
+
+
+
+
+
+const getallQueries = async(req,res)=>{
+
+    try {
+
+        const userqueries = await QueryModel.find({})
+
+        return res.status(200).send({
+            "msg":"Feedback queries fetched successfully",
+            "Queries":userqueries,
+            "Success":true
+        })
+        
+    } 
+    catch (error) {
+        return res.status(400).send({
+            "error":error.message,
+            "msg":"Something went wrong",
+            "Success":false
+        })
+    }
+}
 
 
 
@@ -609,6 +663,8 @@ module.exports = {
     updateUserRole,
     getAllUsersData,
     updateUserPassword,
-    googleAuthentication
+    googleAuthentication,
+    UserQuery,
+    getallQueries
 
 }

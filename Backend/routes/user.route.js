@@ -9,7 +9,7 @@ const AdminAuth = require('../middleware/admin.middleware');
 
 const { passport } = require("../config/google.auth")
 
-const { RegisterNewUser, LoginUser, GetUserData , updateUserData, deleteUserProfile, getAllUsersData, updateUserRole,updateUserPassword,googleAuthentication} = require('../controller/user.controller')
+const { RegisterNewUser, LoginUser, GetUserData , updateUserData, deleteUserProfile, getAllUsersData, updateUserRole,updateUserPassword,googleAuthentication , UserQuery, getallQueries} = require('../controller/user.controller')
 
 
 
@@ -21,6 +21,9 @@ userRouter.post("/register", RegisterNewUser )
 
 
 userRouter.post("/login", LoginUser )
+
+
+userRouter.post("/query", UserQuery)
 
 
 
@@ -61,6 +64,7 @@ userRouter.get("/getall", AdminAuth, getAllUsersData )
 userRouter.put("/updateRole" , AdminAuth , updateUserRole )
 
 
+userRouter.get("/getquery", AdminAuth, getallQueries)
 
 
 module.exports = userRouter;
