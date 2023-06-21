@@ -166,7 +166,7 @@ function Shooping(Address,PaymentMode, razorpay_payment_id='', razorpay_order_id
     console.log(MyOrders)
 
 
-    // UpdateBEServer(MyOrders);
+    UpdateBEServer(MyOrders);
 
 
 }
