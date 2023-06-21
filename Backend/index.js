@@ -1,6 +1,8 @@
 
 const express = require('express');
 
+const Razorpay = require('razorpay');
+
 const { connection } = require('./database/db');
 
 const cartRouter = require('./routes/cart.route');
@@ -16,7 +18,8 @@ require('dotenv').config();
 const cors = require('cors');
 
 
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+const { checkoutRouter } = require('./routes/checkout.route');
 
 const app = express();
 
@@ -26,17 +29,25 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(cors())
 
-app.use('/user',userRouter);
+app.use('/user', userRouter);
 
-app.use('/product',productRouter);
+app.use('/product', productRouter);
 
-app.use('/cart',cartRouter);
+app.use('/cart', cartRouter);
 
-app.use('/order',orderRouter);
+app.use('/order', orderRouter);
 
 
 
-app.all("*", (req,res)=>{
+// app.get('/checkout', async (req, res) => {
+//     res.sendFile("./View/standard.html", { root: __dirname })
+// })
+
+app.use('/checkout', checkoutRouter);
+
+
+
+app.all("*", (req, res) => {
 
     res.status(404).send({
         "error": `404 ! Invalid URL Detected.`
@@ -47,7 +58,7 @@ app.all("*", (req,res)=>{
 
 
 
-app.listen(process.env.port, async (req,res)=>{
+app.listen(process.env.port, async (req, res) => {
 
     try {
 
@@ -55,8 +66,8 @@ app.listen(process.env.port, async (req,res)=>{
 
         console.log('Connected to Mongo DB Atlas');
 
-    } 
-    
+    }
+
     catch (error) {
 
         console.log(error);

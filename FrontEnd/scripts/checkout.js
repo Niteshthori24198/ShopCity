@@ -65,7 +65,7 @@ OrderCheckoutButton.addEventListener("click", function (e) {
 
         getPaymentoption();
 
-        DiscountPrice();
+        // DiscountPrice();
 
         PlaceNewOrder(Address);
 
@@ -89,13 +89,17 @@ function getPaymentoption() {
         <option value="Cash on Delivery">Cash on Delivery</option>
         <option value="Online">Internet Banking</option>
     </select>
-    <div>
+    
+    <button id="Place_Order">Place Order</button>
+    
+    `
+}
+
+{/* <div>
         <p>Use <span id="Special_Code">Jai Shree Ram</span> as coupon code to get extra 40% off </p>
         <input type="text" placeholder="Coupon Code" id="coupon_box">
         <button id="discount_reward">Apply</button>
-    </div>
-    <button id="Place_Order">Place Order</button>`
-}
+    </div> */}
 
 
 function PlaceNewOrder(Address) {
@@ -107,24 +111,29 @@ function PlaceNewOrder(Address) {
         e.preventDefault()
         if (paymentoption.value === "") {
             alert("kindly select a valid payment option !")
+            return
         }
         else if (paymentoption.value === "Cash on Delivery") {
 
-            Shooping(Address);
+            Shooping(Address, 'Cash-On-Delivery');
 
         }
         else {
-            setTimeout(function () {
-                Shooping(Address);
-                alert("Transaction Successfull !!");
-            }, 3000)
+
+
+            showRazorPayBtnFunc(Address)
+
+            // setTimeout(function () {
+            //     // Shooping(Address);
+            //     alert("Transaction Successfull !!");
+            // }, 3000)
         }
     })
 }
 
 
 
-function Shooping(Address) {
+function Shooping(Address,PaymentMode, razorpay_payment_id='', razorpay_order_id='', razorpay_signature='') {
 
     const MyOrders = {};
 
@@ -138,17 +147,26 @@ function Shooping(Address) {
         order.Quantity = item.Quantity;
         order.ProductID = item.product._id;
 
+        order.TotalPrice = +(item.product.Price) * +(item.Quantity)
+
+        order.PaymentMode = PaymentMode
+
+        order.razorpay_payment_id = razorpay_payment_id
+        order.razorpay_order_id = razorpay_order_id
+        order.razorpay_signature = razorpay_signature
+
         Orders.push(order)
 
-        
+
 
     }
 
-    MyOrders.Orders=Orders;
+    MyOrders.Orders = Orders;
 
     console.log(MyOrders)
 
-    UpdateBEServer(MyOrders);
+
+    // UpdateBEServer(MyOrders);
 
 
 }
@@ -162,30 +180,30 @@ function UpdateBEServer(MyOrders) {
         method: 'POST',
         headers: {
             'Content-type': 'application/json',
-            'authorization':`Bearer ${token}`
+            'authorization': `Bearer ${token}`
         },
         body: JSON.stringify(MyOrders)
     })
-    .then((res) => {
-        return res.json()
-    })
-    .then((data) => {
+        .then((res) => {
+            return res.json()
+        })
+        .then((data) => {
 
-        console.log(data)
+            console.log(data)
 
-        if(data.Success){
+            if (data.Success) {
 
-            alert(data.msg)
+                alert(data.msg)
 
-            ClearCart()
+                ClearCart()
 
-            window.location = "../index.html";
+                window.location = "../index.html";
 
-        }
-    })
-    .catch((err)=>{
-        console.log(err)
-    })
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 
 }
 
@@ -275,39 +293,39 @@ function getCards(image, title, cat, quant, price) {
 
 
 
-function DiscountPrice() {
+// function DiscountPrice() {
 
-    let count = 0;
+//     let count = 0;
 
-    let discountCode = document.getElementById("coupon_box");
+//     let discountCode = document.getElementById("coupon_box");
 
-    let discountapplybtn = document.getElementById("discount_reward");
-
-
-    discountapplybtn.addEventListener("click", function (e) {
-
-        e.preventDefault()
+//     let discountapplybtn = document.getElementById("discount_reward");
 
 
-        if (discountCode.value === "Jai Shree Ram" && count == 0) {
+//     discountapplybtn.addEventListener("click", function (e) {
 
-            let Total_Amount = document.querySelector("#Customer_Cart_items  > p > span");
+//         e.preventDefault()
 
-            let finalPrice = parseInt(Total_Amount.textContent);
 
-            finalPrice = finalPrice * 0.6;
+//         if (discountCode.value === "Jai Shree Ram" && count == 0) {
 
-            Cart_Amount = finalPrice;
+//             let Total_Amount = document.querySelector("#Customer_Cart_items  > p > span");
 
-            Total_Amount.textContent = finalPrice + " Rs";
+//             let finalPrice = parseInt(Total_Amount.textContent);
 
-            count++;
+//             finalPrice = finalPrice * 0.6;
 
-        }
+//             Cart_Amount = finalPrice;
 
-    })
+//             Total_Amount.textContent = finalPrice + " Rs";
 
-}
+//             count++;
+
+//         }
+
+//     })
+
+// }
 
 
 function calculateCartTotal() {
@@ -328,25 +346,157 @@ function calculateCartTotal() {
 
 
 
-function ClearCart(){
+function ClearCart() {
 
     console.log("cart khali karo")
 
-    fetch(`${BaseUrL}/cart/empty`,{
-        method:'delete',
-        headers:{
-            'Content-type':'application/json',
-            'authorization':`Bearer ${token}`
+    fetch(`${BaseUrL}/cart/empty`, {
+        method: 'delete',
+        headers: {
+            'Content-type': 'application/json',
+            'authorization': `Bearer ${token}`
         }
     })
-    .then((res)=>{
-        return res.json()
-    })
-    .then((data)=>{
-        console.log("@@@----->",data)
-    })
-    .catch((err)=>{
-        console.log(err)
-    })
+        .then((res) => {
+            return res.json()
+        })
+        .then((data) => {
+            console.log("@@@----->", data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 
 }
+
+
+
+
+
+
+
+
+
+
+// Razorpay
+
+function showRazorPayBtnFunc(Address) {
+
+    document.getElementById('onlinePaymentSection').innerHTML = `
+                                <button id="rzp-button1">Pay with Razorpay</button>`;
+
+
+
+    var orderId;
+    $(document).ready(function () {
+        var settings = {
+            "url": "http://localhost:3000/checkout/create/orderId",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify({
+                "amount": "50000"
+            }),
+        };
+
+
+        $.ajax(settings).done(function (response) {
+            console.log('response obj==>', response);
+
+            orderId = response.orderId;
+            console.log(orderId);
+        });
+
+
+
+
+        document.getElementById('rzp-button1').onclick = function (e) {
+
+            console.log(orderId);
+
+            var options = {
+                "key": "rzp_test_FePSDKRvTiVZWa", // Enter the Key ID generated from the Dashboard
+                "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "currency": "INR",
+                "name": "Acme Corp",
+                "description": "Test Transaction",
+                "image": "https://example.com/your_logo",
+                "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "handler": function (response) {
+                    console.log(response);
+                    // alert('payment-id==>')
+                    alert(response.razorpay_payment_id);
+                    // alert('order -id==>')
+                    alert(response.razorpay_order_id);
+                    // alert('signature-id==>')
+                    alert(response.razorpay_signature);
+
+                    const razorpay_payment_id = response.razorpay_payment_id
+                    const razorpay_order_id = response.razorpay_order_id
+                    const razorpay_signature = response.razorpay_signature
+
+
+
+
+                    var settings = {
+                        "url": "http://localhost:3000/checkout/api/payment/verify",
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json"
+                        },
+                        "data": JSON.stringify({ response }),
+                    }
+
+
+
+
+                    //creates new orderId everytime
+                    $.ajax(settings).done(function (response) {
+                        console.log('response obj==>', response);
+
+                        orderId = response.orderId;
+                        console.log(orderId);
+                        $("button").show();
+                        if (response.signatureIsValid) {
+
+                            console.log('okay order placed successfully');
+                            Shooping(Address, 'Internet-Banking', razorpay_payment_id, razorpay_order_id, razorpay_signature)
+
+                        } else {
+
+                            console.log('order not placed succcessfully');
+                            alert('Something Went Wrong ! (Please Try After Some Time)')
+
+                        }
+                        // alert(JSON.stringify(response))
+                    });
+                },
+
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.on('payment.failed', function (response) {
+                alert(response.error.code);
+                alert(response.error.description);
+                alert(response.error.source);
+                alert(response.error.step);
+                alert(response.error.reason);
+                alert(response.error.metadata.order_id);
+                alert(response.error.metadata.payment_id);
+            });
+            rzp1.open();
+            e.preventDefault();
+        }
+
+    });
+}
+
+
+
+
+// Razorpay

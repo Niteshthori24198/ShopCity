@@ -8,7 +8,9 @@ const ProductModel = require('../model/product.model');
 
 const PlaceNewOrder = async (req,res) => {
 
-    console.log(req.body)
+    // console.log(req.body)
+
+    
 
     let { UserID, Orders } = req.body;
 
@@ -31,10 +33,22 @@ const PlaceNewOrder = async (req,res) => {
             Quantity:ele.Quantity, 
             Address:ele.Address, 
             Status:"Confirmed" , 
-            Date:`${d.getMonth()+1}-${d.getDate()}-${d.getFullYear()}`
+            Date:`${d.getMonth()+1}-${d.getDate()}-${d.getFullYear()}`,
+
+            TotalPrice : ele.TotalPrice,
+            PaymentMode : ele.PaymentMode,
+            razorpay_payment_id: ele.razorpay_payment_id,
+            razorpay_order_id: ele.razorpay_order_id ,
+            razorpay_signature: ele.razorpay_signature
         }
 
     })
+    console.log('---------------');
+    console.log(UserOrders);
+    console.log('---------------');
+
+   
+
 
     if(flag){
 

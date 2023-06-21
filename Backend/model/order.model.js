@@ -33,7 +33,18 @@ const orderSchema = mongoose.Schema({
             
             Address: {type:String , required:true},
 
-            Status:{type:String , required:true , enum:["Confirmed","Cancelled","Delivered"]}
+            Status:{type:String , required:true , enum:["Confirmed","Cancelled","Delivered"]},
+
+
+            
+            TotalPrice: {type:Number},
+        
+            PaymentMode: {type:String , required:true , enum:["Cash-On-Delivery","EMI","Internet-Banking"]},
+
+            razorpay_payment_id:{type:String},
+            razorpay_order_id:{type:String},
+            razorpay_signature:{type:String}
+
 
         } 
     
