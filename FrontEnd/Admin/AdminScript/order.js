@@ -91,6 +91,14 @@ function formateOrdersData(Orders) {
             obj.Product = productItem.product;
             obj.Customer = Customer;
 
+            obj.TotalPrice = productItem.TotalPrice;
+            obj.PaymentMode = productItem.PaymentMode;
+
+            obj.razorpay_payment_id = productItem.razorpay_payment_id;
+            obj.razorpay_order_id = productItem.razorpay_order_id;
+            obj.razorpay_signature = productItem.razorpay_signature;
+
+
             accumaltor.push(obj);
 
             return accumaltor;
@@ -136,20 +144,20 @@ function RenderOrders(OrderData) {
 
 
     for (let i = 0; i < ordersstatus.length; i++) {
-       
+
         const statuscheck = ordersstatus[i].innerText.split(': ')
 
         // console.log(statuscheck)
 
         if (statuscheck[0] === 'Delivered') {
-            ordersstatus[i].style.color='green'
+            ordersstatus[i].style.color = 'green'
         }
 
         else if (statuscheck[0] === 'Confirmed') {
-            ordersstatus[i].style.color='blue'
+            ordersstatus[i].style.color = 'blue'
         }
         else {
-            ordersstatus[i].style.color='red'
+            ordersstatus[i].style.color = 'red'
         }
 
     }
@@ -158,7 +166,7 @@ function RenderOrders(OrderData) {
 }
 
 
-function GetOrderCard({ _id, Customer, Product, customerId, orderDate, orderQuantity, orderStatus, shippingAddress }) {
+function GetOrderCard({ _id, Customer, Product, customerId, orderDate, orderQuantity, orderStatus, shippingAddress, TotalPrice, PaymentMode, razorpay_order_id, razorpay_payment_id, razorpay_signature }) {
     // console.log(Product);
 
 
@@ -174,28 +182,36 @@ function GetOrderCard({ _id, Customer, Product, customerId, orderDate, orderQuan
 
         <div>
 
-            <p> <span> Product </span>  :- ${Product?.Title} [${Product?.Category}] </p>
-            <p> <span> Price </span>  :- ${Product?.Price} Rs. </p>
+            <p> <span> Product </span>  :- ${Product?.Title}  </p>
+          
 
             <p> <span> Customer </span>  : ${Customer?.Name} </p>
             <p> <span> Email </span>  : ${Customer?.Email} </p>
             <p> <span> Contact </span>  : ${Customer?.Contact} </p>
             
-            
-            <p> <span> Left Item </span> :- ${Product?.Quantity}</p>
-
-        </div>
-
-        <div>
-
             <p> <span> Ordered Quantity </span>  :- ${orderQuantity}</p>
-            <p> <span> Total Price </span>  :- ${Product?.Price * orderQuantity} </p>
+            <p> <span> Total Price </span>  :- Rs. ${TotalPrice} </p>
+            
             <p> <span> Order Date </span>  :- ${orderDate} </p>
+            
+            
+            </div>
+            
+            <div>
+            
+            
             <p> <span> Shipping Address </span>  :- ${shippingAddress} </p>
-
-        </div>
-
-        <div>
+            <p> <span> Payment Mode </span>  :- ${PaymentMode} </p>
+            ${ PaymentMode=='Internet-Banking' ?  `<p style="font-size:14px;"> <span> payment_id </span>  :- ${razorpay_payment_id} </p>` : ''}
+            ${ PaymentMode=='Internet-Banking' ?  `<p style="font-size:14px;"> <span> order_id </span>  :- ${razorpay_order_id} </p>` : ''}
+           
+            
+            
+            
+            
+            </div>
+            
+            <div>
             <p > Status : <span class="orderstatuscolor"> ${orderStatus} </span></p>
             ${orderStatus == 'Confirmed' ? `<button onclick="handleDeveivery('${_id}')" id="${_id}"> Delivered </button>` : ''}
         </div>
@@ -211,10 +227,10 @@ function GetOrderCard({ _id, Customer, Product, customerId, orderDate, orderQuan
 
 function handleDeveivery(ID) {
 
-    if(!confirm('Are you sure you want to mark the product as delivered?')) return
+    if (!confirm('Are you sure you want to mark the product as delivered?')) return
 
     document.getElementById(ID).innerHTML = '<i class="fa fa-refresh fa-spin"></i> Delivered'
-    
+
     fetch(`${admin_baseurl}/order/updatestatus/${ID}`, {
         method: 'PATCH',
         headers: {
@@ -222,13 +238,13 @@ function handleDeveivery(ID) {
             'authorization': `Bearer ${adminusertoken}`
         }
     })
-    .then((res) => {
-        return res.json()
-    })
-    .then((data) => {
-            
+        .then((res) => {
+            return res.json()
+        })
+        .then((data) => {
+
             document.getElementById(ID).innerHTML = 'Delivered'
-            
+
             console.log(data)
             if (data.Success) {
                 alert(data.msg)
@@ -248,10 +264,10 @@ function handleDeveivery(ID) {
 
 
 // searchbar
-function handleNavSearchBarOrder(value){
+function handleNavSearchBarOrder(value) {
     // console.log(value);
-    
-    if(value==='' || !value){
+
+    if (value === '' || !value) {
         RenderOrders(orderPage_OrderData)
         return
     }
@@ -259,12 +275,12 @@ function handleNavSearchBarOrder(value){
     value = value.toLowerCase()
 
 
-    const filterData = orderPage_OrderData.filter((ord)=>{
+    const filterData = orderPage_OrderData.filter((ord) => {
         return (ord.orderStatus.toLowerCase().includes(value) || ord.Product.Title.toLowerCase().includes(value) || ord.Customer.Email.toLowerCase().includes(value) || ord.Customer.Name.toLowerCase().includes(value) || ord.shippingAddress.toLowerCase() == value)
     })
 
     RenderOrders(filterData)
 
 
-    
+
 }

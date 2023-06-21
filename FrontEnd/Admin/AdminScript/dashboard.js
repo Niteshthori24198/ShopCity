@@ -133,7 +133,7 @@ function formateOrdersData(Orders) {
             console.log(order.Quantity, order.Status, order.product.Price, order.product.Category);
 
             if (order.Status !== 'Cancelled') {
-                totalRevenueGenerated += (+order.Quantity * +order.product.Price);
+                totalRevenueGenerated += (+order.TotalPrice);
             }
             console.log(totalRevenueGenerated);
 

@@ -67,6 +67,7 @@ function GetUserCard({ isAdmin, Location, Gender, Contact, Email, Name, _id }) {
     return `
    
     <div>
+        
 
         <div>
 

@@ -44,13 +44,16 @@ body,
 #adminordercontainer>div {
 
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
+    grid-template-columns: 1fr 2fr 2fr 1fr;
+    gap: 30px;
     margin: 0px auto 10px auto;
     padding: 15px;
     align-items: center;
     /* border: 1px solid red; */
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    font-size: 15px;
+    border-radius: 5px;
 
 }
 
@@ -72,7 +75,7 @@ body,
 }
 
 #adminordercontainer img {
-    width: 50%;
+    width: 80%;
     margin: auto;
 }
 
