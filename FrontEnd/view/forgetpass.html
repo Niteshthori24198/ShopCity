@@ -9,16 +9,17 @@
 
     <!-- login style sheet -->
 
-    <link rel="stylesheet" href="../styles/user.login.css">
-
+    
     <link rel="stylesheet" href="../styles/navbar.css">
-
+    
+    <link rel="stylesheet" href="../styles/forgetpass.css">
+    
     <!-- login style sheet -->
-
+    
     <!-- Google fonts Poppins -->
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
     <!-- Google fonts Poppins -->
@@ -56,7 +57,7 @@
 
             <!-- <form> -->
 
-                <input type="text" placeholder="Search Here" oninput="handleNavSearchBar(value)">
+            <input type="text" placeholder="Search Here" oninput="handleNavSearchBar(value)">
 
             <!-- </form> -->
 
@@ -105,83 +106,78 @@
 
 
 
-    <!-- Login Form -->
+    <!-- forgotpass form -->
 
-    <div class="login-form">
+   
+    <div id="forgotpassform">
 
-        <h2>Sign In</h2>
+        <h2>Reset your password</h2>
 
-        <form id="login-user">
+        <p>If the account exists, we'll email you instructions to reset the password.</p>
 
-            <input type="email" placeholder="Enter your Email-id" id="useremail" required>
-            <input type="password" placeholder="Enter your password" id="userpass" required>
+        <form onsubmit="handleSubmitForgotPass()">
+        
+            <input type="text" placeholder="Enter Your Email Here" id="forgetpassuserEmail" autofocus required>
 
-            <div>
-
-                <a href="">Forgot Password</a>
-            </div>
-
-            <!-- <input type="submit" value="Login"> -->
-            <button type="submit" id="loginBtnHai"> Login </button>
-
+            <button type="submit" id="ResetPassbtn">Reset Password</button>
+        
         </form>
 
-        <p>New User ?</p>
-
-        <a href="./user.register.html">Create New Account</a>
-
-        <button onclick="HandleGoogleSignup()" id="niteshgoogleauth"> Continue With Google</button>
+        <a href="">Return to login</a>
 
     </div>
 
-    <!-- Login Form -->
+
+
+    <!-- forgotpass form -->
+
+
 
     <footer class="shop-footer">
-		<div class="shop-city-container">
-			<div class="shop-row">
-				<div class="shop-footer-col">
-					<h4>Company</h4>
-					<ul>
-						<li><a href="./about.html">About us</a></li>
-						<li><a href="#">Our Services</a></li>
-						<li><a href="#">Privacy Policy</a></li>
-					</ul>
-				</div>
-				<div class="shop-footer-col">
-					<h4>Get Help</h4>
-					<ul>
-						<li><a href="#">FAQ</a></li>
-						<li><a href="#">Shipping</a></li>
-						<li><a href="#">Order Status</a></li>
-					</ul>
-				</div>
-				<div class="shop-footer-col">
-					<h4>Online Shop</h4>
-					<ul>
-						<li><a href="#">Men</a></li>
-						<li><a href="#">Women</a></li>
-						<li><a href="#">Kids</a></li>
-					</ul>
-				</div>
-				<div class="shop-footer-col">
-					<h4>Follow us</h4>
-					<div class="shop-social-links">
-						<a href="#"><i class="fab fa-facebook-f"></i></a>
-						<a href="#"><i class="fab fa-instagram"></i></a>
-						<a href="#"><i class="fab fa-linkedin-in"></i></a>
-						<a href="#"><i class="fa-brands fa-github"></i></a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
+        <div class="shop-city-container">
+            <div class="shop-row">
+                <div class="shop-footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="./about.html">About us</a></li>
+                        <li><a href="#">Our Services</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="shop-footer-col">
+                    <h4>Get Help</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Order Status</a></li>
+                    </ul>
+                </div>
+                <div class="shop-footer-col">
+                    <h4>Online Shop</h4>
+                    <ul>
+                        <li><a href="#">Men</a></li>
+                        <li><a href="#">Women</a></li>
+                        <li><a href="#">Kids</a></li>
+                    </ul>
+                </div>
+                <div class="shop-footer-col">
+                    <h4>Follow us</h4>
+                    <div class="shop-social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fa-brands fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 
 </body>
 
 </html>
 
-<script src="../scripts/user.login.js"></script>
 
 <script src="../scripts/index.js"></script>
 <script src="../scripts/navbar.js"></script>

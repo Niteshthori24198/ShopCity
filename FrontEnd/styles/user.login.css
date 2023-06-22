@@ -22,7 +22,7 @@ body{
 }
 
 .login-form input, #loginBtnHai{
-    width: 80%;
+    width: 75%;
     height: 30px;
     /* border-color: aqua; */
     margin: 15px auto;
@@ -43,11 +43,13 @@ body{
     font-size: 15px;
 }
 #loginBtnHai:hover{
-    color: white;
-    border: none;
-    font-size: 15px;
-    cursor: pointer;
+    background: transparent;
+    color: #007bff;
+    font-weight: bold;
+    border: 1px solid;
     letter-spacing: 1px;
+    cursor: pointer;
+
 } 
 
 .login-form  > p{
@@ -71,7 +73,7 @@ body{
 .login-form > button {
     border: none;
     background-color: #007bff;
-    width: 120px;
+    width: 200px;
     color: white;
     border-radius: 7px;
     font-size: 14px;
@@ -81,11 +83,28 @@ body{
 }
 
 .login-form > button:hover {
-   background: transparent;
+    background: transparent;
     color: #007bff;
     font-weight: bold;
     border: 1px solid;
     letter-spacing: 1px;
+}
+
+
+
+.login-form > form > div{
+    /* border: 1px solid red; */
+    width: 45%;
+    float: right;
+    margin-right: 21px;
+
+}
+
+
+.login-form > form > div >a{
+    text-decoration: none;
+    color: #007bff;
+    cursor: pointer;
 }
 
 
@@ -106,5 +125,16 @@ body{
     }
     .login-form input, #loginBtnHai{
         width: 80%;
+    }
+    .login-form > button{
+        width: 225px;
+    }
+
+    .login-form > form > div{
+        /* border: 1px solid red; */
+        width: 65%;
+        /* float: right; */
+        margin-right: 2px;
+    
     }
 }

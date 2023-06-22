@@ -1,0 +1,50 @@
+body,
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#forgotpassform {
+  
+    width: 42%;
+    margin: 75px auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 7px;
+    padding: 35px;
+}
+
+#forgotpassform > p{
+    margin: 12px auto;
+    width: 75%;
+    text-align: justify;
+    line-height: 25px;
+}
+
+#forgotpassform>form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+}
+
+#forgotpassform > a{
+    margin: 12px auto;
+    text-decoration: none;
+    color:#007bff;
+   
+}
+
+
+
+#forgotpassform input, button {
+    width: 80%;
+    margin: 15px auto;
+    height: 45px;
+    outline: none;
+    border-radius: 7px;
+    text-align: center;
+    border: none;
+    border: 1px solid gray;
+}
