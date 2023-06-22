@@ -23,6 +23,9 @@
 
 .shop-city-logo img {
     width: 150px;
+    mix-blend-mode:lighten;
+    border-radius: 1px;
+    padding-top: 5px;
 }
 
 
@@ -36,6 +39,10 @@
     font-size: 16px;
     padding: 10px;
     text-align: center;
+}
+.shopcity-nav-search input:focus {
+    width: 50vw;
+    letter-spacing: 2px;
 }
 
 .shop-nav-icons {
@@ -225,6 +232,9 @@
         height: 245px;
         padding-top: 0px;
     }
+    .shopcity-nav-search input:focus {
+        width: 100%;
+    }
 }
 
 
@@ -343,6 +353,9 @@ ul {
         margin: auto;
         /* margin: auto 150px; */
     }
+    .shopcity-nav-search input:focus {
+        width: 100%;
+    }
 
 }
 
@@ -364,6 +377,9 @@ ul {
     .shop-social-links {
         width: 250px;
         margin-left: -55px;
+    }
+    .shopcity-nav-search input:focus {
+        width: 100%;
     }
 
 }

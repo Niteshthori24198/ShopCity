@@ -9,6 +9,8 @@ require('dotenv').config();
 
 const jwt = require('jsonwebtoken');
 
+const nodemailer = require("nodemailer");
+
 
 
 const RegisterNewUser = async (req, res) => {
@@ -42,78 +44,174 @@ const RegisterNewUser = async (req, res) => {
 
     /* don't touch this line */
 
-
     const isAdmin = false;
 
 
-    /* don't touch this line */
+    let userVerifiedFlag = true
 
-
-    bcrypt.hash(Password, 7, async (err, hash) => {
-
-        if (err) {
-
-            return res.status(400).send({
-
-                "msg": " Oops ! Something Went Wrong here. Kindly retry once after sometime.",
-
-                "error": err.message,
-
-                "Success": false,
-
-            })
-
-        }
-
-        else {
-
-            try {
-
-                const user = new UserModel({ Email, Name, Password: hash, Location, Gender, Contact, isAdmin });
-
-
-                // user will get an email then after verification of otp he will get's registered
-
-
-
-                await user.save();
-
-                return res.status(200).send({
-
-                    "msg": "Your Registration has been done Successfully.You can login with your crendentials.",
-
-                    "Success": true,
-
-                    "UserData": user,
-
-
-                })
-
-            }
-
-            catch (error) {
-
+    try {
+        const userPresent = await UserModel.findOne({ Email })
+        if (userPresent) {
+            userVerifiedFlag = false
+            if (userPresent.isMailVerified) {
                 return res.status(400).send({
-
-                    "error": error.message,
 
                     "Success": false,
 
                     "msg": "User is Already Registered with us. Kindly Login using crendentials."
                 })
+            } else {
+                // send new Email For Verification 
+                const result = await sendEmailForVerification(userPresent._id, Name, Email)
+                console.log('mail send verification result=> ', result);
+
+                if (result) {
+                    return res.status(400).send({
+                        "Success": true,
+                        "msg": "Kindly Verify Your Email Id.(Email Sent Successfully)"
+                    })
+                } else {
+                    return res.status(400).send({
+                        "Success": false,
+                        "msg": "Something Went Wrong .Try After Some Time"
+                    })
+                }
+
+            }
+        }
+    } catch (error) {
+        return res.status(500).send({
+            "error": error.message,
+            "Success": false,
+            "msg": "Internal Server Error"
+        })
+    }
+
+    if (userVerifiedFlag) {
+        bcrypt.hash(Password, 7, async (err, hash) => {
+
+            if (err) {
+
+                return res.status(400).send({
+                    "msg": " Oops ! Something Went Wrong here. Kindly retry once after sometime.",
+                    "error": err.message,
+                    "Success": false,
+                })
+
+            } else {
+
+                try {
+
+                    const user = new UserModel({ Email, Name, Password: hash, Location, Gender, Contact, isAdmin });
+
+                    await user.save();
+
+                    // Email Send For Verification
+                    const result = await sendEmailForVerification(user._id, Name, Email)
+                    console.log('mail send verification result=> ', result);
+
+                    if (result) {
+                        return res.status(400).send({
+                            "Success": true,
+                            "msg": "Your Registration has been successfully. (Kindly Verify Your Email)"
+                        })
+                    } else {
+                        return res.status(400).send({
+                            "Success": false,
+                            "msg": "Something Went Wrong. Try After Some Time"
+                        })
+                    }
+
+                } catch (error) {
+
+                    return res.status(400).send({
+                        "error": error.message,
+                        "Success": false,
+                        "msg": `Something Went Wrong. (${error.message})`
+                    })
+
+                }
 
             }
 
+        })
 
-
-        }
-
-    })
+    }
 
 
 }
 
 
+
+
+
+function sendEmailForVerification(userid, Name, Email) {
+
+    console.log("new user for db => ", userid)
+
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'qr.insight.craft@gmail.com',
+            pass: 'hnzadhtrmwbqcyui'
+        }
+    });
+
+    const BaseUrl_Backend = `http://localhost:3000`
+
+    const accessToken = jwt.sign({ UserID: userid }, process.env.SecretKey, { expiresIn: '6h' })
+
+    let mailOptions = {
+        from: 'qr.insight.craft@gmail.com',
+        to: Email,
+        subject: 'Email For User Verification',
+        html: `<p>Hi ${Name} <br> Welcome ToShop City <br/> Please click here to 
+        <a href="${BaseUrl_Backend}/user/confirm-email/${accessToken}">verify</a>  
+        your Email. This Link is Expired in 6 hours</p>`
+    };
+
+    console.log('mailOptions => ', mailOptions)
+
+    return new Promise(function (resolve, reject) {
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                console.log("While Email Send error: ", err);
+                reject(false);
+            } else {
+                console.log(`Mail sent successfully!`);
+                console.log(info);
+                resolve(true);
+            }
+        });
+    });
+}
+
+
+
+const confirmEmail = async (req, res) => {
+    const { userToken } = req.params;
+    try {
+        const decoded = jwt.verify(userToken, process.env.SecretKey);
+        if (decoded) {
+            console.log(decoded);
+            const { UserID } = decoded
+
+            await UserModel.findByIdAndUpdate({ _id: UserID }, { isMailVerified: true })
+
+            return res.status(200).send(`
+                <h1> Thank You. Your Email Is Verified Successfully. </h1>
+            `)
+        } else {
+            return res.status(500).send(`
+                <h1> OOps! This Links is expired. Kindly Register Again </h1>
+            `)
+        }
+    } catch (error) {
+        return res.status(500).send(`
+            <h1> Internal Server Error(500).  ${error.message} </h1>
+        `)
+    }
+}
 
 
 const LoginUser = async (req, res) => {
@@ -125,6 +223,19 @@ const LoginUser = async (req, res) => {
         const verifyuser = await UserModel.findOne({ Email });
 
         if (verifyuser) {
+
+            if (!verifyuser.isMailVerified) {
+                console.log(verifyuser);
+                return res.status(400).send({
+
+                    "msg": "Kindly Verify Email ID.",
+
+                    "error": "Email is Not Verified ",
+
+                    "Success": false
+
+                })
+            }
 
             bcrypt.compare(Password, verifyuser.Password, (err, result) => {
 
@@ -187,6 +298,152 @@ const LoginUser = async (req, res) => {
     }
 
 
+}
+
+
+
+const requestForgotPassword = async (req, res) => {
+    const { Email } = req.body;
+    console.log(Email);
+    if (!Email) {
+        return res.status(400).send({
+            "msg": "Kindly Pass the Email ID in Body.",
+            "error": "Email  Not Found",
+            "Success": false
+        })
+    }
+    try {
+        const userPresent = await UserModel.findOne({ Email });
+        if (userPresent) {
+            // email send for forgot password
+
+            const result = await sendEmailForForgotPassword(userPresent._id, userPresent.Name, userPresent.Email)
+            console.log('mail send verification result=> ', result);
+
+            if (result) {
+                return res.status(400).send({
+                    "Success": true,
+                    "msg": "Reset password link is sent to you email."
+                })
+            } else {
+                return res.status(400).send({
+                    "Success": false,
+                    "msg": "Something Went Wrong. Try After Some Time"
+                })
+            }
+
+        } else {
+            return res.status(400).send({
+                "msg": "This Email is not registered with shopcity",
+                "error": "Email Not Found",
+                "Success": false
+            })
+        }
+    } catch (error) {
+        return res.status(400).send({
+            "msg": "Something Went Wrong",
+            "error": error.message,
+            "Success": false
+        })
+    }
+}
+
+
+function sendEmailForForgotPassword(userid, Name, Email) {
+
+    console.log("user id for forgot password => ", userid)
+
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'qr.insight.craft@gmail.com',
+            pass: 'hnzadhtrmwbqcyui'
+        }
+    });
+
+    const BaseUrl_Backend = `http://localhost:3000`
+
+    const accessToken = jwt.sign({ UserID: userid }, process.env.SecretKey, { expiresIn: '30m' })
+
+    let mailOptions = {
+        from: 'qr.insight.craft@gmail.com',
+        to: Email,
+        subject: 'Email For Forgot Password',
+        html: `<p>Hi ${Name} <br> Welcome To Shop City <br/> Please click here to
+         <a href="${BaseUrl_Backend}/user/reset-password/?userToken=${accessToken}">forgot password</a>  
+        your Email. This Link is Expired in 30 Minutes</p>`
+    };
+
+    console.log('mailOptions => ', mailOptions)
+
+    return new Promise(function (resolve, reject) {
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                console.log("While forgot password  Email Send error: ", err);
+                reject(false);
+            } else {
+                console.log(`forgot password Mail sent successfully!`);
+                console.log(info);
+                resolve(true);
+            }
+        });
+    });
+}
+
+
+const resetPassword = async (req, res) => {
+    const { userToken } = req.query;
+
+    try {
+        const decoded = jwt.verify(userToken, process.env.SecretKey);
+        if (decoded) {
+        
+            return res.sendFile('forgot-password.html', {root:'./View'})
+
+        } else {
+            return res.status(404).send(`
+                <h1> OOps! This Links is expired. Kindly Generate New Link For Reset Password. </h1>
+            `)
+        }
+    } catch (error) {
+        return res.status(400).send(`
+            <h1> Error(400).  ${error.message} </h1>
+        `)
+    }
+}
+
+
+const saveNewPassword = async (req,res) => {
+    const { UserID } = req.body;
+    const { Password } = req.body;
+    try {
+        const userPresent = await UserModel.findById( {_id : UserID} );
+
+        if(userPresent){
+            const hashPass = bcrypt.hashSync(Password, 7);
+            await UserModel.findByIdAndUpdate({_id:UserID}, {Password:hashPass})
+
+            return res.status(400).send({
+                "msg": "Your Password Successfully Changed.",
+                "Success": true
+            })
+
+        }else{
+            return res.status(400).send({
+                "msg": "Your Account Not Exit",
+                "error": "User Not Found",
+                "Success": false
+            })
+        }
+        
+    } catch (error) {
+        return res.status(400).send({
+            "msg": "Something Went Wrong",
+            "error": error.message,
+            "Success": false
+        })
+    }
+    
 }
 
 
@@ -571,7 +828,7 @@ const googleAuthentication = async (req, res) => {
 
     const user = req.user
 
-    let token = jwt.sign({ UserID: user._id}, process.env.SecretKey, { expiresIn: "24h" })
+    let token = jwt.sign({ UserID: user._id }, process.env.SecretKey, { expiresIn: "24h" })
 
     // const frontendURL = `https://qr-insight-craft.netlify.app/`
 
@@ -594,7 +851,7 @@ const googleAuthentication = async (req, res) => {
 
 
 
-const UserQuery = async(req,res)=>{
+const UserQuery = async (req, res) => {
 
     const payload = req.body;
 
@@ -607,17 +864,17 @@ const UserQuery = async(req,res)=>{
         await userquery.save()
 
         return res.status(200).send({
-            "msg":"Your Query has been Submitted Successfully ! Our Team will contact you soon regarding your issue. Thank You",
-            "Success":true
+            "msg": "Your Query has been Submitted Successfully ! Our Team will contact you soon regarding your issue. Thank You",
+            "Success": true
         })
 
-        
-    } 
+
+    }
     catch (error) {
         return res.status(400).send({
-            "error":error.message,
-            "msg":"Something Went Wrong",
-            "Success":false
+            "error": error.message,
+            "msg": "Something Went Wrong",
+            "Success": false
         })
     }
 
@@ -627,24 +884,24 @@ const UserQuery = async(req,res)=>{
 
 
 
-const getallQueries = async(req,res)=>{
+const getallQueries = async (req, res) => {
 
     try {
 
         const userqueries = await QueryModel.find({})
 
         return res.status(200).send({
-            "msg":"Feedback queries fetched successfully",
-            "Queries":userqueries,
-            "Success":true
+            "msg": "Feedback queries fetched successfully",
+            "Queries": userqueries,
+            "Success": true
         })
-        
-    } 
+
+    }
     catch (error) {
         return res.status(400).send({
-            "error":error.message,
-            "msg":"Something went wrong",
-            "Success":false
+            "error": error.message,
+            "msg": "Something went wrong",
+            "Success": false
         })
     }
 }
@@ -665,6 +922,10 @@ module.exports = {
     updateUserPassword,
     googleAuthentication,
     UserQuery,
-    getallQueries
+    getallQueries,
+    confirmEmail,
+    requestForgotPassword,
+    resetPassword,
+    saveNewPassword
 
 }

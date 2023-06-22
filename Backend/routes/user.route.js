@@ -9,7 +9,7 @@ const AdminAuth = require('../middleware/admin.middleware');
 
 const { passport } = require("../config/google.auth")
 
-const { RegisterNewUser, LoginUser, GetUserData , updateUserData, deleteUserProfile, getAllUsersData, updateUserRole,updateUserPassword,googleAuthentication , UserQuery, getallQueries} = require('../controller/user.controller')
+const { RegisterNewUser, LoginUser, GetUserData , updateUserData, deleteUserProfile, getAllUsersData, updateUserRole,updateUserPassword,googleAuthentication , UserQuery, getallQueries, confirmEmail, resetPassword, requestForgotPassword, saveNewPassword} = require('../controller/user.controller')
 
 
 
@@ -18,6 +18,14 @@ const { RegisterNewUser, LoginUser, GetUserData , updateUserData, deleteUserProf
 
 
 userRouter.post("/register", RegisterNewUser )
+
+userRouter.get('/confirm-email/:userToken', confirmEmail)
+
+userRouter.post('/request-forgot-password', requestForgotPassword)
+
+userRouter.get('/reset-password', resetPassword)
+
+userRouter.post('/saveNewPassword', Auth ,saveNewPassword);
 
 
 userRouter.post("/login", LoginUser )

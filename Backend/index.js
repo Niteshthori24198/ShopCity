@@ -43,8 +43,13 @@ app.use('/order', orderRouter);
 //     res.sendFile("./View/standard.html", { root: __dirname })
 // })
 
-app.use('/checkout', checkoutRouter);
+app.get('/ks', (req,res)=>{
+    res.sendFile('./View/forgot-password.html', {root:__dirname})
+})
 
+
+
+app.use('/checkout', checkoutRouter);
 
 
 app.all("*", (req, res) => {
