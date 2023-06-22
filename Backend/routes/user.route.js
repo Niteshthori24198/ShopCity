@@ -21,7 +21,7 @@ userRouter.post("/register", RegisterNewUser )
 
 userRouter.get('/confirm-email/:userToken', confirmEmail)
 
-userRouter.post('/request-forgot-password', requestForgotPassword)
+userRouter.patch('/request-forgot-password', requestForgotPassword)
 
 userRouter.get('/reset-password', resetPassword)
 

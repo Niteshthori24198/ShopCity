@@ -35,10 +35,18 @@ body,
     color:#007bff;
    
 }
+#forgotpassform > a:hover{
+    margin: 12px auto;
+    text-decoration: none;
+    color:#056cdb;
+    font-weight: bold;
+    letter-spacing: 1px;
+   
+}
 
 
 
-#forgotpassform input, button {
+#forgotpassform input,#forgotpassform button {
     width: 80%;
     margin: 15px auto;
     height: 45px;
@@ -47,4 +55,14 @@ body,
     text-align: center;
     border: none;
     border: 1px solid gray;
+    letter-spacing: 2px;
+}
+
+
+
+#forgotpassform button:hover {
+    background-color:#007bff;
+    color: white;
+    cursor: pointer;
+    border: none;
 }

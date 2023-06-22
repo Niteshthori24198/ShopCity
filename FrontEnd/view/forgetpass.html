@@ -115,7 +115,7 @@
 
         <p>If the account exists, we'll email you instructions to reset the password.</p>
 
-        <form onsubmit="handleSubmitForgotPass()">
+        <form onsubmit="handleSubmitForgotPass(event)">
         
             <input type="text" placeholder="Enter Your Email Here" id="forgetpassuserEmail" autofocus required>
 
@@ -123,7 +123,7 @@
         
         </form>
 
-        <a href="">Return to login</a>
+        <a href="./user.login.html">Return to login</a>
 
     </div>
 
@@ -181,3 +181,4 @@
 
 <script src="../scripts/index.js"></script>
 <script src="../scripts/navbar.js"></script>
+<script src="../scripts/forgotpass.js"></script>
