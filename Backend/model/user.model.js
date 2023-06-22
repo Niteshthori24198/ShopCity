@@ -10,7 +10,8 @@ const userSchema = mongoose.Schema({
     Gender : {type:String, required:true , enum:["Male","Female","Other"], default:"Other"},
     Location: {type:String, required:true},
     Contact:{type:String, required:true},
-    isAdmin:{type:Boolean, default:false}
+    isAdmin:{type:Boolean, default:false},
+    isMailVerified:{type:Boolean, default:false}
 
 
 },

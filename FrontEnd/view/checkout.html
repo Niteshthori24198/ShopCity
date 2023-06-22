@@ -122,15 +122,10 @@
 
             <div>
                 <p>Country</p>
-                <select name="Country_Name" id="Country_Name">
-                    <option value="">Select</option>
-                    <option value="India">India</option>
-                    <option value="United State">United State</option>
-                    <option value="Canada">Canada</option>
-                    <option value="United Kingdom">United Kingdom</option>
-                    <option value="Australia">Australia</option>
-                    <option value="South Africa">South Africa</option>
-                    <option value="Pakisthan">Pakisthan</option>
+                <select name="Country_Name" id="Country_Name" onchange="handleStateSelect(event)">
+
+                   <!-- add countries here -->
+
                 </select>
                 <p>Address</p>
                 <input type="text" id="CustomerAddress">
@@ -144,20 +139,9 @@
 
                     <p>State</p>
                     <select name="State" id="State_Select">
+                        
 
-                        <option value="">Select</option>
-                        <option value="Rajasthan">Rajasthan</option>
-                        <option value="Haryana">Haryana</option>
-                        <option value="Punjab">Punjab</option>
-                        <option value="Delhi">Delhi</option>
-                        <option value="Mumbai">Mumbai</option>
-                        <option value="Ontario">Ontario</option>
-                        <option value="Alaska">Alaska</option>
-                        <option value="California">California</option>
-                        <option value="Scotland">Scotland</option>
-                        <option value="Esteren Cap">Esteren Cap</option>
-                        <option value="Lahore">Lahore</option>
-                        <option value="Adelaide">Adelaide</option>
+                   <!-- apend states as per country selected here -->
 
                     </select>
 

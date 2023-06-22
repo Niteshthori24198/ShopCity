@@ -166,7 +166,7 @@ function Shooping(Address,PaymentMode, razorpay_payment_id='', razorpay_order_id
     console.log(MyOrders)
 
 
-    UpdateBEServer(MyOrders);
+    // UpdateBEServer(MyOrders);
 
 
 }
@@ -397,7 +397,7 @@ function showRazorPayBtnFunc(Address) {
                 "Content-Type": "application/json"
             },
             "data": JSON.stringify({
-                "amount": "50000"
+                "amount": Cart_Amount*100
             }),
         };
 
@@ -418,7 +418,7 @@ function showRazorPayBtnFunc(Address) {
 
             var options = {
                 "key": "rzp_test_FePSDKRvTiVZWa", // Enter the Key ID generated from the Dashboard
-                "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "amount": Cart_Amount*100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
                 "currency": "INR",
                 "name": "Acme Corp",
                 "description": "Test Transaction",
@@ -500,3 +500,74 @@ function showRazorPayBtnFunc(Address) {
 
 
 // Razorpay
+
+
+
+
+
+const countries = {
+
+    "United States": ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"],
+    "Canada": ["Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Nova Scotia", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan"],
+    "Australia": ["New South Wales", "Queensland", "South Australia", "Tasmania", "Victoria", "Western Australia"],
+    "India": ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"],
+    "United Kingdom": ["England", "Scotland", "Wales", "Northern Ireland"],
+    "Germany": ["Baden-Württemberg", "Bavaria", "Berlin", "Brandenburg", "Bremen", "Hamburg", "Hesse", "Lower Saxony", "Mecklenburg-Vorpommern", "North Rhine-Westphalia", "Rhineland-Palatinate", "Saarland", "Saxony", "Saxony-Anhalt", "Schleswig-Holstein", "Thuringia"],
+    "France": ["Auvergne-Rhône-Alpes", "Bourgogne-Franche-Comté", "Brittany", "Centre-Val de Loire", "Corsica", "Grand Est", "Hauts-de-France", "Île-de-France", "Normandy", "Nouvelle-Aquitaine", "Occitanie", "Pays de la Loire", "Provence-Alpes-Côte d'Azur"],
+    "China": ["Beijing", "Shanghai", "Guangdong", "Jiangsu", "Zhejiang", "Fujian", "Shandong", "Hunan", "Hubei", "Henan", "Sichuan", "Chongqing", "Hebei", "Liaoning", "Anhui", "Jiangxi", "Shaanxi", "Yunnan", "Hainan", "Guizhou", "Shanxi", "Tianjin", "Gansu", "Guangxi", "Jilin", "Inner Mongolia", "Ningxia", "Xinjiang", "Qinghai", "Tibet"],
+    "Brazil": ["São Paulo", "Rio de Janeiro", "Bahia", "Minas Gerais", "Rio Grande do Sul", "Paraná", "Pernambuco", "Ceará", "Pará", "Santa Catarina", "Maranhão", "Goiás", "Amazonas", "Espírito Santo", "Paraíba", "Rio Grande do Norte", "Alagoas", "Mato Grosso", "Distrito Federal", "Mato Grosso do Sul", "Sergipe", "Rondônia", "Tocantins", "Acre", "Amapá", "Roraima"],
+    "Japan": ["Hokkaido", "Aomori", "Iwate", "Miyagi", "Akita", "Yamagata", "Fukushima", "Ibaraki", "Tochigi", "Gunma", "Saitama", "Chiba", "Tokyo", "Kanagawa", "Niigata", "Toyama", "Ishikawa", "Fukui", "Yamanashi", "Nagano", "Gifu", "Shizuoka", "Aichi", "Mie", "Shiga", "Kyoto", "Osaka", "Hyogo", "Nara", "Wakayama", "Tottori", "Shimane", "Okayama", "Hiroshima", "Yamaguchi", "Tokushima", "Kagawa", "Ehime", "Kochi", "Fukuoka", "Saga", "Nagasaki", "Kumamoto", "Oita", "Miyazaki", "Kagoshima", "Okinawa"],
+    "Russia": ["Moscow", "Saint Petersburg", "Novosibirsk", "Yekaterinburg", "Nizhny Novgorod", "Kazan", "Chelyabinsk", "Omsk", "Samara", "Rostov-on-Don", "Ufa", "Krasnoyarsk", "Voronezh", "Perm", "Volgograd", "Krasnodar", "Saratov", "Tyumen", "Tolyatti", "Izhevsk", "Barnaul", "Ulyanovsk", "Irkutsk", "Khabarovsk", "Yaroslavl", "Vladivostok", "Makhachkala", "Tomsk", "Orenburg", "Kemerovo", "Novokuznetsk"]
+    // Add more countries and states as needed
+  };
+  
+
+
+  fetchAndRenderCountries()
+
+
+  function fetchAndRenderCountries(){
+
+    const countrysel = document.getElementById("Country_Name")
+
+    const countryNames = Object.keys(countries)
+
+    const countryseldata = countryNames.map((ele)=>{
+        return getSelectTagOptions(ele)
+    }).join('')
+
+
+    countrysel.innerHTML = `<option value="">Select Country</option>${countryseldata}`
+
+
+  }
+
+
+
+  function getSelectTagOptions(e){
+    return `<option value="${e}">${e}</option>`
+  }
+
+
+  function handleStateSelect(event){
+
+    const stateselect = document.getElementById('State_Select')
+
+    let cn = event.target.value;
+
+    if(!cn){
+        stateselect.innerHTML = ''
+        return
+    }
+
+    let states = countries[cn];
+
+
+    const stateseldata = states.map((ele)=>{
+        return getSelectTagOptions(ele)
+    }).join('')
+
+
+    stateselect.innerHTML = `<option value="">Select State</option>${stateseldata}`
+    
+  }
