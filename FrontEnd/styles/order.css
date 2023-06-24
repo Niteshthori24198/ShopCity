@@ -1,5 +1,4 @@
-
-.ordersection{
+.ordersection {
     display: flex;
     width: 60%;
     justify-content: space-between;
@@ -9,7 +8,7 @@
 
 
 
-.ordersection > div{
+.ordersection>div {
 
     text-align: center;
     width: 100%;
@@ -17,44 +16,45 @@
     letter-spacing: 1px;
 }
 
-.ordersection > div > h3:hover{
+.ordersection>div>h3:hover {
     letter-spacing: 2px;
     color: aquamarine;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 
 
-#allOrdersHere{
+#allOrdersHere {
     width: 90%;
     margin: 50px auto;
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     line-height: 30px;
 }
 
-#allOrdersHere > div{
+#allOrdersHere>div {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border-radius: 10px;
-    padding: 10px 0px ;
+    padding: 10px 0px;
     /* text-align: center; */
     display: flex;
     justify-content: space-evenly;
     align-items: center;
 }
-#allOrdersHere > div > div:nth-child(2){
+
+#allOrdersHere>div>div:nth-child(2) {
     /* border: 1px solid red; */
     margin-left: 20px;
 }
 
-#allOrdersHere img{
+#allOrdersHere img {
     width: 100%;
     margin: auto;
 }
 
 
-.cancelbtn{
+.cancelbtn {
     border: none;
     cursor: pointer;
     background-color: red;
@@ -62,29 +62,123 @@
     color: white;
     border: none;
     outline: none;
-    
+
     padding: 5px 12px;
     margin-top: 10px;
     border-radius: 5px;
     font-size: 15px;
     width: 140px;
 }
-.cancelbtn:hover{
+
+.cancelbtn:hover {
     transition: 1s;
-    background: transparent;
-    color: red;
+    background-color: rgb(243, 46, 46);
     /* font-weight: bold; */
     border: 1px solid;
 }
 
 
+
+
+/* Review */
+
+/* 
+    {
+    box-sizing: border-box;
+} */
+/* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+    background-color: #555;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+    bottom: 23px;
+    right: 28px;
+    width: 280px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+    max-width: 300px;
+    padding: 10px;
+    background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text],
+.form-container input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus,
+.form-container input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+    background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover,
+.open-button:hover {
+    opacity: 1;
+}
+
+
+
+
+
+
 @media screen and (max-width:850px) {
-    #allOrdersHere{
+    #allOrdersHere {
         width: 90%;
         margin: 50px auto;
         display: grid;
-        grid-template-columns: repeat(1,1fr);
+        grid-template-columns: repeat(1, 1fr);
         gap: 20px;
         line-height: 30px;
+    }
+    #allOrdersHere>div {
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        border-radius: 10px;
+        padding: 10px 0px;
+        /* text-align: center; */
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: column;
     }
 }
