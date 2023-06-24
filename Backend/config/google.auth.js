@@ -3,6 +3,9 @@ require("dotenv").config()
 
 const passport = require("passport");
 
+const crypto = require('crypto')
+const randomPassword = (byte = 32) => crypto.randomBytes(byte).toString('hex')
+
 const UserModel = require("../model/user.model");
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -33,11 +36,12 @@ passport.use(new GoogleStrategy({
 
           Email,
           Name:profile._json.name,
-          Password:"12345678",
+          Password: randomPassword() ,
           Gender:"Male",
           isAdmin:false,
-          Contact:1234567890,
-          Location:"XYZ"
+          Contact:"-",
+          Location:"-",
+          isMailVerified:true
         })
 
         await newuser.save()

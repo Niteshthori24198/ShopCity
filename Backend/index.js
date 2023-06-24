@@ -20,6 +20,7 @@ const cors = require('cors');
 
 var bodyParser = require('body-parser');
 const { checkoutRouter } = require('./routes/checkout.route');
+const reviewRouter = require('./routes/review.route');
 
 const app = express();
 
@@ -37,15 +38,17 @@ app.use('/cart', cartRouter);
 
 app.use('/order', orderRouter);
 
+app.use('/review', reviewRouter)
+
 
 
 // app.get('/checkout', async (req, res) => {
 //     res.sendFile("./View/standard.html", { root: __dirname })
 // })
 
-app.get('/ks', (req,res)=>{
-    res.sendFile('./View/forgot-password.html', {root:__dirname})
-})
+// app.get('/ks', (req,res)=>{
+//     res.sendFile('./View/forgot-password.html', {root:__dirname})
+// })
 
 
 

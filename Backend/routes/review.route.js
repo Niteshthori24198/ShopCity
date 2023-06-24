@@ -27,7 +27,7 @@ reviewRouter.delete('/delete/:reviewId', Auth, deleteReview);
 
 reviewRouter.get('/get-by-productId/:productId', getReviewByProductId);
 
-reviewRouter.get('/get-by-orderId/:orderId', getReviewByOrderId);
+reviewRouter.get('/get-by-orderId/:orderId', Auth, getReviewByOrderId);
 
 
 

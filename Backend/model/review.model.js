@@ -27,13 +27,13 @@ const reviewSchema = mongoose.Schema({
     },
     NewRating : {
         type: Number,
-        enum : [1,2,3,4,5],
         required : true
     },
     Description : {
         type : String,
         required : true
     },
+    CustomerName : { type:String },
     Image : { type:String },
     Video : { type : String },
     S3_Url:{ type:String },

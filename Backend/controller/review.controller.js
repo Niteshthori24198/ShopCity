@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const ReviewModel = require('../model/review.model');
 const ProductModel = require('../model/product.model');
 const UserModel = require('../model/user.model');
+const OrderModel = require('../model/order.model');
 
 require('dotenv').config();
 
@@ -15,6 +16,7 @@ const addReview = async (req, res) => {
     const { UserID } = req.body;
     const { ProductId, OrderId, NewRating, Description } = req.body;
 
+
     if (!ProductId || !OrderId || !NewRating || !Description) {
         return res.status(404).send({
             "error": "Kindly Pass All The Required Details",
@@ -25,14 +27,56 @@ const addReview = async (req, res) => {
 
     try {
 
-        const alreadyReviewPresent = await ReviewModel.findOne({ ProductId, OrderId, CustomerId: UserID });
-        if (alreadyReviewPresent) {
+        const userInfoo = await UserModel.findById({ _id: UserID });
+        if (!userInfoo) {
             return res.status(404).send({
-                "error": "Your review is already added",
+                "error": "This User is currently not available",
                 "Success": false,
-                "msg": "Your review is already added"
+                "msg": "This User is currently not available"
+            })
+        }
+
+        const alreadyReviewPresent = await ReviewModel.findOne({ ProductId, OrderId, CustomerId: UserID });
+        console.log('===>',alreadyReviewPresent);
+        if (alreadyReviewPresent) {
+            console.log('review over ride ho rha hai .....');
+            const productInfo = await ProductModel.findById({ _id: ProductId })
+            if (!productInfo) {
+                return res.status(404).send({
+                    "error": "This Product is currently not available",
+                    "Success": false,
+                    "msg": "This Product is currently not available"
+                })
+            }
+
+            // productInfo.Total_Review_Count++;
+            productInfo.Total_Review_Sum = (+productInfo.Total_Review_Sum) - (+alreadyReviewPresent.NewRating) + (+NewRating);
+            productInfo.Rating = productInfo.Total_Review_Count ? (productInfo.Total_Review_Sum / productInfo.Total_Review_Count).toFixed(1) : 0;
+
+            await ProductModel.findByIdAndUpdate({ _id: ProductId }, { ...productInfo });
+
+            await ReviewModel.findByIdAndUpdate({_id:alreadyReviewPresent._id}, { NewRating, Description, CustomerName: userInfoo.Name });
+
+            return res.status(200).send({
+                "error": "no error",
+                "Success": true,
+                "msg": "Your review has been successfully added."
             })
         } else {
+    
+
+            const OrderItem = await OrderModel.findOne({ UserID: UserID })
+            console.log(OrderItem);
+            const isDelivered = isOrderDelivered(OrderItem.Products, ProductId)
+
+            if(!isDelivered){
+                return res.status(400).send({
+                    "error": "You can not able to give review now",
+                    "Success": false,
+                    "msg": "Your order not deliverd yet"
+                })
+            }
+
 
             const productInfo = await ProductModel.findById({ _id: ProductId })
             if (!productInfo) {
@@ -51,7 +95,7 @@ const addReview = async (req, res) => {
 
             // add review and update product
             const newReview = new ReviewModel({
-                ProductId, OrderId, NewRating, Description, CustomerId: UserID
+                ProductId, OrderId, NewRating, Description, CustomerId: UserID,  CustomerName: userInfoo.Name
             })
             await newReview.save();
 
@@ -74,6 +118,19 @@ const addReview = async (req, res) => {
     }
 
 
+}
+
+function isOrderDelivered(orders, productId){
+    for(let i=0; i<orders.length; i++){
+        if(orders[i].product == productId){
+            if(orders[i].Status == 'Delivered'){
+                return true
+            }else{
+                return false
+            }
+        }
+    }
+    return false
 }
 
 const updateReview = async (req, res) => {
@@ -136,7 +193,7 @@ const updateReview = async (req, res) => {
             // productInfo.Total_Review_Count++;
             productInfo.Total_Review_Sum = productInfo.Total_Review_Sum + NewRating - reviewInfo.NewRating;
 
-            productInfo.Rating = productInfo.Total_Review_Count ? (productInfo.Total_Review_Sum / productInfo.Total_Review_Count) : 0;
+            productInfo.Rating = productInfo.Total_Review_Count ? (productInfo.Total_Review_Sum / productInfo.Total_Review_Count).toFixed(1) : 0;
 
             await ProductModel.findByIdAndUpdate({ _id: ProductId }, { ...productInfo });
 
@@ -186,21 +243,24 @@ const deleteReview = async (req, res) => {
 
             ableToDelete = true
 
+        }else{
+
+            const userInfo = await UserModel.findById({ _id: UserID });
+            // If User is Admin then can able to delete any review
+            if (userInfo && userInfo.isAdmin) {
+    
+                ableToDelete = true
+    
+            }
+
         }
 
 
 
-        const userInfo = await UserModel.findById({ _id: UserID });
-        // If User is Admin then can able to delete any review
-        if (userInfo && userInfo.isAdmin) {
-
-            ableToDelete = true
-
-        }
 
         if (ableToDelete) {
 
-            const productInfo = await ProductModel.findById({ _id: ProductId })
+            const productInfo = await ProductModel.findById({ _id: reviewInfo.ProductId })
             if (!productInfo) {
                 return res.status(404).send({
                     "error": "This Product is currently not available",
@@ -211,9 +271,9 @@ const deleteReview = async (req, res) => {
 
             productInfo.Total_Review_Count--;
             productInfo.Total_Review_Sum = productInfo.Total_Review_Sum - reviewInfo.NewRating;
-            productInfo.Rating = productInfo.Total_Review_Count ? (productInfo.Total_Review_Sum / productInfo.Total_Review_Count) : 0;
+            productInfo.Rating = productInfo.Total_Review_Count ? (productInfo.Total_Review_Sum / productInfo.Total_Review_Count).toFixed(1) : 0;
 
-            await ProductModel.findByIdAndUpdate({ _id: ProductId }, { ...productInfo });
+            await ProductModel.findByIdAndUpdate({ _id: productInfo._id }, { ...productInfo });
 
             await ReviewModel.findByIdAndDelete({ _id: reviewId })
 
@@ -263,6 +323,10 @@ const getReviewByProductId = async (req, res) => {
                 "msg": "Review Not Found",
                 "Review": []
             })
+        }
+        for(let review of reviewInfo){
+            const userInfo = await UserModel.findById({ _id: review.CustomerId });
+            review.CustomerName = userInfo.Name
         }
         return res.status(200).send({
             "error": "no error",
