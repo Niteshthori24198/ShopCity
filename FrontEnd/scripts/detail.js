@@ -55,7 +55,7 @@ function ShowProduct(data) {
             <h2>Title : ${data.Title}</h2>
             <p>Category : ${data.Category}</p>
             <p>Details : ${data.Description}</p>
-            <p>Rating : ${data.Rating} ⭐ / 5</p>
+            ${data.Rating ? getRatingStarDetail(data.Rating)  : '<p  id="newProductBtn"><span>New Product</span></p>' }
             <p>Price : <i class="fa-solid fa-indian-rupee-sign"></i> ${data.Price} </p>
             
             ${data.Quantity <= 0 ? '<p> Out Of Stock <p>' : `Quantity : ${getQuantitySelectTag(data.Quantity)}`}        
@@ -80,6 +80,12 @@ function ShowProduct(data) {
     });
 
 }
+
+
+function getRatingStarDetail(num){
+    return ` <p>Rating : <i data-star="${num}" style="font-size: 25px;"></i> ${num} / 5 </p>`
+}
+
 
 function getQuantitySelectTag(n) {
     let options = ''
@@ -162,7 +168,7 @@ function AddItemToCart(token) {
         })
         .catch((err) => {
             document.getElementById('addToCartBtnhai').innerHTML = 'Add To Cart'
-            alert(data.msg)
+            console.log(err);
         })
 
 }

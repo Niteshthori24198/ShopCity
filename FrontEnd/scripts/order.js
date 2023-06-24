@@ -80,7 +80,7 @@ function getordersBox(id, date, add, status, img, title, cat, price, quant, prod
                     <img src="${img}" alt="error">
                 </div>
                 <div>
-                    <h3>Product :- ${title} [${cat}]</h3>
+                    <h5>Product :- ${title} </h5>
                     <p>Order Date :- ${date}</p>
                     <p>Quantity :- ${quant}</p>
                     <p>Total Price :- ${quant * price} Rs</p>

@@ -74,12 +74,18 @@ function getProductCard(product) {
                     <p>Category : ${product.Category}</p>
                     <p>Description : ${product.Description.substring(0, 5)}</p>
                     <p>Price : <i class="fa-solid fa-indian-rupee-sign"></i> ${product.Price} </p>
-                    <p>Rating : ${product.Rating} ⭐</p>
+
+                    ${product.Rating ? getRatingStar(product.Rating)  : '<p  id="newProductBtn"><span>New Product</span></p>' }
+                    
                     
                 </div>
                 
             </div>`
 
+}
+
+function getRatingStar(num){
+    return `<p>Rating :  <i data-star="${num}" style="font-size: 25px;"></i> ${num} / 5</p>`
 }
 
 

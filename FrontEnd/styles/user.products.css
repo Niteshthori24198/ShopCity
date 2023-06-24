@@ -105,6 +105,19 @@
 
 .myproductdetails {
     text-align: justify;
+    text-align: start;
+}
+
+#newProductBtn{
+    margin-top: 15px;
+    /* padding: 5px 7px; */
+}
+
+#newProductBtn > span{
+    background-color: rgb(26, 189, 26);
+    color: white;
+    margin-top: 15px;
+    padding: 3px 7px;
 }
 
 .mydivbutton {
