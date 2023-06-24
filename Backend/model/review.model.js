@@ -33,7 +33,11 @@ const reviewSchema = mongoose.Schema({
     Description : {
         type : String,
         required : true
-    }
+    },
+    Image : { type:String },
+    Video : { type : String },
+    S3_Url:{ type:String },
+    S3_Url_ExipreDate:{ type:Date },
 
 
 },

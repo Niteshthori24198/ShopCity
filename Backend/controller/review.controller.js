@@ -7,6 +7,10 @@ const UserModel = require('../model/user.model');
 require('dotenv').config();
 
 
+
+
+
+
 const addReview = async (req, res) => {
     const { UserID } = req.body;
     const { ProductId, OrderId, NewRating, Description } = req.body;
@@ -76,8 +80,8 @@ const updateReview = async (req, res) => {
     const { reviewId } = req.params
     const { UserID, ProductId, OrderId, NewRating, Description } = req.body;
     try {
-        const reviewInfo = await ReviewModel.findById({_id:reviewId});
-        if(!reviewInfo){
+        const reviewInfo = await ReviewModel.findById({ _id: reviewId });
+        if (!reviewInfo) {
             return res.status(404).send({
                 "error": "Review Not Found",
                 "Success": false,
@@ -85,7 +89,7 @@ const updateReview = async (req, res) => {
             })
         }
 
-        if(UserID != reviewInfo.CustomerId ){
+        if (UserID != reviewInfo.CustomerId) {
             return res.status(404).send({
                 "error": "Unauthorized access",
                 "Success": false,
@@ -94,18 +98,18 @@ const updateReview = async (req, res) => {
         }
 
         let ableToUpdate = true
-        if(ProductId){
-            if(reviewInfo.ProductId != ProductId ){
+        if (ProductId) {
+            if (reviewInfo.ProductId != ProductId) {
                 ableToUpdate = false
             }
         }
-        if(OrderId){
-            if(OrderId != reviewInfo.OrderId){
+        if (OrderId) {
+            if (OrderId != reviewInfo.OrderId) {
                 ableToUpdate = false
             }
         }
 
-        if(!ableToUpdate){
+        if (!ableToUpdate) {
             return res.status(404).send({
                 "error": "You are not able to update productid or orderid",
                 "Success": false,
@@ -113,11 +117,11 @@ const updateReview = async (req, res) => {
             })
         }
 
-        if(Description){
+        if (Description) {
             reviewInfo.Description = Description;
         }
 
-        if(NewRating){
+        if (NewRating) {
 
 
             const productInfo = await ProductModel.findById({ _id: ProductId })
@@ -141,7 +145,7 @@ const updateReview = async (req, res) => {
 
         }
 
-        await ReviewModel.findByIdAndUpdate({_id : reviewInfo._id}, {...reviewInfo})
+        await ReviewModel.findByIdAndUpdate({ _id: reviewInfo._id }, { ...reviewInfo })
 
         return res.status(404).send({
             "error": "no error",
@@ -166,8 +170,8 @@ const deleteReview = async (req, res) => {
     const { UserID } = req.body;
 
     try {
-        const reviewInfo = await ReviewModel.findById({_id: reviewId});
-        if(!reviewInfo){
+        const reviewInfo = await ReviewModel.findById({ _id: reviewId });
+        if (!reviewInfo) {
             return res.status(404).send({
                 "error": "Review Not Found",
                 "Success": false,
@@ -178,7 +182,7 @@ const deleteReview = async (req, res) => {
         let ableToDelete = false
 
         // If User want to delete own review
-        if(UserID == reviewInfo.CustomerId ){
+        if (UserID == reviewInfo.CustomerId) {
 
             ableToDelete = true
 
@@ -186,15 +190,15 @@ const deleteReview = async (req, res) => {
 
 
 
-        const userInfo = await UserModel.findById({_id : UserID});
+        const userInfo = await UserModel.findById({ _id: UserID });
         // If User is Admin then can able to delete any review
-        if(userInfo && userInfo.isAdmin){
+        if (userInfo && userInfo.isAdmin) {
 
             ableToDelete = true
-        
+
         }
 
-        if(ableToDelete){
+        if (ableToDelete) {
 
             const productInfo = await ProductModel.findById({ _id: ProductId })
             if (!productInfo) {
@@ -211,7 +215,7 @@ const deleteReview = async (req, res) => {
 
             await ProductModel.findByIdAndUpdate({ _id: ProductId }, { ...productInfo });
 
-            await ReviewModel.findByIdAndDelete({_id:reviewId})
+            await ReviewModel.findByIdAndDelete({ _id: reviewId })
 
             return res.status(200).send({
                 "error": "no error",
@@ -219,7 +223,7 @@ const deleteReview = async (req, res) => {
                 "msg": "Your review has been successfully deleted."
             })
 
-        }else{
+        } else {
             // not able to delete
             return res.status(404).send({
                 "error": "You can not delete this review",
@@ -234,76 +238,76 @@ const deleteReview = async (req, res) => {
             "Success": false,
             "msg": "Something Went Wrong"
         })
-        
+
     }
 
 }
 
 const getReviewByProductId = async (req, res) => {
-    const {productId} = req.params;
-    if(!productId){
+    const { productId } = req.params;
+    if (!productId) {
         return res.status(404).send({
             "error": "Review Not Found",
             "Success": false,
             "msg": "Review Not Found",
-            "Review" : []
+            "Review": []
         })
     }
     try {
 
         const reviewInfo = await ReviewModel.find({ ProductId: productId });
-        if(!reviewInfo){
+        if (!reviewInfo) {
             return res.status(404).send({
                 "error": "Review Not Found",
                 "Success": false,
                 "msg": "Review Not Found",
-                "Review" : []
+                "Review": []
             })
         }
         return res.status(200).send({
             "error": "no error",
             "Success": true,
             "msg": "Review Found",
-            "Review" : reviewInfo
+            "Review": reviewInfo
         })
-        
+
     } catch (error) {
         return res.status(404).send({
             "error": error.message,
             "Success": false,
             "msg": "Something Went Wrong"
         })
-        
+
     }
 }
 
 const getReviewByOrderId = async (req, res) => {
-    const {orderId} = req.params;
-    if(!orderId){
+    const { orderId } = req.params;
+    if (!orderId) {
         return res.status(404).send({
             "error": "Review Not Found",
             "Success": false,
             "msg": "Review Not Found",
-            "Review" : []
+            "Review": []
         })
     }
     try {
         const reviewInfo = await ReviewModel.find({ OrderId: orderId });
-        if(!reviewInfo){
+        if (!reviewInfo) {
             return res.status(404).send({
                 "error": "Review Not Found",
                 "Success": false,
                 "msg": "Review Not Found",
-                "Review" : []
+                "Review": []
             })
         }
         return res.status(200).send({
             "error": "no error",
             "Success": true,
             "msg": "Review Found",
-            "Review" : reviewInfo
+            "Review": reviewInfo
         })
-    }catch (error) {
+    } catch (error) {
         return res.status(404).send({
             "error": error.message,
             "Success": false,
@@ -311,7 +315,7 @@ const getReviewByOrderId = async (req, res) => {
         })
     }
 
-    
+
 }
 
 
