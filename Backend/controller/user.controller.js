@@ -12,6 +12,186 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer");
 
 
+// AWS S3
+
+// sharp is used for image resizing
+const sharp = require('sharp');
+
+// crypto is used for generate unique image name
+const crypto = require('crypto')
+const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex')
+
+// aws s3 services 
+const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3");
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+
+// aws s3 bucket credentials
+const bucketName = process.env.bucketName
+const bucketRegion = process.env.bucketRegion
+const accessKey = process.env.accessKey
+const secretAccessKey = process.env.secretAccessKey
+
+// aws s3 client
+const s3 = new S3Client({
+    credentials: {
+        accessKeyId: accessKey,
+        secretAccessKey: secretAccessKey
+    },
+    region: bucketRegion
+})
+
+
+
+const uploadProfileImage = async (req, res) => {
+    console.log(req.body);
+    const { UserID } = req.body
+    console.log(req.file);
+    if (!req.file) {
+        return res.status(400).send({
+
+            "error": "Image Not Found",
+
+            "msg": "Kindly Pass Only JPEG or PNG Image",
+
+            "Success": fasle
+
+        })
+
+    }
+    if (req.file.mimetype !== 'image/jpeg' && req.file.mimetype !== 'image/png') {
+        console.log('Invalid File Type');
+        return res.status(400).send({
+
+            "error": "Invalid File Type",
+
+            "msg": "Kindly Pass Only JPEG or PNG Image",
+
+            "Success": fasle
+
+        })
+    }
+    try {
+
+        const userInfo = await UserModel.findById({ _id: UserID })
+        if (!userInfo) {
+            return res.status(400).send({
+                "error": "User Not Found",
+                "msg": "User Not Found",
+                "Success": fasle
+            })
+        }
+
+        if (userInfo.S3_Url) {
+            const params = {
+                Bucket: bucketName,
+                Key: userInfo.S3_Url
+            }
+            const command = new DeleteObjectCommand(params);
+            await s3.send(command);
+            console.log('successfully deleted image from s3');
+        }
+
+        const buffer = await sharp(req.file.buffer).resize({ width: 400, height: 400, fit: "contain" }).toBuffer()
+
+        const ImageName = randomImageName()
+
+        const params = {
+            Bucket: bucketName,
+            Key: ImageName,
+            Body: buffer,
+            ContentType: req.file.mimetype
+        }
+
+        console.log('params for s3 ', params);
+
+        const command = new PutObjectCommand(params)
+        await s3.send(command)
+
+        console.log('Product Image uploaded successfully to s3');
+        const getObjectParams = {
+            Bucket: bucketName,
+            Key: ImageName
+        }
+        const command1 = new GetObjectCommand(getObjectParams);
+        const url = await getSignedUrl(s3, command1, { expiresIn: 604800 });
+        console.log(url);
+
+
+
+
+        // Get the current date
+        const currentDate = new Date();
+
+        // Add 7 days to the current date
+        const futureDate = new Date();
+        futureDate.setDate(currentDate.getDate() + 7);
+
+        // Remove 20 minutes from the future date
+        futureDate.setMinutes(futureDate.getMinutes() - 20);
+        console.log(futureDate);
+
+        await UserModel.findByIdAndUpdate({ _id: UserID }, { Image: url, S3_Url: ImageName, S3_Url_ExipreDate: futureDate })
+
+
+
+
+        return res.status(200).send({
+            "msg": "Your Profile Image has been Successfully Uploaded",
+            "Success": true
+        })
+
+
+    } catch (error) {
+
+        return res.status(400).send({
+            "error": error.message,
+            "msg": "Something Went Wrong",
+            "Success": false
+        })
+
+    }
+}
+
+const removeProfileImage = async (req, res) => {
+    console.log(req.body);
+    const { UserID } = req.body
+    try {
+        const userInfo = await UserModel.findById({ _id: UserID })
+        if (!userInfo) {
+            return res.status(400).send({
+                "error": "User Not Found",
+                "msg": "User Not Found",
+                "Success": fasle
+            })
+        }
+        if (userInfo.S3_Url) {
+            const params = {
+                Bucket: bucketName,
+                Key: userInfo.S3_Url
+            }
+            const command = new DeleteObjectCommand(params);
+            await s3.send(command);
+            console.log('successfully deleted image from s3');
+        }
+        await UserModel.findByIdAndUpdate({ _id: UserID }, { S3_Url: null, S3_Url_ExipreDate: null, Image:'https://cdn.pixabay.com/photo/2020/07/14/13/07/icon-5404125_1280.png' })
+
+        return res.status(200).send({
+            "msg": "Your Profile Image has been Successfully Deleted",
+            "Success": true
+        })
+
+    } catch (error) {
+        return res.status(400).send({
+            "error": error.message,
+            "msg": "Something Went Wrong",
+            "Success": false
+        })
+    }
+}
+
+
+
+
 
 const RegisterNewUser = async (req, res) => {
 
@@ -397,8 +577,8 @@ const resetPassword = async (req, res) => {
     try {
         const decoded = jwt.verify(userToken, process.env.SecretKey);
         if (decoded) {
-        
-            return res.sendFile('forgot-password.html', {root:'./View'})
+
+            return res.sendFile('forgot-password.html', { root: './View' })
 
         } else {
             return res.status(404).send(`
@@ -413,29 +593,29 @@ const resetPassword = async (req, res) => {
 }
 
 
-const saveNewPassword = async (req,res) => {
+const saveNewPassword = async (req, res) => {
     const { UserID } = req.body;
     const { Password } = req.body;
     try {
-        const userPresent = await UserModel.findById( {_id : UserID} );
+        const userPresent = await UserModel.findById({ _id: UserID });
 
-        if(userPresent){
+        if (userPresent) {
             const hashPass = bcrypt.hashSync(Password, 7);
-            await UserModel.findByIdAndUpdate({_id:UserID}, {Password:hashPass})
+            await UserModel.findByIdAndUpdate({ _id: UserID }, { Password: hashPass })
 
             return res.status(400).send({
                 "msg": "Your Password Successfully Changed.",
                 "Success": true
             })
 
-        }else{
+        } else {
             return res.status(400).send({
                 "msg": "Your Account Not Exit",
                 "error": "User Not Found",
                 "Success": false
             })
         }
-        
+
     } catch (error) {
         return res.status(400).send({
             "msg": "Something Went Wrong",
@@ -443,7 +623,7 @@ const saveNewPassword = async (req,res) => {
             "Success": false
         })
     }
-    
+
 }
 
 
@@ -926,6 +1106,8 @@ module.exports = {
     confirmEmail,
     requestForgotPassword,
     resetPassword,
-    saveNewPassword
+    saveNewPassword,
+    uploadProfileImage,
+    removeProfileImage
 
 }

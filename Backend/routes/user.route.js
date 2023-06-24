@@ -3,13 +3,20 @@ const { Router } = require('express');
 
 const userRouter = Router();
 
+
+
+const multer = require('multer')
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
+
+
 const Auth = require('../middleware/auth.middleware');
 
 const AdminAuth = require('../middleware/admin.middleware');
 
 const { passport } = require("../config/google.auth")
 
-const { RegisterNewUser, LoginUser, GetUserData , updateUserData, deleteUserProfile, getAllUsersData, updateUserRole,updateUserPassword,googleAuthentication , UserQuery, getallQueries, confirmEmail, resetPassword, requestForgotPassword, saveNewPassword} = require('../controller/user.controller')
+const { RegisterNewUser, LoginUser, GetUserData , updateUserData, deleteUserProfile, getAllUsersData, updateUserRole,updateUserPassword,googleAuthentication , UserQuery, getallQueries, confirmEmail, resetPassword, requestForgotPassword, saveNewPassword, uploadProfileImage, removeProfileImage} = require('../controller/user.controller')
 
 
 
@@ -59,6 +66,12 @@ userRouter.patch("/changepass", Auth,updateUserPassword)
 
 
 userRouter.delete("/delete" , Auth, deleteUserProfile)
+
+
+// upload profile Image
+userRouter.post('/upload-profile-image', Auth, upload.single('Image'), uploadProfileImage)
+
+userRouter.delete('/delete-profile-image', Auth, removeProfileImage)
 
 
 
