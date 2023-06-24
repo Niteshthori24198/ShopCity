@@ -5,9 +5,9 @@
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     padding: 30px;
-    border: 1px solid #ccc;
+    border: 1px solid #ebe8e8;
     border-radius: 10px;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    box-shadow: rgba(195, 195, 195, 0.2) 0px 2px 8px 0px;
 }
 
 #productdetailcont>div {
@@ -59,8 +59,40 @@
     z-index: 100;
 }
 
+#productreviewHeading{
+    text-align: center;
+}
 
-@media screen and (max-width:750px) {
+#productreviewcont{
+    /* background-color: red; */
+    width: 75%;
+    margin: auto;
+    margin-bottom: 50px; 
+}
+
+#productreviewcont > div{
+    border-radius: 5px;
+    border: 1px solid rgb(230, 228, 228);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin: 20px auto;
+    padding: 8px 20px;
+}
+
+#productreviewcont > div > div:nth-child(1){
+    padding-left: 40px;
+}
+#productreviewcont > div > div:nth-child(3){
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+
+
+@media screen and (max-width:1400px) and (min-width:850px) {
     #productdetailcont {
         grid-template-columns: 1fr;
         gap: 20px;
@@ -71,6 +103,56 @@
         border-radius: 5px;
         margin: auto;
     }
+    #productreviewcont > div > div:nth-child(1){
+        padding-left: 0px;
+    }
+    #productreviewcont > div{
+        display: grid;
+        grid-template-columns: 1fr 2fr 2fr;
+        padding: 8px 10px;
+    }
+    #productreviewcont > div > div{
+        border: 1px solid rgb(246, 244, 244);
+        border-radius: 5px;
+    }
+
+}
+
+@media screen and (max-width:850px) {
+    #productdetailcont {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    #productdetailcont img {
+        width: 90%;
+        border-radius: 5px;
+        margin: auto;
+    }
+    #productreviewcont > div > div:nth-child(1){
+        padding-left: 10px;
+    }
+    #productreviewcont > div > div:nth-child(2){
+        padding-left: 10px;
+    }
+    #productreviewcont > div > div:nth-child(3){
+        flex-direction: column;
+        color: #666;
+    }
+
+    #productreviewcont > div{
+        display: grid;
+        grid-template-columns: 1fr ;
+        padding: 8px 10px;
+    }
+   
+    #productreviewcont > div > div{
+        border: 1px solid rgb(246, 244, 244);
+        border-radius: 5px;
+    
+    }
+ 
+   
 
 
 }

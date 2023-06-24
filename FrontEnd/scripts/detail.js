@@ -166,3 +166,49 @@ function AddItemToCart(token) {
         })
 
 }
+
+
+
+
+
+
+const productreviewcont = document.getElementById('productreviewcont')
+
+showReviewToPage()
+function showReviewToPage(){
+    fetch(`${Baseurl}/review/get-by-productId/${productID}`)
+    .then((res)=>{
+        return res.json()
+    }).then((data)=>{
+        console.log(data)
+        if(data.Success){
+            renderReviews(data.Review)
+        }
+    }).catch((err)=>{
+        console.log(err)
+    })
+}
+
+function renderReviews(data){
+    console.log('===>',data)
+    if(!data.length){
+        console.log('kuch nhi');
+        return
+    }
+    productreviewcont.innerHTML = data.map((review)=>{
+       return  `<div>
+                    <div>
+                        <h2> <i class="fa-solid fa-user"></i> ${review.CustomerName}</h2>
+                    </div>
+                    <div>
+                        <p>${review.Description}</p>
+                    </div>
+                    <div>
+                        <input class="rating" max="5" step="0.01"
+                            style="--fill: #C8102E;--symbol:var(--heart);--value:${review.NewRating}" type="range"
+                            value="${review.NewRating}" id="ratingValue" onchange="handleInputRating(event)">
+                            <span class="ratingValue">${review.NewRating} / 5</span>
+                    </div>
+                </div>`
+    }).join('')
+}
