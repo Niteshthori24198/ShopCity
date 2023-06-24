@@ -120,7 +120,10 @@ function editBtnClicked(productID) {
 async function autoFillProductDetails(productID) {
     let res = await fetch(`${admin_baseurl}/product/getone/${productID}`);
     let data = await res.json()
+    console.log('data==>', data);
     data = data.Products;
+
+    console.log('data==>', data);
 
     let editProductForm = document.getElementById('editProductForm');
 
@@ -129,10 +132,11 @@ async function autoFillProductDetails(productID) {
     editProductForm.productTitleEdit.value = data.Title;
     editProductForm.productCategoryEdit.value = data.Category;
     editProductForm.productQuantityEdit.value = data.Quantity;
-    editProductForm.productImageEdit.value = data.Image;
     editProductForm.productPriceEdit.value = data.Price;
-    editProductForm.productRatingEdit.value = data.Rating;
+    editProductForm.productRatingEdit.value = data.Rating+'⭐';
     editProductForm.productDescEdit.value = data.Description;
+
+    // editProductForm.productImageEdit.files[0] = data.Image;
 }
 
 
@@ -140,7 +144,7 @@ async function handleEditProduct(event) {
     event.preventDefault()
     console.log('submitted');
 
-   
+
 
     const data = {}
 
@@ -151,14 +155,14 @@ async function handleEditProduct(event) {
     data.Title = editProductForm.productTitleEdit.value;
     data.Category = editProductForm.productCategoryEdit.value;
     data.Quantity = editProductForm.productQuantityEdit.value;
-    data.Image = editProductForm.productImageEdit.value;
     data.Price = editProductForm.productPriceEdit.value;
-    data.Rating = editProductForm.productRatingEdit.value;
+    // data.Rating = editProductForm.productRatingEdit.value;
     data.Description = editProductForm.productDescEdit.value;
+    // data.Image = editProductForm.productImageEdit.value;
 
     console.log(productID);
 
-    if(!confirm('Are you sure you want to update the product?')) return
+    if (!confirm('Are you sure you want to update the product?')) return
 
     let res = await fetch(`${admin_baseurl}/product/update/${productID}`, {
         method: "PATCH",
@@ -179,61 +183,125 @@ async function handleEditProduct(event) {
 
 async function handleAddProduct(event) {
     event.preventDefault()
-    console.log('submitted');
-
-
-
-    const data = {}
+    if (!confirm('Are you sure you want to Add the product?')) return
 
     let addProductForm = document.getElementById('addProductForm');
 
+    const ImageFile = addProductForm.productImage.files[0]
 
-    data.Title = addProductForm.productTitle.value;
-    data.Category = addProductForm.productCategory.value;
-    data.Quantity = addProductForm.productQuantity.value;
-    data.Image = addProductForm.productImage.value;
-    data.Price = addProductForm.productPrice.value;
-    data.Rating = addProductForm.productRating.value;
-    data.Description = addProductForm.productDesc.value;
+    const Title = addProductForm.productTitle.value
+    const Category = addProductForm.productCategory.value
+    const Quantity = addProductForm.productQuantity.value
+    const Price = addProductForm.productPrice.value
+    const Description = addProductForm.productDesc.value
+    // const Rating = addProductForm.productRating.value
 
-    console.log(data);
 
-    if(!confirm('Are you sure you want to Add the product?')) return
+    const formData = new FormData(addProductForm);
+
+    formData.append("Image", ImageFile);
+
+    formData.append("Title", Title);
+    formData.append("Category", Category);
+    formData.append("Quantity", Quantity);
+    formData.append("Price", Price);
+    formData.append("Description", Description);
+    // formData.append("Rating", Rating);
+
+
+    console.log(formData);
+
+    // const data = {}
+    // data.Image = addProductForm.productImage.value;
+    // data.Title = addProductForm.productTitle.value;
+    // data.Category = addProductForm.productCategory.value;
+    // data.Quantity = addProductForm.productQuantity.value;
+    // data.Price = addProductForm.productPrice.value;
+    // data.Rating = addProductForm.productRating.value;
+    // data.Description = addProductForm.productDesc.value;
+    // console.log(data);
+
+    // headers: {
+    //     'Content-type': 'application/json',
+    //     'authorization': `Bearer ${adminusertoken}`
+    // },
 
     let res = await fetch(`${admin_baseurl}/product/add`, {
         method: "POST",
         headers: {
-            'Content-type': 'application/json',
             'authorization': `Bearer ${adminusertoken}`
         },
-        body: JSON.stringify(data)
+        body: formData
     }).then(r => r.json())
 
     console.log(res);
 
     alert(res.msg);
+
     document.getElementById('addd_close_btn').click()
     fetchAndRenderPro()
 
-    addProductForm.productTitle.value  =  ''  ;
-    addProductForm.productCategory.value  =  ''  ;
-    addProductForm.productQuantity.value  =  ''  ;
-    addProductForm.productImage.value  =  ''  ;
-    addProductForm.productPrice.value  =  ''  ;
-    addProductForm.productRating.value  =  ''  ;
-    addProductForm.productDesc.value  =  ''  ;
+    // addProductForm.productImage.value = '';
+    addProductForm.productTitle.value = '';
+    addProductForm.productCategory.value = '';
+    addProductForm.productQuantity.value = '';
+    addProductForm.productPrice.value = '';
+    // addProductForm.productRating.value = '';
+    addProductForm.productDesc.value = '';
 
 }
+
+
+
+async function handleEditProductImage(event) {
+    event.preventDefault()
+    if (!confirm('Are you sure you want to Change the Product Image?')) return
+
+    let editProductImageForm = document.getElementById('editProductImageForm');
+    let productID = document.getElementById('productIdEdit').value;
+    let ImageFile = document.getElementById('productImageEdit').files[0]
+
+    // const ImageFile = editProductImageForm.productImage.files[0]
+    
+
+
+    const formData = new FormData(editProductImageForm);
+    formData.append("Image", ImageFile);
+
+
+    console.log(formData);
+
+
+    let res = await fetch(`${admin_baseurl}/product/updateImage/${productID}`, {
+        method: "PATCH",
+        headers: {
+            'authorization': `Bearer ${adminusertoken}`
+        },
+        body: formData
+    }).then(r => r.json())
+
+    console.log(res);
+
+    alert(res.msg);
+
+    document.getElementById('addd_close_btn').click()
+    fetchAndRenderPro()
+
+    // addProductForm.productImage.value = '';
+
+}
+
+
 
 
 
 async function handleDeleteProduct(productID) {
     console.log(productID);
 
-    if(!confirm('Are you sure you want to delete the product?')) return
+    if (!confirm('Are you sure you want to delete the product?')) return
 
     document.getElementById(productID).innerHTML = '<i class="fa fa-refresh fa-spin"></i> Delete Product'
-    
+
     let res = await fetch(`${admin_baseurl}/product/delete/${productID}`, {
         method: "DELETE",
         headers: {
@@ -241,7 +309,7 @@ async function handleDeleteProduct(productID) {
             'authorization': `Bearer ${adminusertoken}`
         }
     }).then(r => r.json())
-    
+
     document.getElementById(productID).innerHTML = 'Delete Product'
     console.log(res);
     alert(res.msg);
@@ -266,10 +334,10 @@ function handleFilterByCategory(event) {
 
 
 
-function handleNavSearchProducts(value){
+function handleNavSearchProducts(value) {
     // console.log(value);
-    
-    if(value==='' || !value){
+
+    if (value === '' || !value) {
         RenderProducts(allProductsDataDB)
         return
     }
@@ -277,12 +345,12 @@ function handleNavSearchProducts(value){
     value = value.toLowerCase()
 
 
-    const filterData = allProductsDataDB.filter((prod)=>{
-        return (prod.Title.toLowerCase().includes(value) || prod.Description.toLowerCase().includes(value) || prod.Category.toLowerCase() == value )
+    const filterData = allProductsDataDB.filter((prod) => {
+        return (prod.Title.toLowerCase().includes(value) || prod.Description.toLowerCase().includes(value) || prod.Category.toLowerCase() == value)
     })
 
     RenderProducts(filterData)
 
 
-    
+
 }

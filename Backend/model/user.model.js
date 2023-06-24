@@ -4,26 +4,28 @@ const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
 
 
-    Name: {type:String, required:true},
-    Email : {type:String , required:true , unique:true},
-    Password :{type:String, required:true},
-    Gender : {type:String, required:true , enum:["Male","Female","Other"], default:"Other"},
-    Location: {type:String, required:true},
-    Contact:{type:String, required:true},
-    isAdmin:{type:Boolean, default:false},
-    isMailVerified:{type:Boolean, default:false}
+    Name: { type: String, required: true },
+    Email: { type: String, required: true, unique: true },
+    Password: { type: String, required: true },
+    Gender: { type: String, required: true, enum: ["Male", "Female", "Other"], default: "Other" },
+    Location: { type: String, required: true },
+    Contact: { type: String, required: true },
+    isAdmin: { type: Boolean, default: false },
+    isMailVerified: { type: Boolean, default: false },
+
+    Image: { type: String, default:'https://cdn.pixabay.com/photo/2020/07/14/13/07/icon-5404125_1280.png' }
 
 
 },
 
     {
-        versionKey:false,
-        timestamps :true
-    
+        versionKey: false,
+        timestamps: true
+
     }
 )
 
 
-const UserModel = mongoose.model("userVerifications",userSchema)
+const UserModel = mongoose.model("userVerifications", userSchema)
 
 module.exports = UserModel;

@@ -11,10 +11,10 @@ const replySchema = mongoose.Schema({
         ref: ReviewModel,
         required : true
     },
-    Reply : {
+    Reply : [{
         type : String,
         required : true
-    }
+    }]
 
 
 },

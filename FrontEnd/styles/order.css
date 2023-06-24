@@ -43,6 +43,10 @@
     justify-content: space-evenly;
     align-items: center;
 }
+#allOrdersHere > div > div:nth-child(2){
+    /* border: 1px solid red; */
+    margin-left: 20px;
+}
 
 #allOrdersHere img{
     width: 100%;
@@ -53,7 +57,7 @@
 .cancelbtn{
     border: none;
     cursor: pointer;
-    background-color: #007bff;
+    background-color: red;
 
     color: white;
     border: none;
@@ -63,13 +67,13 @@
     margin-top: 10px;
     border-radius: 5px;
     font-size: 15px;
-    width: 150px;
+    width: 140px;
 }
 .cancelbtn:hover{
-    transition: 0.6s;
+    transition: 1s;
     background: transparent;
-    color: #007bff;
-    font-weight: bold;
+    color: red;
+    /* font-weight: bold; */
     border: 1px solid;
 }
 

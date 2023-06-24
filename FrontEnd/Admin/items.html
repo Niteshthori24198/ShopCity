@@ -165,7 +165,7 @@
                         id="addd_close_btn"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="addProductForm" onsubmit="handleAddProduct(event)">
+                    <form id="addProductForm" enctype="multipart/form-data" onsubmit="handleAddProduct(event)">
                         <div class="mb-2">
                             <label for="recipient-name" class="col-form-label">Title:</label>
                             <input type="text" class="form-control" id="productTitle" required>
@@ -185,17 +185,17 @@
                             <input type="number" class="form-control" id="productQuantity" required>
                         </div>
                         <div class="mb-2">
-                            <label for="recipient-name" class="col-form-label">Image Link:</label>
-                            <input type="text" class="form-control" id="productImage" required>
+                            <label for="recipient-name" class="col-form-label">Image :</label>
+                            <input type="file" class="form-control" id="productImage" required>
                         </div>
                         <div class="mb-2">
                             <label for="recipient-name" class="col-form-label">Price:</label>
                             <input type="number" class="form-control" id="productPrice" required>
                         </div>
-                        <div class="mb-2">
+                        <!-- <div class="mb-2">
                             <label for="recipient-name" class="col-form-label">Rating:</label>
                             <input type="text" class="form-control" id="productRating" required>
-                        </div>
+                        </div> -->
                         <div class="mb-2">
                             <label for="message-text" class="col-form-label">Description:</label>
                             <textarea class="form-control" id="productDesc" required></textarea>
@@ -232,6 +232,10 @@
                             <input type="text" class="form-control" id="productIdEdit" disabled>
                         </div>
                         <div class="mb-2">
+                            <label for="recipient-name" class="col-form-label">Rating:</label>
+                            <input type="text" class="form-control" id="productRatingEdit" disabled>
+                        </div>
+                        <div class="mb-2">
                             <label for="recipient-name" class="col-form-label">Title:</label>
                             <input type="text" class="form-control" id="productTitleEdit" required>
                         </div>
@@ -243,24 +247,20 @@
                                 <option value="Women">Women</option>
                                 <option value="Kids">Kids</option>
                             </select>
-                            <!-- <input type="text" class="form-control" id="productCategoryEdit" required> -->
                         </div>
                         <div class="mb-2">
                             <label for="recipient-name" class="col-form-label">Quantity:</label>
                             <input type="number" class="form-control" id="productQuantityEdit" required>
                         </div>
-                        <div class="mb-2">
-                            <label for="recipient-name" class="col-form-label">Image Link:</label>
-                            <input type="text" class="form-control" id="productImageEdit" required>
-                        </div>
+                        <!-- <div class="mb-2">
+                            <label for="recipient-name" class="col-form-label">Image :</label>
+                            <input type="file" class="form-control" id="productImageEdit" required >
+                        </div> -->
                         <div class="mb-2">
                             <label for="recipient-name" class="col-form-label">Price:</label>
                             <input type="number" class="form-control" id="productPriceEdit" required>
                         </div>
-                        <div class="mb-2">
-                            <label for="recipient-name" class="col-form-label">Rating:</label>
-                            <input type="text" class="form-control" id="productRatingEdit" required>
-                        </div>
+                       
                         <div class="mb-2">
                             <label for="message-text" class="col-form-label">Description:</label>
                             <textarea class="form-control" id="productDescEdit" required></textarea>
@@ -271,6 +271,17 @@
                         <input type="submit" class="form-control btn btn-secondary mb-3" id="recipient-name"
                             value="Update Product" style="margin-top: 10px; padding: 10px; font-size: 1.2rem;">
                         <!-- </div> -->
+
+                    </form>
+                    <form id="editProductImageForm" onsubmit="handleEditProductImage(event)">
+                        
+                        <div class="mb-2">
+                            <label for="recipient-name" class="col-form-label">Image :</label>
+                            <input type="file" class="form-control" id="productImageEdit">
+                        </div>
+                        
+                        <input type="submit" class="form-control btn btn-secondary mb-3" id="recipient-name"
+                            value="Update Product Image" style="margin-top: 10px; padding: 10px; font-size: 1.2rem;">
 
                     </form>
                 </div>

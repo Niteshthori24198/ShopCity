@@ -86,6 +86,9 @@ function getordersBox(id,date,add,status,img,title,cat,price,quant){
                     <p>Order Status :- ${status}</p>
                     <p>Shipping Address :- ${add}</p>
                     ${((status=='Delivered')|| (status=='Cancelled')) ? '' : `<button onclick="handleCancel('${id}')" class="cancelbtn" >Cancel Order</button>`}
+
+                    ${(status!=='Delivered') ?  `<button onclick="handleAddReview('${id}')" >Add Review</button>` : ''}
+                    ${(status!=='Delivered') ?  `<button onclick="handleViewReview('${id}')"  >View Review</button>` : ''}
                    
                 </div>
             </div>

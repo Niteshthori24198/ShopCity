@@ -40,8 +40,8 @@ const addReview = async (req, res) => {
             }
 
             productInfo.Total_Review_Count++;
-            productInfo.Total_Review_Sum += NewRating;
-            productInfo.Rating = productInfo.Total_Review_Count ? (productInfo.Total_Review_Sum / productInfo.Total_Review_Count) : 0;
+            productInfo.Total_Review_Sum = (+productInfo.Total_Review_Sum) + (+NewRating);
+            productInfo.Rating = productInfo.Total_Review_Count ? (productInfo.Total_Review_Sum / productInfo.Total_Review_Count).toFixed(1) : 0;
 
             await ProductModel.findByIdAndUpdate({ _id: ProductId }, { ...productInfo });
 
@@ -85,7 +85,7 @@ const updateReview = async (req, res) => {
             })
         }
 
-        if(UserID != reviewId.CustomerId ){
+        if(UserID != reviewInfo.CustomerId ){
             return res.status(404).send({
                 "error": "Unauthorized access",
                 "Success": false,
@@ -95,12 +95,12 @@ const updateReview = async (req, res) => {
 
         let ableToUpdate = true
         if(ProductId){
-            if(reviewId.ProductId != ProductId ){
+            if(reviewInfo.ProductId != ProductId ){
                 ableToUpdate = false
             }
         }
         if(OrderId){
-            if(OrderId != reviewId.OrderId){
+            if(OrderId != reviewInfo.OrderId){
                 ableToUpdate = false
             }
         }
@@ -131,6 +131,7 @@ const updateReview = async (req, res) => {
 
             // productInfo.Total_Review_Count++;
             productInfo.Total_Review_Sum = productInfo.Total_Review_Sum + NewRating - reviewInfo.NewRating;
+
             productInfo.Rating = productInfo.Total_Review_Count ? (productInfo.Total_Review_Sum / productInfo.Total_Review_Count) : 0;
 
             await ProductModel.findByIdAndUpdate({ _id: ProductId }, { ...productInfo });
@@ -177,7 +178,7 @@ const deleteReview = async (req, res) => {
         let ableToDelete = false
 
         // If User want to delete own review
-        if(UserID == reviewId.CustomerId ){
+        if(UserID == reviewInfo.CustomerId ){
 
             ableToDelete = true
 
@@ -191,12 +192,6 @@ const deleteReview = async (req, res) => {
 
             ableToDelete = true
         
-        }else{
-            return res.status(404).send({
-                "error": "Unauthorized access",
-                "Success": false,
-                "msg": "You are not able to update this review"
-            })
         }
 
         if(ableToDelete){
@@ -218,7 +213,7 @@ const deleteReview = async (req, res) => {
 
             await ReviewModel.findByIdAndDelete({_id:reviewId})
 
-            return res.status(404).send({
+            return res.status(200).send({
                 "error": "no error",
                 "Success": true,
                 "msg": "Your review has been successfully deleted."
@@ -245,11 +240,78 @@ const deleteReview = async (req, res) => {
 }
 
 const getReviewByProductId = async (req, res) => {
+    const {productId} = req.params;
+    if(!productId){
+        return res.status(404).send({
+            "error": "Review Not Found",
+            "Success": false,
+            "msg": "Review Not Found",
+            "Review" : []
+        })
+    }
+    try {
 
+        const reviewInfo = await ReviewModel.find({ ProductId: productId });
+        if(!reviewInfo){
+            return res.status(404).send({
+                "error": "Review Not Found",
+                "Success": false,
+                "msg": "Review Not Found",
+                "Review" : []
+            })
+        }
+        return res.status(200).send({
+            "error": "no error",
+            "Success": true,
+            "msg": "Review Found",
+            "Review" : reviewInfo
+        })
+        
+    } catch (error) {
+        return res.status(404).send({
+            "error": error.message,
+            "Success": false,
+            "msg": "Something Went Wrong"
+        })
+        
+    }
 }
 
 const getReviewByOrderId = async (req, res) => {
+    const {orderId} = req.params;
+    if(!orderId){
+        return res.status(404).send({
+            "error": "Review Not Found",
+            "Success": false,
+            "msg": "Review Not Found",
+            "Review" : []
+        })
+    }
+    try {
+        const reviewInfo = await ReviewModel.find({ OrderId: orderId });
+        if(!reviewInfo){
+            return res.status(404).send({
+                "error": "Review Not Found",
+                "Success": false,
+                "msg": "Review Not Found",
+                "Review" : []
+            })
+        }
+        return res.status(200).send({
+            "error": "no error",
+            "Success": true,
+            "msg": "Review Found",
+            "Review" : reviewInfo
+        })
+    }catch (error) {
+        return res.status(404).send({
+            "error": error.message,
+            "Success": false,
+            "msg": "Something Went Wrong"
+        })
+    }
 
+    
 }
 
 

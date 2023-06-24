@@ -1,11 +1,16 @@
 
 const { Router } = require('express');
 
+const multer = require('multer')
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
+
+
 const productRouter = Router();
 
 const AdminAuth = require('../middleware/admin.middleware');
 
-const { GetAllProducts, GetOneProduct, GetProductByCategory, CreateNewProduct, UpdateProduct, RemoveProduct } = require('../controller/product.controller');
+const { GetAllProducts, GetOneProduct, GetProductByCategory, CreateNewProduct, UpdateProduct, RemoveProduct,UpdateProductImage } = require('../controller/product.controller');
 
 
 /* Open routes to explore products in detailed manner */ 
@@ -29,11 +34,13 @@ productRouter.get('/getbycategory/:Category',GetProductByCategory )
 productRouter.use(AdminAuth)
 
 
-productRouter.post("/add", CreateNewProduct)
+productRouter.post("/add",upload.single('Image'), CreateNewProduct)
 
 
 
 productRouter.patch("/update/:productID", UpdateProduct)
+
+productRouter.patch("/updateImage/:productID",upload.single('Image'), UpdateProductImage)
 
 
 
