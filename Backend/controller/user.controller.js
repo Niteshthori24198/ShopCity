@@ -45,8 +45,8 @@ const s3 = new S3Client({
 const uploadProfileImage = async (req, res) => {
     console.log(req.body);
     const { UserID } = req.body
-    console.log('userid for profile image :- ',UserID);
-    
+    console.log('userid for profile image :- ', UserID);
+
     console.log(req.file);
     if (!req.file) {
         return res.status(400).send({
@@ -642,6 +642,30 @@ const GetUserData = async (req, res) => {
 
         const user = await UserModel.findById({ _id: UserID });
 
+        // check if image is expire then generate new image link from  s3
+
+        const currentDate = new Date();
+        // Get the current date and get expiration date
+        const futureDate = new Date();
+        futureDate.setDate(currentDate.getDate() + 7);
+        futureDate.setMinutes(futureDate.getMinutes() - 20);
+
+
+        if (user.S3_Url_ExipreDate && user.S3_Url_ExipreDate < currentDate) {
+            user.S3_Url_ExipreDate = futureDate;
+
+            const getObjectParams = {
+                Bucket: bucketName,
+                Key: user.S3_Url
+            }
+            const command1 = new GetObjectCommand(getObjectParams);
+            const url = await getSignedUrl(s3, command1, { expiresIn: 604800 });
+            user.Image = url;
+            await UserModel.findByIdAndUpdate({ _id: user._id }, { S3_Url_ExipreDate: futureDate, Image: url })
+        }
+
+        // check if image is expire then generate new image link from  s3
+
         res.status(200).send({
 
             "Success": true,
@@ -905,7 +929,7 @@ const getAllUsersData = async (req, res) => {
 
 
         // check if image is expire then generate new image link from  s3
-        
+
         const currentDate = new Date();
         // Get the current date and get expiration date
         const futureDate = new Date();
@@ -922,7 +946,7 @@ const getAllUsersData = async (req, res) => {
                     Key: user.S3_Url
                 }
                 const command1 = new GetObjectCommand(getObjectParams);
-                const url = await getSignedUrl(s3, command1,{ expiresIn: 604800 });
+                const url = await getSignedUrl(s3, command1, { expiresIn: 604800 });
                 user.Image = url;
                 await UserModel.findByIdAndUpdate({ _id: user._id }, { S3_Url_ExipreDate: futureDate, Image: url })
             }

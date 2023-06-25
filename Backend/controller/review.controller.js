@@ -36,6 +36,8 @@ const addReview = async (req, res) => {
             })
         }
 
+        
+
         const alreadyReviewPresent = await ReviewModel.findOne({ ProductId, OrderId, CustomerId: UserID });
         console.log('===>',alreadyReviewPresent);
         if (alreadyReviewPresent) {
@@ -55,7 +57,7 @@ const addReview = async (req, res) => {
 
             await ProductModel.findByIdAndUpdate({ _id: ProductId }, { ...productInfo });
 
-            await ReviewModel.findByIdAndUpdate({_id:alreadyReviewPresent._id}, { NewRating, Description, CustomerName: userInfoo.Name });
+            await ReviewModel.findByIdAndUpdate({_id:alreadyReviewPresent._id}, { NewRating, Description, CustomerName: userInfoo.Name, CustomerImage: userInfoo.Image });
 
             return res.status(200).send({
                 "error": "no error",
@@ -325,8 +327,32 @@ const getReviewByProductId = async (req, res) => {
             })
         }
         for(let review of reviewInfo){
-            const userInfo = await UserModel.findById({ _id: review.CustomerId });
-            review.CustomerName = userInfo.Name
+            const user = await UserModel.findById({ _id: review.CustomerId });
+
+            const currentDate = new Date();
+            // Get the current date and get expiration date
+            const futureDate = new Date();
+            futureDate.setDate(currentDate.getDate() + 7);
+            futureDate.setMinutes(futureDate.getMinutes() - 20);
+            console.log(currentDate ,user?.S3_Url_ExipreDate);
+    
+    
+            if (user.S3_Url_ExipreDate && user.S3_Url_ExipreDate < currentDate) {
+                user.S3_Url_ExipreDate = futureDate;
+    
+                const getObjectParams = {
+                    Bucket: bucketName,
+                    Key: user.S3_Url
+                }
+                const command1 = new GetObjectCommand(getObjectParams);
+                const url = await getSignedUrl(s3, command1, { expiresIn: 604800 });
+                user.Image = url;
+                await UserModel.findByIdAndUpdate({ _id: user._id }, { S3_Url_ExipreDate: futureDate, Image: url })
+            }
+            
+            review.CustomerImage = user.Image
+            
+            review.CustomerName = user.Name
         }
         return res.status(200).send({
             "error": "no error",
