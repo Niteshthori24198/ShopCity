@@ -164,3 +164,44 @@ function handleItemClick(id){
     localStorage.setItem('productID',id)
     location.href = "./view/details.html"
 }
+
+
+
+
+
+let slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+    slideIndex += n
+    showSlides(slideIndex);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+    slideIndex = n
+    showSlides(n);
+}
+
+var idOfTimeOut = ''
+
+function showSlides(n=null) {
+    let i;
+    let slides = document.getElementsByClassName("mySlides");
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+    if(!n){
+        slideIndex++;
+    }
+    if (slideIndex > slides.length) { slideIndex = 1 }
+    if(slideIndex <= 0) { slideIndex = slides.length }
+
+    slides[slideIndex - 1].style.display = "block";
+
+    if(idOfTimeOut){
+        clearTimeout(idOfTimeOut)
+    }
+    idOfTimeOut = setTimeout(showSlides, 2000); // Change image every 2 seconds
+}
