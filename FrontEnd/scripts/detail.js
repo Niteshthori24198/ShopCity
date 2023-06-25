@@ -47,7 +47,7 @@ function ShowProduct(data) {
 
     let product = `
                     <div>
-                        <img src="${data.Image}" alt="Error"  class="zoom" data-magnify-src="${data.Image}" />
+                        <img src="${data.Image}" alt="Error"  class="zoom" data-magnify-src="${data.Image}"/>
                     </div>
 
                     <div>
@@ -75,7 +75,7 @@ function ShowProduct(data) {
     productdetailcont.innerHTML = product;
 
     $(document).ready(function () {
-        $(".zoom").magnify();
+        $(".zoom").magnify(50);
     });
 
 }
@@ -203,7 +203,8 @@ function renderReviews(data) {
     productreviewcont.innerHTML = data.map((review) => {
         return `<div>
                     <div>
-                        <h2> <i class="fa-solid fa-user"></i> ${review.CustomerName}</h2>
+                        <img src="${review.CustomerImage}" alt="${review.CustomerName}" style="width:51px"/>
+                        <span style="font-weight:bold">${review.CustomerName}</span> 
                     </div>
                     <div>
                         <p>${review.Description}</p>

@@ -18,6 +18,8 @@
     /* border: 1px solid red; */
 }
 
+
+
 #newProductBtn{
     margin-top: 15px;
     /* padding: 5px 7px; */
@@ -99,13 +101,29 @@
 }
 
 #productreviewcont > div > div:nth-child(1){
-    padding-left: 40px;
+   
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    gap: 25px;
+    justify-content: space-evenly;
+    align-items: center;
+
 }
 #productreviewcont > div > div:nth-child(3){
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
+}
+
+#productreviewcont > div > div:nth-child(1)>img{
+   border-radius: 50%;
+}
+
+#productreviewcont > div > div:nth-child(1)>img:hover{
+   transform: scale(1.10);
+   transition: 1s ease;
+   cursor: pointer;
 }
 
 
@@ -169,6 +187,11 @@
     
     }
  
+    #productreviewcont > div > div:nth-child(1)>img:hover{
+        transform: scale(1.05);
+        transition: 0.8s ease;
+        cursor: pointer;
+     }
    
 
 
