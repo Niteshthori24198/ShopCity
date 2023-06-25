@@ -69,7 +69,7 @@ userRouter.delete("/delete" , Auth, deleteUserProfile)
 
 
 // upload profile Image
-userRouter.post('/upload-profile-image', Auth, upload.single('Image'), uploadProfileImage)
+userRouter.post('/upload-profile-image',  upload.single('Image'),Auth, uploadProfileImage)
 
 userRouter.delete('/delete-profile-image', Auth, removeProfileImage)
 

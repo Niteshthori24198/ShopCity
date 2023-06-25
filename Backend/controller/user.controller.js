@@ -45,6 +45,8 @@ const s3 = new S3Client({
 const uploadProfileImage = async (req, res) => {
     console.log(req.body);
     const { UserID } = req.body
+    console.log('userid for profile image :- ',UserID);
+    
     console.log(req.file);
     if (!req.file) {
         return res.status(400).send({
@@ -53,7 +55,7 @@ const uploadProfileImage = async (req, res) => {
 
             "msg": "Kindly Pass Only JPEG or PNG Image",
 
-            "Success": fasle
+            "Success": false
 
         })
 
@@ -66,7 +68,7 @@ const uploadProfileImage = async (req, res) => {
 
             "msg": "Kindly Pass Only JPEG or PNG Image",
 
-            "Success": fasle
+            "Success": false
 
         })
     }
@@ -77,7 +79,7 @@ const uploadProfileImage = async (req, res) => {
             return res.status(400).send({
                 "error": "User Not Found",
                 "msg": "User Not Found",
-                "Success": fasle
+                "Success": false
             })
         }
 
@@ -161,7 +163,7 @@ const removeProfileImage = async (req, res) => {
             return res.status(400).send({
                 "error": "User Not Found",
                 "msg": "User Not Found",
-                "Success": fasle
+                "Success": false
             })
         }
         if (userInfo.S3_Url) {
@@ -173,7 +175,10 @@ const removeProfileImage = async (req, res) => {
             await s3.send(command);
             console.log('successfully deleted image from s3');
         }
-        await UserModel.findByIdAndUpdate({ _id: UserID }, { S3_Url: null, S3_Url_ExipreDate: null, Image:'https://cdn.pixabay.com/photo/2020/07/14/13/07/icon-5404125_1280.png' })
+        await UserModel.findByIdAndUpdate({ _id: UserID }, {
+            S3_Url: null, S3_Url_ExipreDate: null,
+            Image: 'https://cdn.pixabay.com/photo/2020/07/14/13/07/icon-5404125_1280.png'
+        })
 
         return res.status(200).send({
             "msg": "Your Profile Image has been Successfully Deleted",
@@ -882,36 +887,62 @@ const getAllUsersData = async (req, res) => {
     try {
 
         const searchFilter = new RegExp(search, 'i');
+        let users = []
 
         if (isAdmin === undefined) {
 
-            const users = await UserModel.find({ Name: searchFilter }).skip(limit * (page - 1)).limit(limit)
-
-            return res.status(200).send({
-
-                "Success": true,
-
-                "UsersData": users,
-
-                "msg": "User data fetched Successfully."
-            })
+            users = await UserModel.find({ Name: searchFilter }).skip(limit * (page - 1)).limit(limit)
 
         }
 
         else {
 
-            const users = await UserModel.find({ Name: searchFilter, isAdmin }).skip(limit * (page - 1)).limit(limit)
-
-            return res.status(200).send({
-
-                "Success": true,
-
-                "UsersData": users,
-
-                "msg": "User data fetched Successfully."
-            })
+            users = await UserModel.find({ Name: searchFilter, isAdmin }).skip(limit * (page - 1)).limit(limit)
 
         }
+
+
+
+
+        // check if image is expire then generate new image link from  s3
+        
+        const currentDate = new Date();
+        // Get the current date and get expiration date
+        const futureDate = new Date();
+        futureDate.setDate(currentDate.getDate() + 7);
+        futureDate.setMinutes(futureDate.getMinutes() - 20);
+
+        for (let user of users) {
+
+            if (user.S3_Url_ExipreDate && user.S3_Url_ExipreDate < currentDate) {
+                user.S3_Url_ExipreDate = futureDate;
+
+                const getObjectParams = {
+                    Bucket: bucketName,
+                    Key: user.S3_Url
+                }
+                const command1 = new GetObjectCommand(getObjectParams);
+                const url = await getSignedUrl(s3, command1,{ expiresIn: 604800 });
+                user.Image = url;
+                await UserModel.findByIdAndUpdate({ _id: user._id }, { S3_Url_ExipreDate: futureDate, Image: url })
+            }
+
+        }
+
+        // check if image is expire then generate new image link from  s3
+
+
+
+
+
+        return res.status(200).send({
+
+            "Success": true,
+
+            "UsersData": users,
+
+            "msg": "User data fetched Successfully."
+        })
 
     }
 
@@ -1012,7 +1043,7 @@ const googleAuthentication = async (req, res) => {
 
     // const frontendURL = `https://qr-insight-craft.netlify.app/`
 
-    const frontendURL = "http://127.0.0.1:5500/FrontEnd/index.html"
+    const frontendURL = "http://127.0.0.1:5501/FrontEnd/index.html"
 
     res.send(`
                 <a href="${frontendURL}?token=${token}" id="myid" style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #222222; margin: 0; padding: 0; overflow: scroll;">
