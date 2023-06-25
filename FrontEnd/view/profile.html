@@ -26,6 +26,9 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <script src="jquery-3.6.4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
 
     <!-- Home page Style sheet -->
 
@@ -110,7 +113,7 @@
 
         <div>
 
-            <img src="https://cdn.pixabay.com/photo/2020/07/14/13/07/icon-5404125_1280.png" alt="User Image">
+            <img src="https://cdn.pixabay.com/photo/2020/07/14/13/07/icon-5404125_1280.png" alt="User Image" id="user_profile_image_here">
             <h2 id="user_name_here"></h2>
 
         </div>
@@ -128,16 +131,35 @@
         </div>
 
         <div>
-            <button id="updateUserInfobtn">Save</button>
             <button onclick="UpdatePassword()">Change Password</button>
+            
+            <!-- A button to open the popup form -->
+            <button class="open-button" onclick="openForm()">Profile</button>
+
+            <button id="updateUserInfobtn">Save</button>
+
+            <!-- The form -->
+            <div class="form-popup" id="myForm">
+                <form id="profileImageForm" enctype="multipart/form-data" onsubmit="handleAddProfileImage(event)" class="form-container">
+                    <!-- <h1>Profile</h1> -->
+
+                    <label for="email"><b>Profile Image</b></label>
+                    <input type="file" accept="image/*" id="profileImageInput">
+
+                    <button type="submit" class="btn">Save</button>
+                    <button type="button" class="btn cancel" onclick="handleRemoveProfieImage()">Remove</button>
+                    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                </form>
+            </div>
+
         </div>
 
 
         <div id="Updateuserpass">
 
             <input type="password" placeholder="Enter Current Password" id="user_old_password">
-            <input type="password" placeholder="Enter new Password" id="user_new_password" >
-            <input type="password" placeholder="Confirm Your Password" id="user_new_password_confirm" >
+            <input type="password" placeholder="Enter new Password" id="user_new_password">
+            <input type="password" placeholder="Confirm Your Password" id="user_new_password_confirm">
             <div>
 
                 <button onclick="UpdateUserNewPassword()" id="savePasswordBTN">Save</button>
