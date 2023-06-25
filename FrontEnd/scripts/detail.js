@@ -45,33 +45,32 @@ function ShowProduct(data) {
     // console.log(data.Image,data.Title,data.Price)
     console.log(`<img src="${data.Image}" alt="Error"  class="zoom" data-magnify-src="${data.Image}" />`)
 
-    let product = `<div>
-        <img src="${data.Image}" alt="Error"  class="zoom" data-magnify-src="${data.Image}" />
-    </div>
+    let product = `
+                    <div>
+                        <img src="${data.Image}" alt="Error"  class="zoom" data-magnify-src="${data.Image}" />
+                    </div>
 
-    <div>
+                    <div>
 
-        <div class="nitesh_product_detail">
-            <h2>Title : ${data.Title}</h2>
-            <p>Category : ${data.Category}</p>
-            <p>Details : ${data.Description}</p>
-            ${data.Rating ? getRatingStarDetail(data.Rating)  : '<p  id="newProductBtn"><span>New Product</span></p>' }
-            <p>Price : <i class="fa-solid fa-indian-rupee-sign"></i> ${data.Price} </p>
-            
-            ${data.Quantity <= 0 ? '<p> Out Of Stock <p>' : `Quantity : ${getQuantitySelectTag(data.Quantity)}`}        
-           
+                        <div class="nitesh_product_detail">
+                            <h2>Title : ${data.Title}</h2>
+                            <p>Category : ${data.Category}</p>
+                            <p>Details : ${data.Description}</p>
+                            ${data.Rating ? getRatingStarDetail(data.Rating) : '<p  id="newProductBtn"><span>New Product</span></p>'}
+                            <p>Price : <i class="fa-solid fa-indian-rupee-sign"></i> ${data.Price} </p>
+                            
+                            ${data.Quantity <= 0 ? '<p> Out Of Stock <p>' : `Quantity : ${getQuantitySelectTag(data.Quantity)}`}        
+                        
 
-        </div>
+                        </div>
 
-        <div>
-            <button id="addToCartBtnhai" class="niteshcartbutton" ${data.Quantity <= 0 && 'disabled'}>Add To Cart</button>
-        </div>
+                        <div>
+                            <button id="addToCartBtnhai" class="niteshcartbutton" ${data.Quantity <= 0 && 'disabled'}>Add To Cart</button>
+                        </div>
 
-    </div>
+                    </div>
     
-    <div>
-
-    </div>`
+                `
 
     productdetailcont.innerHTML = product;
 
@@ -82,7 +81,7 @@ function ShowProduct(data) {
 }
 
 
-function getRatingStarDetail(num){
+function getRatingStarDetail(num) {
     return ` <p>Rating : <i data-star="${num}" style="font-size: 25px;"></i> ${num} / 5 </p>`
 }
 
@@ -164,7 +163,7 @@ function AddItemToCart(token) {
 
                 alert(data.msg)
             }
-            
+
         })
         .catch((err) => {
             document.getElementById('addToCartBtnhai').innerHTML = 'Add To Cart'
@@ -181,28 +180,28 @@ function AddItemToCart(token) {
 const productreviewcont = document.getElementById('productreviewcont')
 
 showReviewToPage()
-function showReviewToPage(){
+function showReviewToPage() {
     fetch(`${Baseurl}/review/get-by-productId/${productID}`)
-    .then((res)=>{
-        return res.json()
-    }).then((data)=>{
-        console.log(data)
-        if(data.Success){
-            renderReviews(data.Review)
-        }
-    }).catch((err)=>{
-        console.log(err)
-    })
+        .then((res) => {
+            return res.json()
+        }).then((data) => {
+            console.log(data)
+            if (data.Success) {
+                renderReviews(data.Review)
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
 }
 
-function renderReviews(data){
-    console.log('===>',data)
-    if(!data.length){
+function renderReviews(data) {
+    console.log('===>', data)
+    if (!data.length) {
         console.log('kuch nhi');
         return
     }
-    productreviewcont.innerHTML = data.map((review)=>{
-       return  `<div>
+    productreviewcont.innerHTML = data.map((review) => {
+        return `<div>
                     <div>
                         <h2> <i class="fa-solid fa-user"></i> ${review.CustomerName}</h2>
                     </div>
