@@ -42,10 +42,12 @@ body {
     border: 1px solid;
     margin: 7px;
     height: 30px;
-    border-radius: 7px;
+    border-radius: 5px;
     font-weight: 500;
     font-size: 18px;
     text-align: center;
+    border: 1px solid gray;
+    outline: none;
 }
 
 #userprofilecont>div:nth-child(3) {
@@ -107,6 +109,8 @@ body {
     text-align: center;
     height: 28px;
     border-radius: 7px;
+    outline: none;
+    border: 1px solid gray;
 }
 
 
@@ -136,88 +140,24 @@ body {
 
 
 
-
-
-/* Profile Pic Start*/
-/* .picture-container {
-    position: relative;
-    cursor: pointer;
-    text-align: center;
-}
-
-.picture {
-    width: 106px;
-    height: 106px;
-    background-color: #999999;
-    border: 4px solid #CCCCCC;
-    color: #FFFFFF;
-    border-radius: 50%;
-    margin: 0px auto;
-    overflow: hidden;
-    transition: all 0.2s;
-    -webkit-transition: all 0.2s;
-}
-
-.picture:hover {
-    border-color: #2ca8ff;
-}
-
-.content.ct-wizard-green .picture:hover {
-    border-color: #05ae0e;
-}
-
-.content.ct-wizard-blue .picture:hover {
-    border-color: #3472f7;
-}
-
-.content.ct-wizard-orange .picture:hover {
-    border-color: #ff9500;
-}
-
-.content.ct-wizard-red .picture:hover {
-    border-color: #ff3b30;
-}
-
-.picture input[type="file"] {
-    cursor: pointer;
-    display: block;
-    height: 100%;
-    left: 0;
-    opacity: 0 !important;
-    position: absolute;
-    top: 0;
-    width: 100%;
-}
-
-#wizardPicturePreview {
-    width: 1000px;   
-
-} */
-
-
-
 /* Button used to open the contact form - fixed at the bottom of the page */
 .open-button {
-    background-color: #555;
+    background-color: #007bff;
     color: white;
     padding: 16px 20px;
     border: none;
     cursor: pointer;
-    opacity: 0.8;
-    /* position: fixed; */
-    /* bottom: 23px; */
-    /* right: 28px; */
     width: 280px;
 }
 
 /* The popup form - hidden by default */
 .form-popup {
     display: none;
-    position: fixed;
-    bottom: 140px;
-    right: 35px;
+    position: absolute;
+    top: 50%;
+    left: 39%;
     border: 3px solid #f1f1f1;
-    z-index: 9;
+    z-index: 20;
 }
 
 /* Add styles to the form container */
@@ -225,21 +165,22 @@ body {
     max-width: 300px;
     padding: 10px;
     background-color: white;
+    text-align: center;
 }
 
 /* Full-width input fields */
-.form-container input[type=text],
-.form-container input[type=password] {
+.form-container input[type=file]{
     width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
+    padding: 10px 40px;
+    margin: 10px 0 20px 0;
     border: none;
     background: #f1f1f1;
+    height: 40px;
+   
 }
 
 /* When the inputs get focus, do something */
-.form-container input[type=text]:focus,
-.form-container input[type=password]:focus {
+.form-container input[type=text]:focus{
     background-color: #ddd;
     outline: none;
 }
@@ -248,12 +189,13 @@ body {
 .form-container .btn {
     background-color: #04AA6D;
     color: white;
-    padding: 16px 20px;
+    /* padding: 16px 20px; */
     border: none;
     cursor: pointer;
     width: 100%;
     margin-bottom: 10px;
-    opacity: 0.8;
+    /* opacity: 0.8; */
+    height: 35px;
 }
 
 /* Add a red background color to the cancel button */
@@ -298,10 +240,16 @@ body {
     }
 
 
-  
+    .form-popup {
+       
+        top: 32.5%;
+        left: 34%;
+       
+    }
 
-
-
+    #userprofilecont>div:nth-child(3) {
+        width: 80%;
+    }
 
 }
 
@@ -315,7 +263,7 @@ body {
 
 
     #userprofilecont>div:nth-child(3)>button {
-        width: 135px;
+        width: 180px;
         padding: 6px 4px;
     }
 
@@ -343,8 +291,20 @@ body {
         width: 90%;
     }
 
+    #userprofilecont>div:nth-child(3) {
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+    #userprofilecont>div:nth-child(3) > button{
+        margin: 10px auto;
+    }
 
     
-
+    .form-popup {
+        top: 52%;
+        left: 12%;
+    }
 
 }
