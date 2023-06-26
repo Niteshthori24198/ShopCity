@@ -57,7 +57,7 @@ function fetchAndRenderCart() {
     })
     .then((data) => {
 
-        //console.log(data);
+        console.log("cart response",data);
 
         if(data.Success){
 
@@ -96,6 +96,13 @@ function Emptycart() {
     let MainCartSection = document.getElementById("Nitesh_Cart_items");
 
     MainCartSection.innerHTML = `<p>Your Shopping Cart is Empty !</p>`
+    MainCartSection.style.backgroundImage = `url('https://thumbs.gfycat.com/CompleteShallowFlyingsquirrel-size_restricted.gif')`
+    MainCartSection.style.height="480px"
+    MainCartSection.style.display = 'flex';
+    MainCartSection.style.justifyContent='center'
+    MainCartSection.style.backgroundRepeat='no-repeat'
+    MainCartSection.style.backgroundPosition='center'
+    MainCartSection.style.backgroundSize = 'auto';
 }
 
 

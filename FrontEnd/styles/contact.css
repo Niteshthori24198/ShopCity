@@ -8,10 +8,15 @@ body{
     width: 35%;
     text-align: center;
     margin: 50px auto;
-    padding: 55px auto;
+    padding: 40px auto;
     /* border: 1px solid red; */
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
+
+#contactcontainer > h2{
+    padding-top: 15px;
+}
+
 
 #contactqueryForm{
     /* border: 2px solid green; */
@@ -29,7 +34,10 @@ body{
     text-align: center;
     padding: 5px;
     border-radius: 7px;
-    margin: 10px auto;
+    margin: 15px auto;
+    border: none;
+    outline: none;
+    border: 1px solid gray;
 }
 
 #users_query_{
@@ -46,8 +54,8 @@ body{
     background-color: #007bff;
     color: white;
     width: 35%;
-    outline: none;
     border: none;
+    outline: none;
 }
 
 #contactqueryForm > input:nth-child(5):hover{

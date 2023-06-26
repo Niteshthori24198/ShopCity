@@ -133,14 +133,60 @@ function renderUserName() {
 
 
 
-logedOutBtn.addEventListener('click', () => {
+logedOutBtn.addEventListener('click', async() => {
 
     if (confirm('Are you sure you want to log out?')) {
-        localStorage.removeItem('usertoken');
 
-        location.reload();
+        const userLogOut = await userLogedOutHandle()
+
+        if(userLogOut){
+
+            localStorage.removeItem('usertoken');
+
+            alert('Logout Successfull !')
+    
+            location.reload();
+        }
+
+        else{
+            alert(userLogOut)
+        }
+
     }
 
 
 })
 
+
+
+async function userLogedOutHandle(){
+
+    let userloggedout=false;
+
+    const Response = await fetch(`${BASEURL}/user/logout`,{
+        method:'GET',
+        headers:{
+            'content-type':'application/json',
+            'authorization':`Bearer ${usertoken}`
+        }
+    })
+    .then((res)=>{
+        return res.json()
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+
+
+    const data = await Response
+
+    if(data.Success){
+        userloggedout=true
+    }
+    else{
+        userloggedout=data.msg;
+    }
+
+    return userloggedout
+
+}

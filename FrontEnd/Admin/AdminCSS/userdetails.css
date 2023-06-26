@@ -53,6 +53,7 @@ body,
     border-radius: 8px;
     /* background-color: red;
     color: yellow; */
+    font-size: 15px;
 
 }
 
@@ -95,7 +96,7 @@ body,
 
 
 .activeBtn {
-    background-color: green;
+    background-color: rgb(41, 144, 41);
     padding: 3px 10px;
     border: none;
     margin-left: 10px;
@@ -106,7 +107,7 @@ body,
 }
 
 .blockBtn {
-    background-color: red;
+    background-color: rgb(238, 51, 51);
     padding: 3px 10px;
     border: none;
     margin-left: 10px;
@@ -120,7 +121,7 @@ body,
 .blockBtn:hover,
 .activeBtn:hover {
     background-color: transparent;
-    color: orangered;
+    color: rgb(230, 80, 26);
     border: 1px solid;
     font-weight: bold;
 }
