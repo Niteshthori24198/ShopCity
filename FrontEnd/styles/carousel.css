@@ -9,6 +9,11 @@
     /* height: 50%; */
     /* position: relative; */
     margin: auto;
+    /* height: 100px; */
+}
+/* Slideshow container */
+.slideshow-container img {
+    width:  100%;
 }
 
 /* Hide the images by default */
@@ -17,7 +22,7 @@
     /* border: 2px solid blue; */
 }
 .mySlides img {
-    width: 100vw;
+    width: 50%;
     /* border: 1px solid red; */
 }
 

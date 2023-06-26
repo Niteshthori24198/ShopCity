@@ -77,7 +77,7 @@ function getProductCard(product) {
                         <span class="price"> ${product.Price} </span>
                          <span class="onwards"> onwards </span> 
                     </p>
-                    <p> ${product.Description.substring(0, 15)}...</p>
+                    <p> ${product.Description.substring(0, 25)}...</p>
 
                     ${product.Rating ? getRatingStar(product.Rating, product.Total_Review_Count)  : '<p  id="newProductBtn"><span>New Product</span></p>' }
                     
@@ -119,6 +119,7 @@ function AppendPaginationButton(n) {
 function getbutton(pno, text) {
     return `<div><button class="pagination-button" data-page-number="${pno}" onclick={cahngeBtn('${pno}')}>${text}</button></div>`
 }
+
 
 function cahngeBtn(pn){
     console.log(pn);
