@@ -99,7 +99,7 @@
 }
 .myproductimage>img:hover{
     border-radius: 10px;
-    transform: scale(1.25);
+    transform: scale(1.05);
     transition: transform 1.3s ease;
 }
 

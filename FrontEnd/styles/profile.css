@@ -26,6 +26,7 @@ body {
 #userprofilecont img {
     width: 15%;
     margin: auto;
+    border-radius: 5%;
 }
 
 

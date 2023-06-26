@@ -113,7 +113,7 @@
 
         <div>
 
-            <img src="https://cdn.pixabay.com/photo/2020/07/14/13/07/icon-5404125_1280.png" alt="User Image" id="user_profile_image_here">
+            <img src="https://cdn.pixabay.com/photo/2020/07/14/13/07/icon-5404125_1280.png" alt="User Image" id="user_profile_image_here" >
             <h2 id="user_name_here"></h2>
 
         </div>
@@ -146,8 +146,8 @@
                     <label for="email"><b>Profile Image</b></label>
                     <input type="file" accept="image/*" id="profileImageInput">
 
-                    <button type="submit" class="btn">Save</button>
-                    <button type="button" class="btn cancel" onclick="handleRemoveProfieImage()">Remove</button>
+                    <button type="submit" class="btn" id="savePasswordBtn">Save</button>
+                    <button type="button" class="btn cancel" onclick="handleRemoveProfieImage()" id="removePhotoBtn">Remove</button>
                     <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
                 </form>
             </div>

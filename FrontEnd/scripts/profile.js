@@ -126,10 +126,10 @@ userdataeditbtn.addEventListener("click", () => {
 
     }
 
-    if (!validatePhoneNumber(usercontact.value)) {
-        alert('Please enter a valid phone number!')
-        return
-    }
+    // if (!validatePhoneNumber(usercontact.value)) {
+    //     alert('Please enter a valid phone number!')
+    //     return
+    // }
 
 
 
@@ -146,6 +146,7 @@ userdataeditbtn.addEventListener("click", () => {
 function UpdateUserInfo(userpayload) {
 
     userdataeditbtn.innerHTML = '<i class="fa fa-refresh fa-spin"></i> Save'
+    userdataeditbtn.disabled = true;
     fetch(`${profile_baseurl}/user/update`, {
         method: 'PATCH',
         headers: {
@@ -160,6 +161,7 @@ function UpdateUserInfo(userpayload) {
         .then((data) => {
 
             userdataeditbtn.innerHTML = 'Save'
+            userdataeditbtn.disabled = false;
             if (data.Success) {
 
                 alert(data.msg)
@@ -173,6 +175,7 @@ function UpdateUserInfo(userpayload) {
         })
         .catch((err) => {
             userdataeditbtn.innerHTML = 'Save'
+            userdataeditbtn.disabled = false;
             console.log(err)
         })
 
@@ -207,7 +210,7 @@ function UpdateUserNewPassword() {
     const confirmpass = document.getElementById('user_new_password_confirm').value;
 
     if (!validatePassword(newpass)) {
-        alert('Please enter a strong password! ( At least one uppercase letter, one lowercase letter, and one digit )')
+        alert('Please enter a strong password! ( At least one uppercase letter, one lowercase letter, one digit and length must be 8 )')
         return
     }
 
@@ -233,6 +236,7 @@ function UpdateUserNewPassword() {
     }
 
     savePasswordBTN.innerHTML = '<i class="fa fa-refresh fa-spin"></i> Save'
+    savePasswordBTN.disabled = true
 
     fetch(`${profile_baseurl}/user/changepass`, {
         method: 'PATCH',
@@ -248,6 +252,7 @@ function UpdateUserNewPassword() {
         .then((data) => {
 
             savePasswordBTN.innerHTML = 'Save'
+            savePasswordBTN.disabled = false
 
             if (data.Success) {
 
@@ -261,6 +266,7 @@ function UpdateUserNewPassword() {
         })
         .catch((err) => {
             savePasswordBTN.innerHTML = 'Save'
+            savePasswordBTN.disabled = false
             console.log(err)
         })
 
@@ -311,6 +317,8 @@ function closeForm() {
 
 async function handleAddProfileImage(event) {
     event.preventDefault()
+    document.getElementById('savePasswordBtn').innerHTML = '<i class="fa fa-refresh fa-spin"></i> Save'
+    document.getElementById('savePasswordBtn').disabled = true;
 
     let profileImageForm = document.getElementById('profileImageForm');
 
@@ -331,26 +339,32 @@ async function handleAddProfileImage(event) {
     }).then(r => r.json())
 
     console.log(res);
-
+    document.getElementById('savePasswordBtn').innerHTML = 'Save'
+    document.getElementById('savePasswordBtn').disabled = false;
     alert(res?.msg);
-   location.reload()
+    location.reload()
 }
 
 
-function handleRemoveProfieImage(){
-    if(!confirm('Do you Want to Remove your Profile Image ?')){
+function handleRemoveProfieImage() {
+    if (!confirm('Do you Want to Remove your Profile Image ?')) {
         return
     }
-    fetch(`${profile_baseurl}/user/delete-profile-image`,{
+    document.getElementById('removePhotoBtn').innerHTML = '<i class="fa fa-refresh fa-spin"></i> Remove'
+    document.getElementById('removePhotoBtn').disabled = true;
+    fetch(`${profile_baseurl}/user/delete-profile-image`, {
         method: 'DELETE',
         headers: {
             'authorization': `Bearer ${users_token}`
         }
-    }).then(r => r.json()).then(data =>{
+    }).then(r => r.json()).then(data => {
         console.log(data);
         location.reload()
     }).catch(err => {
         alert('Something Went Wrong')
         console.log(err);
+    }).finally(() => {
+        document.getElementById('removePhotoBtn').innerHTML = 'Remove'
+        document.getElementById('removePhotoBtn').disabled = false;
     })
 }

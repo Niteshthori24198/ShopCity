@@ -113,8 +113,8 @@
         <form id="registeruser">
 
 
-            <input type="email" placeholder="Enter your Email-id" id="new_user_email" required>
             <input type="text" placeholder="Enter your Name" id="new_user_name" required>
+            <input type="email" placeholder="Enter your Email" id="new_user_email" required>
 
             <!-- <input type="text" placeholder="Enter your Gender" id="new_user_gen" required> -->
             <select name="" id="new_user_gen" required>
@@ -129,7 +129,13 @@
             <input type="password" placeholder="Enter your Password" id="new_user_pass" required>
             <input type="password" placeholder="Re-enter your Password" id="new_user_conf_pass" required>
 
-            <!-- <input type="submit" value="Register"> -->
+            <div>
+                <input type="text" id="captchImage" onselectstart="return false" onCopy="return false" onCut="return false" disabled>
+                <i class="fas fa-sync" id="refreshCaptch" onclick="generateCaptcha()"></i>
+            </div>
+
+            <input type="text" placeholder="Enter Captcha" id="new_user_captcha"  onpaste="return false;"  autocomplete=off required >
+
             <button type="submit" id="registerFormSubmitBtn"> Register </button>
 
 

@@ -12,6 +12,7 @@ loginform.addEventListener("submit", function (e){
     e.preventDefault();
 
     document.getElementById('loginBtnHai').innerHTML = `<i class="fa fa-refresh fa-spin"></i> Login`
+    document.getElementById('loginBtnHai').disabled = true;
     
     userLogin();
 
@@ -55,6 +56,7 @@ function LoginNewUser(user){
 
         console.log(data);
         document.getElementById('loginBtnHai').innerHTML = `Login`
+        document.getElementById('loginBtnHai').disabled = false;
 
         if(data.Success){
 
@@ -75,6 +77,7 @@ function LoginNewUser(user){
     .catch((err)=>{
 
         document.getElementById('loginBtnHai').innerHTML = `Login`
+        document.getElementById('loginBtnHai').disabled = false;
 
         alert(data.error);
         
@@ -87,7 +90,7 @@ function LoginNewUser(user){
 
 function HandleGoogleSignup(){
 
-    document.getElementById('niteshgoogleauth').innerHTML = `<i class="fa fa-refresh fa-spin"></i> Google`;
+    document.getElementById('niteshgoogleauth').innerHTML = `<i class="fa fa-refresh fa-spin"></i> Continue With Google`;
     window.location.href = `${BaseURL}/user/auth/google`;
 
 }

@@ -61,27 +61,51 @@ function RenderUsers(users) {
 }
 
 
-function GetUserCard({ isAdmin, Location, Gender, Contact, Email, Name, _id }) {
+function GetUserCard({ isAdmin, Location, Gender, Contact, Email, Name, _id, Image, isMailVerified, isBlocked }) {
 
 
     return `
    
     <div>
-        
-
         <div>
-
-            <p>Name : ${Name}</p>
-            <p>Email-Id : ${Email}</p>
-            <p>Gender : ${Gender}</p>
-
+            <img src="${Image}" alt="user-image">
         </div>
 
         <div>
 
-            <p>Address : ${Location}</p>
-            <p>Contact : ${Contact}</p>
-            <p>Role : ${isAdmin ? "Admin" : "User"}</p>
+            <p><span>Name</span> : ${Name}</p>
+            <p><span>Email-Id</span> : ${Email}</p>
+            <p><span>Gender</span> : ${Gender}</p>
+            ${Contact != '-' ? `<p><span>Contact</span> : ${Contact}</p>` : ''}
+            ${Location != '-' ? `<p><span>Address</span> : ${Location}</p>` : ''}
+            
+            </div>
+            
+        <div>
+            
+            <p> <span>ID</span> : ${_id} </p>
+            <p>
+                <span>Role</span> : <span style="color: ${isAdmin ? 'green' : '#007bff'};"> 
+                    ${isAdmin ? "Admin" : "User"} 
+                </span>
+            </p>
+            <p >
+                <span> Mail </span> : <span style="color: ${isMailVerified ? 'green' : 'red'};">
+                    ${isMailVerified ? "Verified" : "Not Verified"}
+                </span>
+            </p>
+
+            ${isBlocked ?
+            `<p style="color: red; display:flex">
+                     <span style="width:150px">Blocked</span> 
+                     <button class="activeBtn" onclick="handleActiveUserAccount('${_id}')" >Activate</button> 
+                </p>`
+            :
+            `<p style="color: green; display:flex"> 
+                    <span style="width:150px">Active</span> 
+                    <button class="blockBtn" onclick="handleBlockUserAccount('${_id}')">Block</button> 
+                </p>`
+        }
 
         </div>
 
@@ -104,13 +128,13 @@ function handleUpdateRole(userid, isAdmin) {
 
     // console.log("---> click data",userid,isAdmin, typeof isAdmin)
 
-    if(!confirm("Are you sure you want to update the user's role?")){
+    if (!confirm("Are you sure you want to update the user's role?")) {
         return
     }
 
-    document.getElementById(userid).innerHTML ='<i class="fa fa-refresh fa-spin"></i> Update Role'
+    document.getElementById(userid).innerHTML = '<i class="fa fa-refresh fa-spin"></i> Update Role'
 
-    
+
 
     if (isAdmin === 'true') {
         isAdmin = false
@@ -139,7 +163,7 @@ function handleUpdateRole(userid, isAdmin) {
         })
         .then((data) => {
 
-            document.getElementById(userid).innerHTML ='Update Role'
+            document.getElementById(userid).innerHTML = 'Update Role'
 
             if (data.Success) {
                 alert(data.msg)
@@ -150,7 +174,7 @@ function handleUpdateRole(userid, isAdmin) {
             }
         })
         .catch((err) => {
-            document.getElementById(userid).innerHTML ='Update Role'
+            document.getElementById(userid).innerHTML = 'Update Role'
             alert(data)
             console.log(err)
         })
@@ -163,10 +187,10 @@ function handleUpdateRole(userid, isAdmin) {
 function SentEmailAnnouncement(email, name) {
 
     document.getElementById(email).innerHTML = '<i class="fa fa-refresh fa-spin"></i> Announcement'
-    
-    setTimeout(()=>{
+
+    setTimeout(() => {
         document.getElementById(email).innerHTML = 'Announcement'
-    },3000)
+    }, 3000)
 
     let subject = 'Important Announcement from Shop City'
     name = name.split(' ').join('%20')
@@ -178,10 +202,10 @@ function SentEmailAnnouncement(email, name) {
 
 
 
-function handleSearchNav_users(value){
+function handleSearchNav_users(value) {
     // console.log(value);
-    
-    if(value==='' || !value){
+
+    if (value === '' || !value) {
         RenderUsers(allUserData_userDetails)
         return
     }
@@ -189,12 +213,65 @@ function handleSearchNav_users(value){
     value = value.toLowerCase()
 
 
-    const filterData = allUserData_userDetails.filter((user)=>{
+    const filterData = allUserData_userDetails.filter((user) => {
         return (user.Name.toLowerCase().includes(value) || user.Email.toLowerCase().includes(value) || user.Location.toLowerCase().includes(value) || user.Gender.toLowerCase() == value)
     })
 
     RenderUsers(filterData)
 
 
-    
+
+}
+
+
+function handleBlockUserAccount(id) {
+    if (!confirm('Are you sure you want to block this user?')) {
+        return
+    }
+    fetch(`${admin_baseurl}/user/blockUserAccount/${id}`, {
+        method: "PATCH",
+        headers: {
+            'content-type': 'application/json',
+            'authorization': `Bearer ${adminusertoken}`
+        }
+    }).then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if (data.Success) {
+                alert(data.msg)
+            } else {
+                alert(data.error)
+            }
+        }).catch(err => {
+            console.log(err);
+            alert('Something Went Wrong.(Try Again.)')
+        }).finally(() => {
+            location.reload()
+        })
+}
+
+function handleActiveUserAccount(id) {
+    if (!confirm('Are you sure you want to Activate this user?')) {
+        return
+    }
+    fetch(`${admin_baseurl}/user/activeUserAccount/${id}`, {
+        method: "PATCH",
+        headers: {
+            'content-type': 'application/json',
+            'authorization': `Bearer ${adminusertoken}`
+        }
+    }).then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if (data.Success) {
+                alert(data.msg)
+            } else {
+                alert(data.error)
+            }
+        }).catch(err => {
+            console.log(err);
+            alert('Something Went Wrong.(Try Again.)')
+        }).finally(() => {
+            location.reload()
+        })
 }

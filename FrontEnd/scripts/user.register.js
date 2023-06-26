@@ -15,6 +15,11 @@ registerForm.addEventListener('submit',(e)=> {
         return
 
     }
+    else if(registerForm.new_user_captcha.value !== registerForm.captchImage.value){
+        alert('Captcha Not Match')
+        generateCaptcha()
+        return
+    }
     
     else{
         
@@ -45,19 +50,23 @@ function validatePhoneNumber(phoneNumber) {
 const registerNewUser = () => {
 
     document.getElementById('registerFormSubmitBtn').innerHTML = '<i class="fa fa-refresh fa-spin"></i> Register'
+    document.getElementById('registerFormSubmitBtn').disabled = true;
+
 
     const pass = registerForm.new_user_pass.value
     const phone = registerForm.new_user_contact.value
     
-    if(!validatePhoneNumber(phone)){
-        document.getElementById('registerFormSubmitBtn').innerHTML = 'Register'
-        alert('Please enter a valid phone number!')
-        return
-    }
+    // if(!validatePhoneNumber(phone)){
+    //     document.getElementById('registerFormSubmitBtn').innerHTML = 'Register'
+    //     alert('Please enter a valid phone number!')
+    //     return
+    // }
 
     if(!validatePassword(pass)){
         document.getElementById('registerFormSubmitBtn').innerHTML = 'Register'
-        alert('Please enter a strong password! ( At least one uppercase letter, one lowercase letter, and one digit )')
+        document.getElementById('registerFormSubmitBtn').disabled = false;
+        generateCaptcha()
+        alert('Please enter a Strong Password! ( At least one Uppercase letter, one Lowercase letter, one Digit and length must be grater then 8. )')
         return
     }
 
@@ -104,6 +113,8 @@ const AddNewUserToDB = async (payload) => {
         console.log(data)
 
         document.getElementById('registerFormSubmitBtn').innerHTML = 'Register'
+        document.getElementById('registerFormSubmitBtn').disabled = false;
+        generateCaptcha()
 
         if(data.Success){
 
@@ -123,6 +134,8 @@ const AddNewUserToDB = async (payload) => {
     .catch((err)=>{
 
         document.getElementById('registerFormSubmitBtn').innerHTML = 'Register'
+        document.getElementById('registerFormSubmitBtn').disabled = false;
+        generateCaptcha()
 
         alert(data.msg);
 
@@ -130,3 +143,21 @@ const AddNewUserToDB = async (payload) => {
 
 
 }
+
+
+
+// handle Captcha
+
+const captchImage = document.getElementById('captchImage')
+
+const captchData = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
+
+const generateCaptcha = () => {
+    let str = ''
+    for(let i=0; i<6; i++){
+        const rand = Math.floor(Math.random() * captchData.length)
+        str += captchData[rand]
+    }
+    captchImage.value = str;
+}
+generateCaptcha()

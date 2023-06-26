@@ -1,4 +1,5 @@
-body , *{
+body,
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -6,7 +7,7 @@ body , *{
 }
 
 
-.admin-container{
+.admin-container {
     display: grid;
     width: 90%;
     grid-template-columns: 1fr 4fr;
@@ -16,12 +17,12 @@ body , *{
 }
 
 
-.admin-container > div{
+.admin-container>div {
     /* border: 2px solid green; */
     border-radius: 7px;
 }
 
-.admin-container > div:nth-child(1){
+.admin-container>div:nth-child(1) {
     display: flex;
     flex-direction: column;
     padding: 25px 30px;
@@ -30,19 +31,19 @@ body , *{
     background-color: rgba(168, 195, 222, 0.15);
 }
 
-.admin-container a{
+.admin-container a {
     text-decoration: none;
 }
 
-.admin-container a:hover{
+.admin-container a:hover {
     color: gray;
 }
 
 
-#adminusercontainer > div{
+#adminusercontainer>div {
 
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: 1fr 4fr 3fr 3fr;
     gap: 15px;
     margin: 0px auto 10px auto;
     padding: 15px;
@@ -55,16 +56,27 @@ body , *{
 
 }
 
-
-
-
-#adminusercontainer > div > div:nth-child(3){
-    display: flex;
+#adminusercontainer img {
+    width: 100px;
     margin: auto;
+    display: block;
+}
+
+#adminusercontainer span {
+    font-weight: 600;
 }
 
 
-#adminusercontainer > div button{
+
+#adminusercontainer>div>div:nth-child(4) {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    /* border: 1px solid red; */
+}
+
+
+#adminusercontainer div>div:nth-child(4) button {
     margin: 10px;
     border: none;
     background-color: #007bff;
@@ -73,7 +85,7 @@ body , *{
     padding: 5px 10px;
 }
 
-#adminusercontainer > div button:hover{
+#adminusercontainer div>div:nth-child(4) button:hover {
     background: transparent;
     border: 1px solid black;
     color: rgb(22, 22, 190);
@@ -82,17 +94,45 @@ body , *{
 
 
 
+.activeBtn {
+    background-color: green;
+    padding: 3px 10px;
+    border: none;
+    margin-left: 10px;
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+    width: 100px;
+}
 
+.blockBtn {
+    background-color: red;
+    padding: 3px 10px;
+    border: none;
+    margin-left: 10px;
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 100px;
 
+}
+
+.blockBtn:hover,
+.activeBtn:hover {
+    background-color: transparent;
+    color: orangered;
+    border: 1px solid;
+    font-weight: bold;
+}
 
 
 /*  media querires */
 
 
-@media only screen and (min-width:750px) and (max-width:1000px){
+@media only screen and (min-width:750px) and (max-width:1000px) {
 
 
-    .admin-container{
+    .admin-container {
         grid-template-columns: 1fr;
         text-align: center;
     }
@@ -100,21 +140,21 @@ body , *{
 
 
 
-    #adminusercontainer > div{
-        grid-template-columns: repeat(2,1fr);
+    #adminusercontainer>div {
+        grid-template-columns: repeat(2, 1fr);
         text-align: justify;
     }
 
-    #adminusercontainer > div > div:nth-child(3){
+    /* #adminusercontainer > div > div:nth-child(3){
         grid-area: 2/1/3/3;
-    }
-       
-    #adminusercontainer > div button{
+    } */
+
+    #adminusercontainer>div button {
         margin: 18px;
         border: none;
         border-radius: 4px;
         padding: 6px 25px;
-        
+
     }
 
 
@@ -123,10 +163,10 @@ body , *{
 
 
 
-@media only screen and (max-width:750px){
+@media only screen and (max-width:750px) {
 
 
-    .admin-container{
+    .admin-container {
         grid-template-columns: 1fr;
         text-align: center;
     }
@@ -134,9 +174,19 @@ body , *{
 
 
 
-    #adminusercontainer > div{
-        grid-template-columns: repeat(1,1fr);
+    #adminusercontainer>div {
+        grid-template-columns: repeat(1, 1fr);
         text-align: justify;
+    }
+
+    #adminusercontainer>div>div:nth-child(4) {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        width: 100%;
+        margin: auto;
+        margin-left: 5px;
+        /* border: 1px solid red; */
     }
 
 

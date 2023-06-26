@@ -74,6 +74,8 @@ function ShowProduct(data) {
 
     productdetailcont.innerHTML = product;
 
+    
+
     $(document).ready(function () {
         $(".zoom").magnify(50);
     });
@@ -188,9 +190,12 @@ function showReviewToPage() {
             console.log(data)
             if (data.Success) {
                 renderReviews(data.Review)
+            }else{
+                productreviewcont.innerHTML = `<h3 style="text-align: center; margin: 30px;">No Review Yet 🔕</h3>`
             }
         }).catch((err) => {
             console.log(err)
+            productreviewcont.innerHTML = `<h3 style="text-align: center; margin: 30px;">No Review Yet 🔕</h3>`
         })
 }
 
@@ -198,6 +203,7 @@ function renderReviews(data) {
     console.log('===>', data)
     if (!data.length) {
         console.log('kuch nhi');
+        productreviewcont.innerHTML = `<h3 style="text-align: center; margin: 30px;">No Review Yet 🔕</h3>`
         return
     }
     productreviewcont.innerHTML = data.map((review) => {

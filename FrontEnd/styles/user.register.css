@@ -1,12 +1,11 @@
-
-body{
-    margin:0;
+body {
+    margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
 }
 
 
-.register-form{
+.register-form {
     width: 35%;
     margin: 50px auto;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -20,25 +19,28 @@ body{
     padding: 20px 0px 0px 0px;
 }
 
-.register-form input, #registerFormSubmitBtn, #new_user_gen{
+.register-form input,
+#registerFormSubmitBtn,
+#new_user_gen {
     width: 70%;
     height: 30px;
     margin: 10px auto;
     padding-left: 10px;
     border: none;
     outline: none;
-    /* border-bottom: 2px solid black; */
-    border-bottom: 1px solid #666;
-    /* border-top: 1px solid #333; */
-    border-radius: 6px; 
+    letter-spacing: 1px;
+    border-bottom: 1px solid gray;
+    border-top: 1px solid gray;
+    border-radius: 6px;
     text-align: center;
 }
 
-.register-form input:nth-child(1){
+.register-form input:nth-child(1) {
     margin-top: 30px;
 }
 
-.register-form input:nth-child(8), #registerFormSubmitBtn{
+.register-form input:nth-child(8),
+#registerFormSubmitBtn {
     background-color: rgb(24, 22, 22);
     background-color: #007bff;
     color: white;
@@ -47,31 +49,99 @@ body{
     margin-top: 20px;
     margin-bottom: 30px;
     cursor: pointer;
-}
-.register-form input:nth-child(8):hover, #registerFormSubmitBtn:hover{
-    color: white;
-    font-size: 15px;
-    cursor: pointer;
     letter-spacing: 1px;
 }
 
-@media screen and (max-width:1000px) and (min-width:750px) {
-    .register-form{
+
+#registerFormSubmitBtn:hover {
+    background-color: transparent;
+    color: #007bff;
+    border: 1px solid;
+    font-size: 15px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: 0.5s ease;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+
+
+#captchImage {
+    margin: 10px;
+    width: 200px;
+    /* padding: 20px; */
+    font-weight: 400;
+    padding-bottom: 0px;
+    height: 50px;
+    user-select: none;
+    text-decoration: line-through;
+    font-style: italic;
+    font-size: x-large;
+    background-color: #e6e8eb;
+    color:  rgb(66, 49, 49);
+    margin-left: 45px;
+    letter-spacing: 8px;
+}
+
+#refreshCaptch{
+    font-size: 24px;
+    margin-left: 10px;
+}
+
+#refreshCaptch:hover {
+    rotate: 280deg;
+    cursor: pointer;
+    color: #007bff;
+}
+
+@media screen and (max-width:1000px) and (min-width:850px) {
+    .register-form {
         width: 60%;
         margin: 10vh auto;
     }
-    .register-form input, #registerFormSubmitBtn, #new_user_gen{
+
+    .register-form input,
+    #registerFormSubmitBtn,
+    #new_user_gen {
         width: 60%;
     }
-    
+
 }
 
 @media screen and (max-width:850px) {
-    .register-form{
+    .register-form {
         width: 80%;
         /* margin: 10vh auto; */
     }
-    .register-form input, #registerFormSubmitBtn, #new_user_gen{
+
+    .register-form input,
+    #registerFormSubmitBtn,
+    #new_user_gen {
         width: 80%;
+    }
+
+
+    #captchImage {
+        margin: 10px;
+        width: 150px;
+        /* padding: 20px; */
+        padding: 0px;
+        font-weight: 400;
+        padding-bottom: 0px;
+        height: 40px;
+        user-select: none;
+        text-decoration: line-through;
+        font-style: italic;
+        font-size: 18px;
+        background-color: #e6e8eb;
+        color:  rgb(66, 49, 49);
+        margin-left: 15px;
+        letter-spacing: 8px;
+    }
+    
+    #refreshCaptch{
+        font-size: 24px;
+        margin-left: 10px;
     }
 }
