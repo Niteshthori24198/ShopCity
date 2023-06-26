@@ -13,7 +13,8 @@ const {
     updateReview,
     deleteReview,
     getReviewByProductId,
-    getReviewByOrderId
+    getReviewByOrderId,
+    getAllReview
     
 } = require('../controller/review.controller');
 
@@ -28,6 +29,9 @@ reviewRouter.delete('/delete/:reviewId', Auth, deleteReview);
 reviewRouter.get('/get-by-productId/:productId', getReviewByProductId);
 
 reviewRouter.get('/get-by-orderId/:orderId', Auth, getReviewByOrderId);
+
+
+reviewRouter.get('/getAllReview', AdminAuth, getAllReview)
 
 
 

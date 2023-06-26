@@ -334,7 +334,6 @@ const getReviewByProductId = async (req, res) => {
             const futureDate = new Date();
             futureDate.setDate(currentDate.getDate() + 7);
             futureDate.setMinutes(futureDate.getMinutes() - 20);
-            console.log(currentDate ,user?.S3_Url_ExipreDate);
     
     
             if (user.S3_Url_ExipreDate && user.S3_Url_ExipreDate < currentDate) {
@@ -409,6 +408,51 @@ const getReviewByOrderId = async (req, res) => {
 }
 
 
+const getAllReview = async (req,res) => {
+    try {
+        const reviewInfo = await ReviewModel.find();
+        for(let review of reviewInfo){
+            const user = await UserModel.findById({ _id: review.CustomerId });
+
+            const currentDate = new Date();
+            // Get the current date and get expiration date
+            const futureDate = new Date();
+            futureDate.setDate(currentDate.getDate() + 7);
+            futureDate.setMinutes(futureDate.getMinutes() - 20);
+            console.log(currentDate ,user?.S3_Url_ExipreDate);
+    
+    
+            if (user.S3_Url_ExipreDate && user.S3_Url_ExipreDate < currentDate) {
+                user.S3_Url_ExipreDate = futureDate;
+    
+                const getObjectParams = {
+                    Bucket: bucketName,
+                    Key: user.S3_Url
+                }
+                const command1 = new GetObjectCommand(getObjectParams);
+                const url = await getSignedUrl(s3, command1, { expiresIn: 604800 });
+                user.Image = url;
+                await UserModel.findByIdAndUpdate({ _id: user._id }, { S3_Url_ExipreDate: futureDate, Image: url })
+            }
+            
+            review.CustomerImage = user.Image
+            
+            review.CustomerName = user.Name
+        }
+        return res.status(200).send({
+            "error": "no error",
+            "Success": true,
+            "msg": "Review Found",
+            "Review": reviewInfo
+        })
+    } catch (error) {
+        return res.status(404).send({
+            "error": error.message,
+            "Success": false,
+            "msg": "Something Went Wrong"
+        })
+    }
+}
 
 
 
@@ -418,7 +462,8 @@ module.exports = {
     updateReview,
     deleteReview,
     getReviewByProductId,
-    getReviewByOrderId
+    getReviewByOrderId,
+    getAllReview
 
 
 }

@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const jwt = require('jsonwebtoken');
 const UserModel = require('../model/user.model');
+const BlacklistModel = require('../model/blacklist.model');
 
 
 
@@ -33,6 +34,16 @@ const Auth = async (req,res,next)=>{
         const decoded = jwt.verify(token , process.env.SecretKey);
 
         if(decoded){
+
+            const isBlacklist = await BlacklistModel.findOne({token:token})
+            if(isBlacklist){
+                return res.status(400).send({
+                    error : "Your Access Token is Blacklisted. (Kindly Login Again)",
+                    msg : "Kindly Login Again",
+                    Success : false
+                })
+            }
+
             const userInfo = await UserModel.findById( { _id: decoded.UserID });
             if(userInfo.isBlocked){
                 return res.status(400).send({

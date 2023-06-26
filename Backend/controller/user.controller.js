@@ -1218,15 +1218,18 @@ const googleAuthentication = async (req, res) => {
 
     const frontendURL = "http://127.0.0.1:5501/FrontEnd/index.html"
 
+    const imgSrc = 'https://media.tenor.com/IYuR6tycVWEAAAAd/satisfying-rings.gif'
+    const imgSrcAlt = 'https://i.pinimg.com/originals/b8/3e/c9/b83ec9d8ac7a6f2dfaa93fa4f150e3b6.gif'
+
     res.send(`
                 <a href="${frontendURL}?token=${token}" id="myid" style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #222222; margin: 0; padding: 0; overflow: scroll;">
-                    <img style="width:100%;" src="https://cdn.dribbble.com/users/1787505/screenshots/7300251/media/a351d9e0236c03a539181b95faced9e0.gif" alt="https://i.pinimg.com/originals/c7/e1/b7/c7e1b7b5753737039e1bdbda578132b8.gif">
+                    <img style="width:100%;" src="${imgSrc}" alt="${imgSrcAlt}">
                 </a>
                 <script>
                     let a = document.getElementById('myid')
                     setTimeout(()=>{
                         a.click()
-                    },3000)
+                    },5000)
                     console.log(a)
                 </script>
         `)
