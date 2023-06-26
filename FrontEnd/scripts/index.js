@@ -14,7 +14,7 @@ if (tokenfromurl) {
     var currentUrl = window.location.href;
 
     if (currentUrl.indexOf('?token=') !== -1) {
-       
+
         var newUrl = currentUrl.replace(/(\?|&)token=[^&]*(&|$)/, '$1');
 
         history.replaceState(null, null, newUrl);
@@ -70,8 +70,8 @@ async function fetchUserDetails() {
             LogedInBtn.style.display = 'none'
 
             // console.log(loggedInUser.isAdmin)
-            if(loggedInUser.UserData.isAdmin){
-                document.querySelector('.dropdown-content > a:nth-child(3)').style.display='inline-block'
+            if (loggedInUser.UserData.isAdmin) {
+                document.querySelector('.dropdown-content > a:nth-child(3)').style.display = 'inline-block'
             }
 
             LogedInSuccess = true

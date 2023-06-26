@@ -24,6 +24,7 @@ const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex'
 // aws s3 services 
 const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+const BlacklistModel = require('../model/blacklist.model');
 
 // aws s3 bucket credentials
 const bucketName = process.env.bucketName
@@ -1053,6 +1054,95 @@ const updateUserPassword = async (req, res) => {
 
 
 
+const logout = async (req, res) => {
+    const authToken = req.headers['authorization'];
+
+    if (!authToken) {
+        return res.status(400).send({
+
+            "msg": "Token Not Found.",
+
+            "error": "Token Not Found.",
+
+            "Success": false
+
+        })
+    }
+
+    const token = authToken.trim().split(' ')[1];
+
+    try {
+
+        const decoded = jwt.decode(token)
+        console.log(decoded);
+        const expireDate = new Date(decoded.exp * 1000);
+
+        const currentDate = new Date();
+        await BlacklistModel.deleteMany({ expirationDate: { $lte: currentDate } });
+
+        const newBlacklistToken = new BlacklistModel({
+            token: token,
+            expirationDate: expireDate
+        })
+
+        await newBlacklistToken().save()
+        
+        return res.status(200).send({
+
+            "error": "no error",
+    
+            "Success": true,
+            "msg": "Logout Successfull."
+        })
+
+
+    }
+
+    catch (error) {
+
+        return res.status(400).send({
+
+            "error": error.message,
+
+            "msg": "Something Wrong with the Token passed",
+
+            "Success": false,
+
+
+        })
+
+    }
+}
+
+
+
+const clearExpiredBlacklistToken = async (req, res) => {
+    try {
+        const currentDate = new Date();
+        await BlacklistModel.deleteMany({ expirationDate: { $lte: currentDate } });
+        return res.status(200).send({
+
+            "error": "no error",
+    
+            "Success": true,
+            "msg": "Successfull Cleared Expired Blacklist Token. "
+        })
+    } catch (error) {
+        return res.status(400).send({
+
+            "error": error.message,
+
+            "msg": "Something Wrong with the Token passed",
+
+            "Success": false,
+
+
+        })
+
+    }
+}
+
+
 // Google Authentication code
 
 const googleAuthentication = async (req, res) => {
@@ -1145,6 +1235,9 @@ const getallQueries = async (req, res) => {
 
 
 
+
+
+
 module.exports = {
 
     RegisterNewUser,
@@ -1163,6 +1256,8 @@ module.exports = {
     resetPassword,
     saveNewPassword,
     uploadProfileImage,
-    removeProfileImage
+    removeProfileImage,
+    logout,
+    clearExpiredBlacklistToken
 
 }
