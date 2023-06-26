@@ -1208,31 +1208,37 @@ const googleAuthentication = async (req, res) => {
 
     // Successful authentication, redirect home.
 
-    console.log(req.user)
+    console.log('requested user from gauth ===>',req.user)
 
     const user = req.user
+    if(user=='Blocked User'){
+        return res.send(`
+                    <h1 style="text-align:center;"> Your Account is Blocked. </h1> 
+                    <p style="text-align:center;"> Kindly Contact Admin. [Kishansharma6377@gmail.com / Niteshkumar240198@gmail.com] </p>`
+        )
+    }else{
 
-    let token = jwt.sign({ UserID: user._id }, process.env.SecretKey, { expiresIn: "24h" })
+        let token = jwt.sign({ UserID: user._id }, process.env.SecretKey, { expiresIn: "24h" })
+    
+        const frontendURL = "http://127.0.0.1:5501/FrontEnd/index.html"
+    
+        const imgSrc = 'https://media.tenor.com/IYuR6tycVWEAAAAd/satisfying-rings.gif'
+        const imgSrcAlt = 'https://i.pinimg.com/originals/b8/3e/c9/b83ec9d8ac7a6f2dfaa93fa4f150e3b6.gif'
+    
+        return res.send(`
+                    <a href="${frontendURL}?token=${token}" id="myid" style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #222222; margin: 0; padding: 0; overflow: scroll;">
+                        <img style="width:100%;" src="${imgSrc}" alt="${imgSrcAlt}">
+                    </a>
+                    <script>
+                        let a = document.getElementById('myid')
+                        setTimeout(()=>{
+                            a.click()
+                        },5000)
+                        console.log(a)
+                    </script>
+            `)
+    }
 
-    // const frontendURL = `https://qr-insight-craft.netlify.app/`
-
-    const frontendURL = "http://127.0.0.1:5501/FrontEnd/index.html"
-
-    const imgSrc = 'https://media.tenor.com/IYuR6tycVWEAAAAd/satisfying-rings.gif'
-    const imgSrcAlt = 'https://i.pinimg.com/originals/b8/3e/c9/b83ec9d8ac7a6f2dfaa93fa4f150e3b6.gif'
-
-    res.send(`
-                <a href="${frontendURL}?token=${token}" id="myid" style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #222222; margin: 0; padding: 0; overflow: scroll;">
-                    <img style="width:100%;" src="${imgSrc}" alt="${imgSrcAlt}">
-                </a>
-                <script>
-                    let a = document.getElementById('myid')
-                    setTimeout(()=>{
-                        a.click()
-                    },5000)
-                    console.log(a)
-                </script>
-        `)
 
 }
 

@@ -12,36 +12,36 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 passport.use(new GoogleStrategy({
 
-    clientID: process.env.googleclientid,
-    clientSecret: process.env.googleclientsecret,
-    callbackURL: "http://localhost:3000/user/auth/google/callback"
+  clientID: process.env.googleclientid,
+  clientSecret: process.env.googleclientsecret,
+  callbackURL: "http://localhost:3000/user/auth/google/callback"
 
-  },
+},
 
-  async function(accessToken, refreshToken, profile, cb) {
+async function (accessToken, refreshToken, profile, cb) {
 
     try {
 
       let Email = profile._json.email
 
-      const user = await UserModel.findOne({Email})
+      const user = await UserModel.findOne({ Email })
 
       //console.log(user)
 
-      if(!user){
+      if (!user) {
 
         console.log("adding new user")
 
         let newuser = new UserModel({
 
           Email,
-          Name:profile._json.name,
-          Password: randomPassword() ,
-          Gender:"Male",
-          isAdmin:false,
-          Contact:"-",
-          Location:"-",
-          isMailVerified:true
+          Name: profile._json.name,
+          Password: randomPassword(),
+          Gender: "Male",
+          isAdmin: false,
+          Contact: "-",
+          Location: "-",
+          isMailVerified: true
         })
 
         await newuser.save()
@@ -49,23 +49,31 @@ passport.use(new GoogleStrategy({
         return cb(null, newuser)
 
       }
-      
-      else{
+
+      else {
 
         console.log("user is present db")
+        if(user.isBlocked){
 
-        return cb(null, user)
+          return cb(null, 'Blocked User')
+          
+        }else{
+
+          return cb(null, user)
+
+        }
+
 
       }
-    } 
+    }
     catch (error) {
 
       console.log(error)
 
     }
-    
+
     //console.log(profile)
-    
+
   }
 
 ));
@@ -73,4 +81,4 @@ passport.use(new GoogleStrategy({
 
 
 
-module.exports = {passport}
+module.exports = { passport }

@@ -70,12 +70,16 @@ function getProductCard(product) {
                 </div>
                 <div class="myproductdetails">
                     
-                    <h3>Title : ${product.Title}</h3>
-                    <p>Category : ${product.Category}</p>
-                    <p>Description : ${product.Description.substring(0, 5)}</p>
-                    <p>Price : <i class="fa-solid fa-indian-rupee-sign"></i> ${product.Price} </p>
+                    <h3 > ${product.Title} </h3>
 
-                    ${product.Rating ? getRatingStar(product.Rating)  : '<p  id="newProductBtn"><span>New Product</span></p>' }
+                    <p > 
+                        <i class="fa-solid fa-indian-rupee-sign" class="price" style="font-size: 20px;"></i>
+                        <span class="price"> ${product.Price} </span>
+                         <span class="onwards"> onwards </span> 
+                    </p>
+                    <p> ${product.Description.substring(0, 25)}...</p>
+
+                    ${product.Rating ? getRatingStar(product.Rating, product.Total_Review_Count)  : '<p  id="newProductBtn"><span>New Product</span></p>' }
                     
                     
                 </div>
@@ -84,8 +88,8 @@ function getProductCard(product) {
 
 }
 
-function getRatingStar(num){
-    return `<p>Rating :  <i data-star="${num}" style="font-size: 25px;"></i> ${num} / 5</p>`
+function getRatingStar(num, Total_Review_Count){
+    return `<p class="totalstars"> <i data-star="${num}" style="font-size: 25px;"></i> ${num} / 5 <span class="reviewerCount">${Total_Review_Count} Reviews</span></p>`
 }
 
 

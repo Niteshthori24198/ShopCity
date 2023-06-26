@@ -71,6 +71,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
+    /* line-height: 20px; */
 }
 
 
@@ -108,11 +109,33 @@
     text-align: start;
 }
 
+.reviewerCount{
+    background-color: rgb(233, 229, 229);
+    padding: 0px 5px;
+    color: #666;
+    border-radius: 5px;
+    font-size: 10px;
+}
+.onwards{
+    color: gray;
+    font-size: 10px;
+}
+.price{
+    /* margin-right: 5px; */
+    font-size: 20px;
+    font-weight: 800;
+}
+#Niteshproductscontainer  h3{
+    color: rgb(73, 58, 60);
+    font-weight: 550;
+    letter-spacing: 1px;
+}
+
 #newProductBtn{
     margin-top: 15px;
     /* padding: 5px 7px; */
 }
-
+    
 #newProductBtn > span{
     background-color: rgb(26, 189, 26);
     color: white;
