@@ -1066,6 +1066,7 @@ const updateUserPassword = async (req, res) => {
 
 
 const logout = async (req, res) => {
+
     const authToken = req.headers['authorization'];
 
     if (!authToken) {
@@ -1093,7 +1094,7 @@ const logout = async (req, res) => {
             expirationDate: expireDate
         })
 
-        await newBlacklistToken().save()
+        await newBlacklistToken.save()
         
         return res.status(200).send({
 
@@ -1222,7 +1223,7 @@ const googleAuthentication = async (req, res) => {
     
         const frontendURL = "http://127.0.0.1:5501/FrontEnd/index.html"
     
-        const imgSrc = 'https://media.tenor.com/IYuR6tycVWEAAAAd/satisfying-rings.gif'
+        const imgSrc = 'https://cdn.kibrispdr.org/data/1750/3-dot-loading-gif-35.gif'
         const imgSrcAlt = 'https://i.pinimg.com/originals/b8/3e/c9/b83ec9d8ac7a6f2dfaa93fa4f150e3b6.gif'
     
         return res.send(`

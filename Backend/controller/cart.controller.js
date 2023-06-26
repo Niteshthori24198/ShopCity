@@ -221,7 +221,7 @@ const GetCartItems = async (req, res) => {
 
         else {
 
-            res.status(400).send({
+            res.status(200).send({
 
                 "Success": false,
 
