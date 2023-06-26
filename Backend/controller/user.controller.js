@@ -410,13 +410,24 @@ const LoginUser = async (req, res) => {
 
         if (verifyuser) {
 
+            console.log('user data =>',verifyuser);
             if (!verifyuser.isMailVerified) {
-                console.log(verifyuser);
                 return res.status(400).send({
 
                     "msg": "Kindly Verify Email ID.",
 
                     "error": "Email is Not Verified ",
+
+                    "Success": false
+
+                })
+            }
+            if(verifyuser.isBlocked){
+                return res.status(400).send({
+
+                    "msg": "Kindly Contact To Manager",
+
+                    "error": "Your account is blocked by Admin.(Contact To manager.)",
 
                     "Success": false
 
@@ -1077,9 +1088,6 @@ const logout = async (req, res) => {
         console.log(decoded);
         const expireDate = new Date(decoded.exp * 1000);
 
-        const currentDate = new Date();
-        await BlacklistModel.deleteMany({ expirationDate: { $lte: currentDate } });
-
         const newBlacklistToken = new BlacklistModel({
             token: token,
             expirationDate: expireDate
@@ -1121,9 +1129,7 @@ const clearExpiredBlacklistToken = async (req, res) => {
         const currentDate = new Date();
         await BlacklistModel.deleteMany({ expirationDate: { $lte: currentDate } });
         return res.status(200).send({
-
             "error": "no error",
-    
             "Success": true,
             "msg": "Successfull Cleared Expired Blacklist Token. "
         })
@@ -1140,6 +1146,59 @@ const clearExpiredBlacklistToken = async (req, res) => {
         })
 
     }
+}
+
+
+
+const blockUserAccount = async (req, res) => {
+    const { accountId } = req.params;
+    try {
+        const userInfo = await UserModel.findById({ _id: accountId });
+        if(userInfo.Email == 'admin.shopcity@gmail.com'){
+            return res.status(400).send({
+                error : "You are not able to block this account",
+                msg : "You are not able to block this account",
+                Success : false
+            })
+        }
+        await UserModel.findByIdAndUpdate({ _id: accountId }, { isBlocked: true })
+        return res.status(200).send({
+            error : "no error",
+            msg : "User Blocked Successfully",
+            Success : true
+        })
+
+    } catch (error) {
+        return res.status(400).send({
+            error : error.message,
+            msg : "Something Went Wrong",
+            Success : false
+        })
+    }
+
+
+}
+
+
+const activeUserAccount = async (req, res) => {
+    const { accountId } = req.params;
+    try {
+        
+        await UserModel.findByIdAndUpdate({ _id: accountId }, { isBlocked: false })
+        return res.status(200).send({
+            error : "no error",
+            msg : "User Account Activate Successfully",
+            Success : true
+        })
+
+    } catch (error) {
+        return res.status(400).send({
+            error : error.message,
+            msg : "Something Went Wrong",
+            Success : false
+        })
+    }
+
 }
 
 
@@ -1258,6 +1317,8 @@ module.exports = {
     uploadProfileImage,
     removeProfileImage,
     logout,
-    clearExpiredBlacklistToken
+    clearExpiredBlacklistToken,
+    blockUserAccount,
+    activeUserAccount
 
 }

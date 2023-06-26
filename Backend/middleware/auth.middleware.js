@@ -1,15 +1,16 @@
 require('dotenv').config();
 
 const jwt = require('jsonwebtoken');
+const UserModel = require('../model/user.model');
 
 
 
-const Auth = (req,res,next)=>{
+const Auth = async (req,res,next)=>{
 
 
     const authToken = req.headers['authorization'];
 
-    // console.log("---~~~~~~ auth MW >>> token ", authToken)
+    // console.log("--- auth MW >>> token ", authToken)
 
     if(!authToken){
 
@@ -32,6 +33,14 @@ const Auth = (req,res,next)=>{
         const decoded = jwt.verify(token , process.env.SecretKey);
 
         if(decoded){
+            const userInfo = await UserModel.findById( { _id: decoded.UserID });
+            if(userInfo.isBlocked){
+                return res.status(400).send({
+                    error : "Your Account is Blocked by Admin.(Contact To manager.)",
+                    msg : "User is Blocked",
+                    Success : false
+                })
+            }
 
             req.body.UserID = decoded.UserID;
 

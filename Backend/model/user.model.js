@@ -16,7 +16,7 @@ const userSchema = mongoose.Schema({
     Image: { type: String, default: 'https://cdn.pixabay.com/photo/2020/07/14/13/07/icon-5404125_1280.png' },
     S3_Url: { type: String },
     S3_Url_ExipreDate: { type: Date },
-
+    isBlocked: { type: Boolean, default: false },
 
 },
 

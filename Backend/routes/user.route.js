@@ -16,7 +16,7 @@ const AdminAuth = require('../middleware/admin.middleware');
 
 const { passport } = require("../config/google.auth")
 
-const { RegisterNewUser, LoginUser, GetUserData , updateUserData, deleteUserProfile, getAllUsersData, updateUserRole,updateUserPassword,googleAuthentication , UserQuery, getallQueries, confirmEmail, resetPassword, requestForgotPassword, saveNewPassword, uploadProfileImage, removeProfileImage, logout, clearExpiredBlacklistToken} = require('../controller/user.controller')
+const { RegisterNewUser, LoginUser, GetUserData , updateUserData, deleteUserProfile, getAllUsersData, updateUserRole,updateUserPassword,googleAuthentication , UserQuery, getallQueries, confirmEmail, resetPassword, requestForgotPassword, saveNewPassword, uploadProfileImage, removeProfileImage, logout, clearExpiredBlacklistToken, blockUserAccount, activeUserAccount} = require('../controller/user.controller')
 
 
 
@@ -38,9 +38,9 @@ userRouter.post('/saveNewPassword', Auth ,saveNewPassword);
 userRouter.post("/login", LoginUser )
 
 
-userRouter.get("/logout", logout)
+userRouter.get("/logout", Auth, logout)
 
-userRouter.get("/clear-Expired-Blacklist-Token", clearExpiredBlacklistToken)
+userRouter.delete("/clear-Expired-Blacklist-Token", clearExpiredBlacklistToken)
 
 
 userRouter.post("/query", UserQuery)
@@ -91,6 +91,10 @@ userRouter.put("/updateRole" , AdminAuth , updateUserRole )
 
 
 userRouter.get("/getquery", AdminAuth, getallQueries)
+
+
+userRouter.patch('/blockUserAccount/:accountId', AdminAuth, blockUserAccount)
+userRouter.patch('/activeUserAccount/:accountId', AdminAuth, activeUserAccount)
 
 
 module.exports = userRouter;
