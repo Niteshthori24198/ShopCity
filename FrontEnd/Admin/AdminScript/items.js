@@ -79,8 +79,9 @@ function GetItemCard({ _id, Category, Description, Image, Price, Quantity, Ratin
             <p> Product :- ${Title} [${Category}] </p>
             <p> Price :- ${Price} </p>
             <p> Quantity :- ${Quantity} </p>
-            <p> Rating :- ${Rating} </p>
+            <p> Rating :- ${Rating} ⭐ / 5 </p>
             <p> Details :- ${Description} </p>
+            <p> Product ID :- ${_id} </p>
 
         </div>
 

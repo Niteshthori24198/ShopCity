@@ -39,7 +39,7 @@ const addReview = async (req, res) => {
         
 
         const alreadyReviewPresent = await ReviewModel.findOne({ ProductId, OrderId, CustomerId: UserID });
-        console.log('===>',alreadyReviewPresent);
+        
         if (alreadyReviewPresent) {
             console.log('review over ride ho rha hai .....');
             const productInfo = await ProductModel.findById({ _id: ProductId })
@@ -68,7 +68,7 @@ const addReview = async (req, res) => {
     
 
             const OrderItem = await OrderModel.findOne({ UserID: UserID })
-            console.log(OrderItem);
+            
             const isDelivered = isOrderDelivered(OrderItem.Products, ProductId)
 
             if(!isDelivered){
@@ -419,7 +419,7 @@ const getAllReview = async (req,res) => {
             const futureDate = new Date();
             futureDate.setDate(currentDate.getDate() + 7);
             futureDate.setMinutes(futureDate.getMinutes() - 20);
-            console.log(currentDate ,user?.S3_Url_ExipreDate);
+           
     
     
             if (user.S3_Url_ExipreDate && user.S3_Url_ExipreDate < currentDate) {

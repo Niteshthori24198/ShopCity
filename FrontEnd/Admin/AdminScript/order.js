@@ -201,9 +201,11 @@ function GetOrderCard({ _id, Customer, Product, customerId, orderDate, orderQuan
             
             
             <p> <span> Shipping Address </span>  :- ${shippingAddress} </p>
+
+            <p> <span> Order ID </span>  :- ${_id} </p>
             <p> <span> Payment Mode </span>  :- ${PaymentMode} </p>
             ${ PaymentMode=='Internet-Banking' ?  `<p style="font-size:14px;"> <span> payment_id </span>  :- ${razorpay_payment_id} </p>` : ''}
-            ${ PaymentMode=='Internet-Banking' ?  `<p style="font-size:14px;"> <span> order_id </span>  :- ${razorpay_order_id} </p>` : ''}
+            
            
             
             

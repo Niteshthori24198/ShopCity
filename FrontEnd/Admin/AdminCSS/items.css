@@ -42,7 +42,7 @@ body , *{
 #adminitemscontainer > div{
 
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: 1fr 2fr 2fr;
     gap: 15px;
     margin: 0px auto 10px auto;
     padding: 15px;
@@ -59,7 +59,7 @@ body , *{
 }
 
 #adminitemscontainer img{
-    width: 50%;
+    width: 80%;
     margin: auto;
 }
 #adminitemscontainer img:hover{
