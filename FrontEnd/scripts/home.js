@@ -203,5 +203,5 @@ function showSlides(n=null) {
     if(idOfTimeOut){
         clearTimeout(idOfTimeOut)
     }
-    idOfTimeOut = setTimeout(showSlides, 2000); // Change image every 2 seconds
+    idOfTimeOut = setTimeout(showSlides, 3000); // Change image every 2 seconds
 }

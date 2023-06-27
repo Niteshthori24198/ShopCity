@@ -32,7 +32,8 @@ body {
     align-items: center;
     margin: auto;
     border-radius: 10px;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
   
 
 }
@@ -120,11 +121,11 @@ h2 {
 .nitesh_lower_bottom img {
     width: 90%;
     border-radius: 100%;
-    border: 4px solid rgb(155, 155, 155);
+    border: 5px solid rgb(177, 175, 175);
 }
 
 .nitesh_lower_bottom img:hover {
-   transform: scale(1.12);
+   transform: scale(1.05);
    transition: 2s ease-out;
 }
 
@@ -163,7 +164,8 @@ h2 {
 }
 
 .Niteshtopseller>div>div {
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    box-shadow: rgba(188, 185, 185, 0.2) 0px 2px 8px 0px;
+    /* box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px; */
     /* margin: 0px 10px; */
     border-radius: 5px;
 }
@@ -191,12 +193,12 @@ h2 {
 }
 
 .nitesh_ourbrandsection>div {
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    box-shadow: rgba(169, 166, 166, 0.2) 0px 2px 8px 0px;
     border-radius: 5px;
 }
 
 .nitesh_ourbrandsection img {
-    width: 100%;
+    width: 80%;
     border-radius: 10%;
 }
 
