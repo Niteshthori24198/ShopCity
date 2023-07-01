@@ -79,7 +79,7 @@ const Auth = async (req,res,next)=>{
 
             "error":error.message,
 
-            "msg":"Something Wrong with the Token passed",
+            "msg":error.message,
 
             "Success":false,
 

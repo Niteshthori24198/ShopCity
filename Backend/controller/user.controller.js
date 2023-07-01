@@ -299,7 +299,7 @@ const RegisterNewUser = async (req, res) => {
                     if (result) {
                         return res.status(400).send({
                             "Success": true,
-                            "msg": "Your Registration has been successfully. (Kindly Verify Your Email)"
+                            "msg": "Your Registration has been successfull. (Kindly Verify Your Email)"
                         })
                     } else {
                         return res.status(400).send({
@@ -414,7 +414,7 @@ const LoginUser = async (req, res) => {
             if (!verifyuser.isMailVerified) {
                 return res.status(400).send({
 
-                    "msg": "Kindly Verify Email ID.",
+                    "msg": "Kindly Verify Your Email ID.",
 
                     "error": "Email is Not Verified ",
 
@@ -520,12 +520,12 @@ const requestForgotPassword = async (req, res) => {
             if (result) {
                 return res.status(400).send({
                     "Success": true,
-                    "msg": "Reset password link is sent to you email."
+                    "msg": "Reset password link is sent on your email."
                 })
             } else {
                 return res.status(400).send({
                     "Success": false,
-                    "msg": "Something Went Wrong. Try After Some Time"
+                    "msg": "Something Went Wrong. Please Try After Some Time"
                 })
             }
 
@@ -621,13 +621,13 @@ const saveNewPassword = async (req, res) => {
             await UserModel.findByIdAndUpdate({ _id: UserID }, { Password: hashPass })
 
             return res.status(400).send({
-                "msg": "Your Password Successfully Changed.",
+                "msg": "Your Password has been changed Successfully.",
                 "Success": true
             })
 
         } else {
             return res.status(400).send({
-                "msg": "Your Account Not Exit",
+                "msg": "Your Account does Not Exit",
                 "error": "User Not Found",
                 "Success": false
             })
@@ -822,7 +822,7 @@ const deleteUserProfile = async (req, res) => {
             return res.status(200).send({
                 "Code": 200,
                 "Success": true,
-                "msg": "User has been deleted Successfully.",
+                "msg": "User Account has been deleted Successfully.",
                 "UserData": deletedUser
             })
 
@@ -1165,7 +1165,7 @@ const blockUserAccount = async (req, res) => {
         await UserModel.findByIdAndUpdate({ _id: accountId }, { isBlocked: true })
         return res.status(200).send({
             error : "no error",
-            msg : "User Blocked Successfully",
+            msg : "User Account has been Blocked Successfully",
             Success : true
         })
 
@@ -1188,7 +1188,7 @@ const activeUserAccount = async (req, res) => {
         await UserModel.findByIdAndUpdate({ _id: accountId }, { isBlocked: false })
         return res.status(200).send({
             error : "no error",
-            msg : "User Account Activate Successfully",
+            msg : "User Account has been Activate Successfully",
             Success : true
         })
 
