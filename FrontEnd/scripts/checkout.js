@@ -12,8 +12,25 @@ if (token) {
 }
 
 else {
-    alert("Kindly Login First. Your Token is might be Expired or Invalid !");
-    location.href = "../view/user.login.html"
+
+    document.body.innerHTML = null
+
+    Swal.fire({
+
+        title: 'Kindly Login First to Access this section.',
+
+        icon: 'error',
+
+        confirmButtonText: 'Ok'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            location.href = "../view/user.login.html"
+        }
+
+    })
 }
 
 
@@ -52,27 +69,21 @@ OrderCheckoutButton.addEventListener("click", function (e) {
     let C_zip = CustomerZipcode.value;
     let C_phone = CustomerPhoneNumber.value;
 
-    //console.log(C_fname,C_lname,C_country,C_address,C_city,C_state,C_zip,C_phone);
 
     if (C_fname && C_lname && C_country && C_address && C_city && C_state && C_zip && C_phone) {
 
-        // address of customer including All details
-
-
         let Address = `${C_fname} ${C_lname} , ${C_address}, ${C_country} , ${C_state}, ${C_city} , ${C_zip} , ${C_phone}`
 
-        //console.log(obj)
-
         getPaymentoption();
-
-        // DiscountPrice();
 
         PlaceNewOrder(Address);
 
     }
 
     else {
-        alert("Kindly provide All required details ! ")
+
+        Swal.fire('Kindly provide All required details ! ', '', 'warning')
+
     }
 
 })
@@ -95,11 +106,6 @@ function getPaymentoption() {
     `
 }
 
-{/* <div>
-        <p>Use <span id="Special_Code">Jai Shree Ram</span> as coupon code to get extra 40% off </p>
-        <input type="text" placeholder="Coupon Code" id="coupon_box">
-        <button id="discount_reward">Apply</button>
-    </div> */}
 
 
 function PlaceNewOrder(Address) {
@@ -110,7 +116,7 @@ function PlaceNewOrder(Address) {
     placeorderbtn.addEventListener("click", function (e) {
         e.preventDefault()
         if (paymentoption.value === "") {
-            alert("kindly select a valid payment option !")
+            Swal.fire('kindly select a valid payment option !', '', 'warning')
             return
         }
         else if (paymentoption.value === "Cash on Delivery") {
@@ -119,21 +125,14 @@ function PlaceNewOrder(Address) {
 
         }
         else {
-
-
             showRazorPayBtnFunc(Address)
-
-            // setTimeout(function () {
-            //     // Shooping(Address);
-            //     alert("Transaction Successfull !!");
-            // }, 3000)
         }
     })
 }
 
 
 
-function Shooping(Address,PaymentMode, razorpay_payment_id='', razorpay_order_id='', razorpay_signature='') {
+function Shooping(Address, PaymentMode, razorpay_payment_id = '', razorpay_order_id = '', razorpay_signature = '') {
 
     const MyOrders = {};
 
@@ -174,8 +173,6 @@ function Shooping(Address,PaymentMode, razorpay_payment_id='', razorpay_order_id
 
 function UpdateBEServer(MyOrders) {
 
-    console.log("kya order aaya yhan : ", MyOrders);
-
     fetch(`${BaseUrL}/order/place`, {
         method: 'POST',
         headers: {
@@ -193,11 +190,24 @@ function UpdateBEServer(MyOrders) {
 
             if (data.Success) {
 
-                alert(data.msg)
+                Swal.fire({
 
-                ClearCart()
+                    title: data.msg,
 
-                window.location = "../index.html";
+                    icon: 'success',
+
+                    confirmButtonText: 'Ok'
+
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+
+                        ClearCart()
+
+                        window.location = "../index.html";
+                    }
+
+                })
 
             }
         })
@@ -210,8 +220,6 @@ function UpdateBEServer(MyOrders) {
 
 
 function fetchAndRenderCart() {
-
-    console.log("hyy")
 
     fetch(`${BaseUrL}/cart/get`, {
         method: 'GET',
@@ -236,12 +244,13 @@ function fetchAndRenderCart() {
             }
 
             else {
-                alert(data.msg)
+                Swal.fire(data.msg, '', 'error')
+
             }
 
         })
         .catch((err) => {
-            alert(err)
+            Swal.fire(err, '', 'error')
         })
 
 }
@@ -292,42 +301,6 @@ function getCards(image, title, cat, quant, price) {
 
 
 
-
-// function DiscountPrice() {
-
-//     let count = 0;
-
-//     let discountCode = document.getElementById("coupon_box");
-
-//     let discountapplybtn = document.getElementById("discount_reward");
-
-
-//     discountapplybtn.addEventListener("click", function (e) {
-
-//         e.preventDefault()
-
-
-//         if (discountCode.value === "Jai Shree Ram" && count == 0) {
-
-//             let Total_Amount = document.querySelector("#Customer_Cart_items  > p > span");
-
-//             let finalPrice = parseInt(Total_Amount.textContent);
-
-//             finalPrice = finalPrice * 0.6;
-
-//             Cart_Amount = finalPrice;
-
-//             Total_Amount.textContent = finalPrice + " Rs";
-
-//             count++;
-
-//         }
-
-//     })
-
-// }
-
-
 function calculateCartTotal() {
 
     Cart_Amount = 0;
@@ -348,7 +321,6 @@ function calculateCartTotal() {
 
 function ClearCart() {
 
-    console.log("cart khali karo")
 
     fetch(`${BaseUrL}/cart/empty`, {
         method: 'delete',
@@ -397,7 +369,7 @@ function showRazorPayBtnFunc(Address) {
                 "Content-Type": "application/json"
             },
             "data": JSON.stringify({
-                "amount": Cart_Amount*100
+                "amount": Cart_Amount * 100
             }),
         };
 
@@ -418,27 +390,17 @@ function showRazorPayBtnFunc(Address) {
 
             var options = {
                 "key": "rzp_test_FePSDKRvTiVZWa", // Enter the Key ID generated from the Dashboard
-                "amount": Cart_Amount*100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "amount": Cart_Amount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
                 "currency": "INR",
                 "name": "Acme Corp",
                 "description": "Test Transaction",
                 "image": "https://example.com/your_logo",
                 "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
                 "handler": function (response) {
-                    console.log(response);
-                    // alert('payment-id==>')
-                    alert(response.razorpay_payment_id);
-                    // alert('order -id==>')
-                    alert(response.razorpay_order_id);
-                    // alert('signature-id==>')
-                    alert(response.razorpay_signature);
 
                     const razorpay_payment_id = response.razorpay_payment_id
                     const razorpay_order_id = response.razorpay_order_id
                     const razorpay_signature = response.razorpay_signature
-
-
-
 
                     var settings = {
                         "url": "http://localhost:3000/checkout/api/payment/verify",
@@ -468,10 +430,11 @@ function showRazorPayBtnFunc(Address) {
                         } else {
 
                             console.log('order not placed succcessfully');
-                            alert('Something Went Wrong ! (Please Try After Some Time)')
+
+                            Swal.fire('Something Went Wrong! ', 'Please Try After Some Time', 'error')
 
                         }
-                        // alert(JSON.stringify(response))
+
                     });
                 },
 
@@ -481,13 +444,9 @@ function showRazorPayBtnFunc(Address) {
             };
             var rzp1 = new Razorpay(options);
             rzp1.on('payment.failed', function (response) {
-                alert(response.error.code);
-                alert(response.error.description);
-                alert(response.error.source);
-                alert(response.error.step);
-                alert(response.error.reason);
-                alert(response.error.metadata.order_id);
-                alert(response.error.metadata.payment_id);
+
+                Swal.fire('Transaction Failed !', 'If Amount is Deducted then refund will be initiated shortly.', 'error')
+
             });
             rzp1.open();
             e.preventDefault();
@@ -519,20 +478,20 @@ const countries = {
     "Japan": ["Hokkaido", "Aomori", "Iwate", "Miyagi", "Akita", "Yamagata", "Fukushima", "Ibaraki", "Tochigi", "Gunma", "Saitama", "Chiba", "Tokyo", "Kanagawa", "Niigata", "Toyama", "Ishikawa", "Fukui", "Yamanashi", "Nagano", "Gifu", "Shizuoka", "Aichi", "Mie", "Shiga", "Kyoto", "Osaka", "Hyogo", "Nara", "Wakayama", "Tottori", "Shimane", "Okayama", "Hiroshima", "Yamaguchi", "Tokushima", "Kagawa", "Ehime", "Kochi", "Fukuoka", "Saga", "Nagasaki", "Kumamoto", "Oita", "Miyazaki", "Kagoshima", "Okinawa"],
     "Russia": ["Moscow", "Saint Petersburg", "Novosibirsk", "Yekaterinburg", "Nizhny Novgorod", "Kazan", "Chelyabinsk", "Omsk", "Samara", "Rostov-on-Don", "Ufa", "Krasnoyarsk", "Voronezh", "Perm", "Volgograd", "Krasnodar", "Saratov", "Tyumen", "Tolyatti", "Izhevsk", "Barnaul", "Ulyanovsk", "Irkutsk", "Khabarovsk", "Yaroslavl", "Vladivostok", "Makhachkala", "Tomsk", "Orenburg", "Kemerovo", "Novokuznetsk"]
     // Add more countries and states as needed
-  };
-  
+};
 
 
-  fetchAndRenderCountries()
+
+fetchAndRenderCountries()
 
 
-  function fetchAndRenderCountries(){
+function fetchAndRenderCountries() {
 
     const countrysel = document.getElementById("Country_Name")
 
     const countryNames = Object.keys(countries)
 
-    const countryseldata = countryNames.map((ele)=>{
+    const countryseldata = countryNames.map((ele) => {
         return getSelectTagOptions(ele)
     }).join('')
 
@@ -540,22 +499,22 @@ const countries = {
     countrysel.innerHTML = `<option value="">Select Country</option>${countryseldata}`
 
 
-  }
+}
 
 
 
-  function getSelectTagOptions(e){
+function getSelectTagOptions(e) {
     return `<option value="${e}">${e}</option>`
-  }
+}
 
 
-  function handleStateSelect(event){
+function handleStateSelect(event) {
 
     const stateselect = document.getElementById('State_Select')
 
     let cn = event.target.value;
 
-    if(!cn){
+    if (!cn) {
         stateselect.innerHTML = ''
         return
     }
@@ -563,11 +522,11 @@ const countries = {
     let states = countries[cn];
 
 
-    const stateseldata = states.map((ele)=>{
+    const stateseldata = states.map((ele) => {
         return getSelectTagOptions(ele)
     }).join('')
 
 
     stateselect.innerHTML = `<option value="">Select State</option>${stateseldata}`
-    
-  }
+
+}

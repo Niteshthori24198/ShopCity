@@ -10,9 +10,27 @@ const BaseUrl = `http://localhost:3000`
 const token = localStorage.getItem("usertoken") || null;
 
 
-if(!token){
-    alert("Kindly Login First to Access cart section.")
-    location.href = "../view/user.login.html"
+if (!token) {
+
+    document.body.innerHTML = null
+
+    Swal.fire({
+
+        title: 'Kindly Login First to Access cart section.',
+
+        icon: 'error',
+
+        confirmButtonText: 'Ok'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            location.href = "../view/user.login.html"
+        }
+
+    })
+
 }
 
 let Cart_Amount = 0;
@@ -28,67 +46,64 @@ let Total_Amount = document.querySelector("#Nitesh_Order_Summary > div > h3 > sp
 let SubTotal = document.querySelector("#Nitesh_Order_Summary > div > p:nth-child(2) > span");
 
 
-let checkoutbtn = document.querySelector("#Nitesh_Order_Summary button");
+let checkoutbtn = document.querySelector("#nitesh_checkoutbtn");
 
 checkoutbtn.addEventListener("click", function (e) {
 
 
-    if (token && cartitems.length){
+    if (token && cartitems.length) {
         window.location = "../view/checkout.html";
     }
-    else{
-        alert("Your Cart is Empty so Add some items into cart to proceed for checkout.")
-    }
+
 })
 
 
 
 function fetchAndRenderCart() {
 
-    fetch(`${BaseUrl}/cart/get`,{
-        method:'GET',
-        headers:{
-            'content-type':'application/json',
-            'authorization':`Bearer ${token}`
+    fetch(`${BaseUrl}/cart/get`, {
+        method: 'GET',
+        headers: {
+            'content-type': 'application/json',
+            'authorization': `Bearer ${token}`
         }
     })
-    .then((res) => {
-        return res.json()
-    })
-    .then((data) => {
+        .then((res) => {
+            return res.json()
+        })
+        .then((data) => {
 
-        console.log("cart response",data);
+            console.log("cart response", data);
 
-        if(data.Success){
+            if (data.Success) {
 
-            console.log(data.CartItem);
+                // console.log(data.CartItem);
 
-            cartitems = [...data.CartItem.Products];
+                cartitems = [...data.CartItem.Products];
 
-            console.log("cart---->", cartitems)
 
-            if(cartitems.length){
+                if (cartitems.length) {
 
-                RenderCartItem(data.CartItem.Products)
+                    RenderCartItem(data.CartItem.Products)
+                }
+
+                else {
+                    Emptycart();
+                }
             }
 
-            else{
+            else {
                 Emptycart();
             }
-        }
 
-        else{
-            Emptycart();
-        }
-           
-        
-    })
-    .catch((err)=>{
-        console.log(err)
-    })
+
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 
 }
-    
+
 
 
 function Emptycart() {
@@ -97,11 +112,11 @@ function Emptycart() {
 
     MainCartSection.innerHTML = `<p>Your Shopping Cart is Empty !</p>`
     MainCartSection.style.backgroundImage = `url('https://thumbs.gfycat.com/CompleteShallowFlyingsquirrel-size_restricted.gif')`
-    MainCartSection.style.height="480px"
+    MainCartSection.style.height = "480px"
     MainCartSection.style.display = 'flex';
-    MainCartSection.style.justifyContent='center'
-    MainCartSection.style.backgroundRepeat='no-repeat'
-    MainCartSection.style.backgroundPosition='center'
+    MainCartSection.style.justifyContent = 'center'
+    MainCartSection.style.backgroundRepeat = 'no-repeat'
+    MainCartSection.style.backgroundPosition = 'center'
     MainCartSection.style.backgroundSize = 'auto';
 }
 
@@ -111,18 +126,18 @@ function RenderCartItem(data) {
     let len = data.length;
     let totalCartCount = document.getElementById('totalCartCount')
 
-    if(len==0){
+    if (len == 0) {
         totalCartCount.innerText = `Empty Cart`
-    }else if(len==1){
+    } else if (len == 1) {
         totalCartCount.innerText = `1 Item`
-    }else{
+    } else {
         totalCartCount.innerText = `${len} Item's`
     }
 
     let Cards = data.map((item) => {
-        
-        return getCards(item.product.Image, item.product.Title, item.product.Category, item.product.Description, item.product.Price, item.Quantity,item.product._id, item.product.Quantity
-            )
+
+        return getCards(item.product.Image, item.product.Title, item.product.Category, item.product.Description, item.product.Price, item.Quantity, item.product._id, item.product.Quantity
+        )
     }).join("")
 
 
@@ -143,18 +158,18 @@ function RenderCartItem(data) {
             console.log(e.target.value, e.target.id);
 
             const Payload = {
-                Quantity:+e.target.value
+                Quantity: +e.target.value
             }
 
             const ProductID = e.target.id;
 
-            UpdateCartStatus(ProductID,Payload);
+            UpdateCartStatus(ProductID, Payload);
 
         })
     }
 
 
-    let Remove_button = document.querySelectorAll("button");
+    let Remove_button = document.querySelectorAll("#Nitesh_Cart_items button");
 
     for (let i of Remove_button) {
 
@@ -164,14 +179,14 @@ function RenderCartItem(data) {
             const ProductID = e.target.id;
 
             RemoveItemFromCart(ProductID);
-            
+
         })
     }
 
 }
 
 
-function getCards(Image, Title, Category, Description, Price , Quantity, id, totalAvailbleQuantity) {
+function getCards(Image, Title, Category, Description, Price, Quantity, id, totalAvailbleQuantity) {
 
 
     return `<div>
@@ -180,23 +195,23 @@ function getCards(Image, Title, Category, Description, Price , Quantity, id, tot
             <p>${Category}</p>
             <p>${Description.substring(0, 50)} Rs</p>
             <p>Price : ${Price} Rs</p>
-            ${totalAvailbleQuantity > 0 ? getQuantitySelect(totalAvailbleQuantity,Quantity,id) : "<p>Out Of Stock</p>"}
+            ${totalAvailbleQuantity > 0 ? getQuantitySelect(totalAvailbleQuantity, Quantity, id) : "<p>Out Of Stock</p>"}
             
             <button id="${id}">Remove</button>
         </div>`
 
 }
 
-function goToDetailPage(id){
+function goToDetailPage(id) {
     console.log(id);
     localStorage.setItem('productID', id);
     location.href = '../view/details.html'
 }
 
-function getQuantitySelect(totalavailbe, selectedQuantity,id){
+function getQuantitySelect(totalavailbe, selectedQuantity, id) {
     let otpions = ''
-    for(let i=0; i<totalavailbe && i<10; i++){
-        otpions += `<option value="${i+1}" ${selectedQuantity==(i+1) ? "Selected" : ""}>Quantity :- ${i+1}</option>`
+    for (let i = 0; i < totalavailbe && i < 10; i++) {
+        otpions += `<option value="${i + 1}" ${selectedQuantity == (i + 1) ? "Selected" : ""}>Quantity :- ${i + 1}</option>`
     }
     return `
         <select name="quantity" id="${id}">
@@ -215,81 +230,97 @@ function CalculateCartPrice() {
     if (cartitems.length !== 0) {
 
         for (let item of cartitems) {
-            Cart_Amount += (item.Quantity)*(item.product.Price);
+            Cart_Amount += (item.Quantity) * (item.product.Price);
             Total_Amount.textContent = Cart_Amount + " Rs";
             SubTotal.textContent = Cart_Amount + " Rs";
         }
-                  
-        
+
+
     }
 }
 
 
 
-function UpdateCartStatus(ProductID,Payload){
+function UpdateCartStatus(ProductID, Payload) {
 
-    fetch(`${BaseUrl}/cart/update/${ProductID}`,{
-        method:'PATCH',
-        headers:{
-            'content-type':'application/json',
-            'authorization':`Bearer ${token}`
+    fetch(`${BaseUrl}/cart/update/${ProductID}`, {
+        method: 'PATCH',
+        headers: {
+            'content-type': 'application/json',
+            'authorization': `Bearer ${token}`
         },
-        body:JSON.stringify(Payload)
+        body: JSON.stringify(Payload)
     })
-    .then((res)=>{
-        return res.json()
-    })
-    .then((data)=>{
+        .then((res) => {
+            return res.json()
+        })
+        .then((data) => {
 
-        console.log(data);
+            console.log(data);
 
-        if(data.Success){
-            alert(data.msg);
+            if (data.Success) {
 
-            location.reload()
-        }
-        else{
-            alert(data.msg)
-        }
+                Swal.fire(data.msg, '', 'success')
 
-    })
-    .catch((err)=>{
-        // alert(data.msg)
-        console.log(err)
-    })
+            }
+            else {
+                location.reload()
+            }
+
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 }
 
 
-function  RemoveItemFromCart(ProductID){
+function RemoveItemFromCart(ProductID) {
 
-    fetch(`${BaseUrl}/cart/delete/${ProductID}`,{
-        method:'delete',
-        headers:{
-            'content-type':'application/json',
-            'authorization':`Bearer ${token}`
+    Swal.fire({
+
+        title: 'Are you sure you want to remove this item from cart?',
+        showCancelButton: true,
+        confirmButtonText: 'Remove'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            RemoveProductFromCart()
         }
     })
-    .then((res)=>{
-        return res.json()
-    })
-    .then((data)=>{
 
-        console.log(data);
 
-        if(data.Success){
-            alert(data.msg);
 
-            location.reload()
-        }
-        else{
-            alert(data.msg)
-        }
+    function RemoveProductFromCart() {
+        fetch(`${BaseUrl}/cart/delete/${ProductID}`, {
+            method: 'delete',
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${token}`
+            }
+        })
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
 
-    })
-    .catch((err)=>{
-        // alert(data.msg)
-        console.log(err)
-    })
+                console.log(data);
+
+                if (data.Success) {
+
+                    location.reload()
+                }
+                else {
+                    Swal.fire(data.msg, '', 'error')
+                }
+
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
 }
 
 

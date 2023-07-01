@@ -27,23 +27,28 @@ queryformele.addEventListener("submit", (e) => {
 
     console.log(QueryObj)
 
-    if (confirm('Do you want to submit your feedback query ?')) {
 
-        SubmitUserQuery(QueryObj)
+    Swal.fire({
 
+        title: 'Do you want to submit your feedback query ?',
+        showCancelButton: true,
+        confirmButtonText: 'Submit'
 
-        document.getElementById('query_user_name_').value=''
+    }).then((result) => {
 
-        document.getElementById('query_user_email_').value=''
+        if (result.isConfirmed) {
 
-        document.getElementById('query_category').value=''
+            SubmitUserQuery(QueryObj)
 
-        document.getElementById('users_query_').value=''
+            document.getElementById('query_user_name_').value = ''
 
+            document.getElementById('query_user_email_').value = ''
 
-    }
+            document.getElementById('query_category').value = ''
 
-
+            document.getElementById('users_query_').value = ''
+        }
+    })
 
 })
 
@@ -65,9 +70,9 @@ function SubmitUserQuery(QueryObj) {
             return res.json()
         })
         .then((data) => {
-            // console.log(data)
+
             if (data.Success) {
-                alert(data.msg)
+                Swal.fire(data.msg, '', 'success')
             }
         })
         .catch((err) => {

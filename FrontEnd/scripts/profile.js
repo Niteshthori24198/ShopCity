@@ -126,19 +126,25 @@ userdataeditbtn.addEventListener("click", () => {
 
     }
 
-    // if (!validatePhoneNumber(usercontact.value)) {
-    //     alert('Please enter a valid phone number!')
-    //     return
-    // }
+
+    Swal.fire({
+
+        title: 'Do you Want to Update Your Profile ?',
+        showCancelButton: true,
+        confirmButtonText: 'Update'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            UpdateUserInfo(userpayload)
+        }
+       
+    })
 
 
 
-    if (!confirm('Do you Want to Update Your Profile ?')) {
-        location.reload()
-        return
-    }
 
-    UpdateUserInfo(userpayload)
 
 })
 
@@ -164,12 +170,10 @@ function UpdateUserInfo(userpayload) {
             userdataeditbtn.disabled = false;
             if (data.Success) {
 
-                alert(data.msg)
-
                 location.reload()
             }
             else {
-                alert(data.msg)
+                Swal.fire(data.msg, '', 'error')
             }
 
         })
@@ -210,18 +214,19 @@ function UpdateUserNewPassword() {
     const confirmpass = document.getElementById('user_new_password_confirm').value;
 
     if (!validatePassword(newpass)) {
-        alert('Please enter a strong password! ( At least one uppercase letter, one lowercase letter, one digit and length must be 8 )')
+
+        Swal.fire('Please enter a strong password!', ' At least one uppercase letter, one lowercase letter, one digit and length must be 8', 'warning')
         return
     }
 
 
     if (!currpass || !newpass || !confirmpass) {
-        alert('Kindly Enter All Required feilds.')
+        Swal.fire('Kindly Enter All Required feilds.', '', 'warning')
         return
     }
 
     if (newpass !== confirmpass) {
-        alert("Password Mismatch Occur. Kindly re-enter Password !")
+        Swal.fire('Password Mismatch Occur. Kindly re-enter Password.', '', 'warning')
         return
     }
 
@@ -231,80 +236,79 @@ function UpdateUserNewPassword() {
     }
 
 
-    if (!confirm('Do you Want to Update Your Password ?')) {
-        return
-    }
 
-    savePasswordBTN.innerHTML = '<i class="fa fa-refresh fa-spin"></i> Save'
-    savePasswordBTN.disabled = true
+    Swal.fire({
 
-    fetch(`${profile_baseurl}/user/changepass`, {
-        method: 'PATCH',
-        headers: {
-            'content-type': 'application/json',
-            'authorization': `Bearer ${users_token}`
-        },
-        body: JSON.stringify(payload)
+        title: 'Do you Want to Update Your Password ?',
+        showCancelButton: true,
+        confirmButtonText: 'Update'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            UpdateUserPassword()
+        }
+
     })
-        .then((res) => {
-            return res.json()
+
+
+
+
+    function UpdateUserPassword() {
+
+        savePasswordBTN.innerHTML = '<i class="fa fa-refresh fa-spin"></i> Save'
+        savePasswordBTN.disabled = true
+
+        fetch(`${profile_baseurl}/user/changepass`, {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${users_token}`
+            },
+            body: JSON.stringify(payload)
         })
-        .then((data) => {
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
 
-            savePasswordBTN.innerHTML = 'Save'
-            savePasswordBTN.disabled = false
+                savePasswordBTN.innerHTML = 'Save'
+                savePasswordBTN.disabled = false
 
-            if (data.Success) {
+                if (data.Success) {
 
-                alert(data.msg)
-                location.reload()
-            }
-            else {
-                alert(data.msg)
-            }
+                    Swal.fire({
 
-        })
-        .catch((err) => {
-            savePasswordBTN.innerHTML = 'Save'
-            savePasswordBTN.disabled = false
-            console.log(err)
-        })
+                        title: data.msg,
+                        icon:'success',
+                        confirmButtonText: 'Ok'
+
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+
+                            location.reload()
+                        }
+                    })
+
+                }
+                else {
+                    Swal.fire(data.msg, '', 'error')
+                }
+
+            })
+            .catch((err) => {
+                savePasswordBTN.innerHTML = 'Save'
+                savePasswordBTN.disabled = false
+                console.log(err)
+            })
+
+    }
 
 
 }
 
-
-
-
-// $(document).ready(function () {
-//     // Prepare the preview for profile picture
-//     $("#wizard-picture").change(function () {
-//         readURL(this);
-//     });
-// });
-
-// function readURL(input) {
-//     if (input.files && input.files[0]) {
-
-//         const myform = document.getElementById('myform')
-
-//         console.log(input.files[0]);
-//         const data = new FormData(myform);
-//         data.append('file', input.files[0]);
-//         fetch('http://localhost:8080/upload', {
-//             method: 'POST',
-//             body: data
-//         }).then(res => res.json())
-
-
-//         var reader = new FileReader();
-
-//         reader.onload = function (e) {
-//             $('#wizardPicturePreview').attr('src', e.target.result).fadeIn('slow');
-//         }
-//         reader.readAsDataURL(input.files[0]);
-//     }
-// }
 
 
 function openForm() {
@@ -341,30 +345,48 @@ async function handleAddProfileImage(event) {
     console.log(res);
     document.getElementById('savePasswordBtn').innerHTML = 'Save'
     document.getElementById('savePasswordBtn').disabled = false;
-    alert(res?.msg);
+
     location.reload()
 }
 
 
 function handleRemoveProfieImage() {
-    if (!confirm('Do you Want to Remove your Profile Image ?')) {
-        return
-    }
-    document.getElementById('removePhotoBtn').innerHTML = '<i class="fa fa-refresh fa-spin"></i> Remove'
-    document.getElementById('removePhotoBtn').disabled = true;
-    fetch(`${profile_baseurl}/user/delete-profile-image`, {
-        method: 'DELETE',
-        headers: {
-            'authorization': `Bearer ${users_token}`
+
+
+    Swal.fire({
+
+        title: 'Do you Want to Remove your Profile Image ?',
+        showCancelButton: true,
+        confirmButtonText: 'Remove'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            HandleProfileRemove()
         }
-    }).then(r => r.json()).then(data => {
-        console.log(data);
-        location.reload()
-    }).catch(err => {
-        alert('Something Went Wrong')
-        console.log(err);
-    }).finally(() => {
-        document.getElementById('removePhotoBtn').innerHTML = 'Remove'
-        document.getElementById('removePhotoBtn').disabled = false;
+
     })
+
+
+    function HandleProfileRemove() {
+
+        document.getElementById('removePhotoBtn').innerHTML = '<i class="fa fa-refresh fa-spin"></i> Remove'
+        document.getElementById('removePhotoBtn').disabled = true;
+        fetch(`${profile_baseurl}/user/delete-profile-image`, {
+            method: 'DELETE',
+            headers: {
+                'authorization': `Bearer ${users_token}`
+            }
+        }).then(r => r.json()).then(data => {
+            console.log(data);
+            location.reload()
+        }).catch(err => {
+            console.log(err);
+        }).finally(() => {
+            document.getElementById('removePhotoBtn').innerHTML = 'Remove'
+            document.getElementById('removePhotoBtn').disabled = false;
+        })
+    }
+
 }

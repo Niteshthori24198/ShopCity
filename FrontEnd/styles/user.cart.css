@@ -41,6 +41,7 @@
     padding: 5px 10px;
     border-radius: 5px;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 #Nitesh_Cart_items>div>select {
@@ -50,6 +51,7 @@
     border-radius: 5px;
     padding: 5px;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 #Nitesh_Cart_items img {

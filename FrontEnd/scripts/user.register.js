@@ -11,12 +11,13 @@ registerForm.addEventListener('submit',(e)=> {
 
     if(registerForm.new_user_conf_pass.value !== registerForm.new_user_pass.value){
 
-        alert('Password Miss - Matched');
+        Swal.fire('Password Not Matched !', '', 'error')
         return
 
     }
     else if(registerForm.new_user_captcha.value !== registerForm.captchImage.value){
-        alert('Captcha Not Match')
+      
+        Swal.fire('Captcha Not Matched !', '', 'error')
         generateCaptcha()
         return
     }
@@ -56,17 +57,13 @@ const registerNewUser = () => {
     const pass = registerForm.new_user_pass.value
     const phone = registerForm.new_user_contact.value
     
-    // if(!validatePhoneNumber(phone)){
-    //     document.getElementById('registerFormSubmitBtn').innerHTML = 'Register'
-    //     alert('Please enter a valid phone number!')
-    //     return
-    // }
 
     if(!validatePassword(pass)){
         document.getElementById('registerFormSubmitBtn').innerHTML = 'Register'
         document.getElementById('registerFormSubmitBtn').disabled = false;
         generateCaptcha()
-        alert('Please enter a Strong Password! ( At least one Uppercase letter, one Lowercase letter, one Digit and length must be grater then 8. )')
+
+        Swal.fire('Please enter a Strong Password!', 'At least one Uppercase letter, one Lowercase letter, one Digit and length must be grater then 8', 'error')
         return
     }
 
@@ -118,15 +115,29 @@ const AddNewUserToDB = async (payload) => {
 
         if(data.Success){
 
-            alert(data.msg)
+           
+            Swal.fire({
 
-            location.href = '../view/user.login.html';
+                title: data.msg,
+                
+                icon:'success',
+
+                confirmButtonText: 'Ok'
+
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    location.href = '../view/user.login.html';
+                }
+
+            })
 
         }
 
         else{
 
-            alert(data.msg)
+            Swal.fire(data.msg, '', 'error')
 
         }
 

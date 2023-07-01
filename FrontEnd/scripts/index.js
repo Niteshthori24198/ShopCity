@@ -133,58 +133,82 @@ function renderUserName() {
 
 
 
-logedOutBtn.addEventListener('click', async() => {
+logedOutBtn.addEventListener('click', () => {
 
-    if (confirm('Are you sure you want to log out?')) {
 
-        const userLogOut = await userLogedOutHandle()
+    Swal.fire({
 
-        if(userLogOut){
+        title: 'Are you sure you want to log out?',
+        showCancelButton: true,
+        confirmButtonText: 'Logout'
 
-            localStorage.removeItem('usertoken');
+    }).then((result) => {
 
-            alert('Logout Successfull !')
-    
-            location.reload();
+        if (result.isConfirmed) {
+
+            userLogoutIntiate()
         }
-
-        else{
-            alert(userLogOut)
-        }
-
-    }
+    })
 
 
 })
 
 
 
-async function userLogedOutHandle(){
 
-    let userloggedout=false;
+async function userLogoutIntiate() {
 
-    const Response = await fetch(`${BASEURL}/user/logout`,{
-        method:'GET',
-        headers:{
-            'content-type':'application/json',
-            'authorization':`Bearer ${usertoken}`
+    console.log("logout initiated")
+
+    const userLogOut = await userLogedOutHandle()
+
+    if (userLogOut) {
+
+        localStorage.removeItem('usertoken');
+
+        Swal.fire('Logout Successfull ✌', '', 'success')
+
+        setTimeout(() => {
+            location.reload()
+        }, 2000)
+    }
+
+    else {
+        Swal.fire('Oops !! Something Went wrong.', 'Try Again', 'error')
+    }
+
+
+
+
+}
+
+
+async function userLogedOutHandle() {
+
+    let userloggedout = false;
+
+    const Response = await fetch(`${BASEURL}/user/logout`, {
+        method: 'GET',
+        headers: {
+            'content-type': 'application/json',
+            'authorization': `Bearer ${usertoken}`
         }
     })
-    .then((res)=>{
-        return res.json()
-    })
-    .catch((err)=>{
-        console.log(err)
-    })
+        .then((res) => {
+            return res.json()
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 
 
     const data = await Response
 
-    if(data.Success){
-        userloggedout=true
+    if (data.Success) {
+        userloggedout = true
     }
-    else{
-        userloggedout=data.msg;
+    else {
+        userloggedout = data.Success;
     }
 
     return userloggedout

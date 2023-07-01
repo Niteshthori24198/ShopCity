@@ -1,5 +1,11 @@
 function handleSubmitForgotPass(e){
+
     e.preventDefault()
+
+
+    document.getElementById('ResetPassbtn').innerHTML = '<i class="fa fa-refresh fa-spin"></i> Reset Password'
+    document.getElementById('ResetPassbtn').disabled = true;
+
 
     console.log(e);
     
@@ -18,13 +24,22 @@ function handleSubmitForgotPass(e){
     .then(data => {
         console.log(data);
         if(data.Success){
-            alert(data.msg)
+
+            Swal.fire(data.msg, '', 'success')
+
+
         }else{
-            alert(data.error)
+
+            Swal.fire(data.error, '', 'error')
+
         }
     })
     .catch(err => {
         console.log(err);
+    })
+    .finally(()=>{
+        document.getElementById('ResetPassbtn').innerHTML = 'Reset Password'
+        document.getElementById('ResetPassbtn').disabled = false;
     })
 
 }

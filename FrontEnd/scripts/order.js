@@ -8,14 +8,31 @@ let token = localStorage.getItem("usertoken") || null;
 
 if (!token) {
 
-    alert("Kindly login first to access orders")
+    document.body.innerHTML = null
 
-    location.href = "../view/user.login.html"
+    Swal.fire({
+
+        title: 'Kindly Login First to Access order section.',
+
+        icon: 'error',
+
+        confirmButtonText: 'Ok'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            location.href = "../view/user.login.html"
+        }
+
+    })
+}
+else{
+    fetchAndRenderOrders()
 }
 
 
 
-fetchAndRenderOrders()
 
 
 function fetchAndRenderOrders() {
@@ -40,7 +57,7 @@ function fetchAndRenderOrders() {
 
             }
             else {
-                alert(data.msg)
+                Swal.fire(data.msg, '', 'error')
             }
 
         })
@@ -56,7 +73,6 @@ function fetchAndRenderOrders() {
 
 // ***
 function RenderOrdersinPage(Orders) {
-    // console.log("---->",Orders);
 
     Orders = Orders.Products.reverse();
 
@@ -103,42 +119,64 @@ function getordersBox(id, date, add, status, img, title, cat, price, quant, prod
 function handleCancel(id) {
     // console.log(id)
 
-    if (!confirm('Are you sure you want to cancel the order?')) {
-        return
-    }
+    Swal.fire({
 
-    document.querySelector('.cancelbtn').innerHTML = '<i class="fa fa-refresh fa-spin"></i> Cancel Order'
+        title: 'Are you sure you want to cancel order ?',
+        showCancelButton: true,
+        confirmButtonText: 'Cancel',
+        cancelButtonText:'Close'
 
-    fetch(`${baseUrl}/order/cancel/${id}`, {
-        method: 'DELETE',
-        headers: {
-            'Content-type': 'application/json',
-            'authorization': `Bearer ${token}`
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            HandleOrderCancelFromUser()
         }
     })
-        .then((res) => {
-            return res.json()
-        })
-        .then((data) => {
-
-            document.querySelector('.cancelbtn').innerHTML = 'Cancel Order'
-
-            if (data.Success) {
-
-                console.log(data.msg)
-                location.reload()
 
 
+    function HandleOrderCancelFromUser() {
+
+        document.querySelector('.cancelbtn').innerHTML = '<i class="fa fa-refresh fa-spin"></i> Cancel Order'
+        document.querySelector('.cancelbtn').disabled = true
+
+
+        fetch(`${baseUrl}/order/cancel/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json',
+                'authorization': `Bearer ${token}`
             }
-            else {
-                alert(data.msg)
-            }
+        })
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
 
-        })
-        .catch((err) => {
-            document.querySelector('.cancelbtn').innerHTML = 'Cancel Order'
-            console.log(err)
-        })
+                document.querySelector('.cancelbtn').innerHTML = 'Cancel Order'
+                document.querySelector('.cancelbtn').disabled = false
+
+                if (data.Success) {
+
+                    console.log(data.msg)
+                    location.reload()
+
+
+                }
+                else {
+                    Swal.fire(data.msg, '', 'error')
+                }
+
+            })
+            .catch((err) => {
+                document.querySelector('.cancelbtn').innerHTML = 'Cancel Order'
+                document.querySelector('.cancelbtn').disabled = false
+                console.log(err)
+            })
+
+    }
+
+
 
 }
 
@@ -147,7 +185,7 @@ function handleCancel(id) {
 
 
 function openFormForReviewHTML(orderId, productId) {
-    
+
 
     // <!-- A button to open the popup form -->
     return `<button 
@@ -162,7 +200,7 @@ function openFormForReviewHTML(orderId, productId) {
 
 }
 
-function setTheValueOfOrderIDAndPorductID(orderId, productId){
+function setTheValueOfOrderIDAndPorductID(orderId, productId) {
     orderId_review = orderId
     productId_review = productId
 
@@ -178,9 +216,9 @@ function setTheValueOfOrderIDAndPorductID(orderId, productId){
         return res.json()
     }).then((data) => {
         console.log(data)
-        if(data.Success){
+        if (data.Success) {
             console.log(data.Review[0]);
-            if(data.Review.length){
+            if (data.Review.length) {
 
                 reviewId_Order = data.Review[0]._id
 
@@ -189,7 +227,7 @@ function setTheValueOfOrderIDAndPorductID(orderId, productId){
                 ratingValue.value = k
                 ratingSpan.innerText = k
                 messageTextValue.value = data.Review[0].Description
-            }else{
+            } else {
 
                 reviewId_Order = 0
 
@@ -198,16 +236,16 @@ function setTheValueOfOrderIDAndPorductID(orderId, productId){
                 ratingSpan.innerText = 0
                 messageTextValue.value = ''
             }
-        }else{
+        } else {
 
             reviewId_Order = 0
 
-            alert(data.error)
+
         }
     }).catch((err) => {
         console.log(err)
     })
-    
+
 }
 
 
@@ -220,30 +258,30 @@ let reviewId_Order = 0
 let productId_review = 0
 let orderId_review = 0
 
-function handleInputRating(event){
+function handleInputRating(event) {
     ratingSpan.innerText = event.target.value;
 }
 
 
-function handleRatingForm(event){
+function handleRatingForm(event) {
     event.preventDefault();
 
     const payload = {
-        ProductId : productId_review,
-        OrderId : orderId_review,
-        NewRating : ratingValue.value,
-        Description : messageTextValue.value
+        ProductId: productId_review,
+        OrderId: orderId_review,
+        NewRating: ratingValue.value,
+        Description: messageTextValue.value
     }
     console.log(payload);
 
-    
+
     fetch(`${baseUrl}/review/add`, {
         method: 'POST',
         headers: {
             'Content-type': 'application/json',
             'authorization': `Bearer ${token}`
         },
-        body : JSON.stringify(payload)
+        body: JSON.stringify(payload)
     })
         .then((res) => {
             return res.json()
@@ -251,11 +289,28 @@ function handleRatingForm(event){
         .then((data) => {
 
             console.log(data);
-            if(data.Success){
-                alert(data.msg)
-                location.reload()
-            }else{
-                alert(data.error)
+            if (data.Success) {
+
+                Swal.fire({
+
+                    title: data.msg,
+
+                    icon: 'success',
+
+                    confirmButtonText: 'Ok'
+
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+
+                        location.reload()
+                    }
+
+                })
+
+
+            } else {
+                Swal.fire(data.error, '', 'error')
             }
 
         })
@@ -265,33 +320,62 @@ function handleRatingForm(event){
 
 }
 
-function handleDeleteOrderReview(){
-    if(!reviewId_Order){
-        alert('Your Review is not found.')
-        return
-    }
-    if(!confirm(' Are you sure you want to delete this review?')){
-        return
-    }
-    
-    fetch(`${baseUrl}/review/delete/${reviewId_Order}`, {
-        method: 'DELETE',
-        headers: {
-            'Content-type': 'application/json',
-            'authorization': `Bearer ${token}`
+function handleDeleteOrderReview() {
+
+    Swal.fire({
+
+        title: 'Are you sure you want to delete this review ?',
+        showCancelButton: true,
+        confirmButtonText: 'Delete'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            HandleUserReveiwDelete()
         }
-    }).then((res) => {
-        return res.json()
-    }).then((data) => {
-        if(data.Success){
-            alert(data.msg)
-            location.reload()
-        }else{
-            alert(data.error)
-        }
-    }).catch((err) => {
-        console.log(err)
     })
+
+
+    function HandleUserReveiwDelete() {
+
+        fetch(`${baseUrl}/review/delete/${reviewId_Order}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json',
+                'authorization': `Bearer ${token}`
+            }
+        }).then((res) => {
+            return res.json()
+        }).then((data) => {
+            if (data.Success) {
+
+                Swal.fire({
+
+                    title: data.msg,
+
+                    icon: 'success',
+
+                    confirmButtonText: 'Ok'
+
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+
+                        location.reload()
+                    }
+
+                })
+
+
+            } else {
+                Swal.fire(data.error, '', 'error')
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
 }
 
 

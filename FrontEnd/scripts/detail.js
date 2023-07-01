@@ -20,7 +20,6 @@ function fetchAndRenderItem() {
             console.log(data);
 
             if (data.Success) {
-                // console.log("hlo")
 
                 ShowProduct(data.Products);
 
@@ -29,7 +28,8 @@ function fetchAndRenderItem() {
             }
             else {
 
-                alert("Something went wrong")
+                Swal.fire('Something went wrong', '', 'error')
+
             }
         })
         .catch((err) => {
@@ -40,9 +40,8 @@ function fetchAndRenderItem() {
 
 
 function ShowProduct(data) {
-    console.log('data==>', data)
+    
 
-    // console.log(data.Image,data.Title,data.Price)
     console.log(`<img src="${data.Image}" alt="Error"  class="zoom" data-magnify-src="${data.Image}" />`)
 
     let product = `
@@ -113,8 +112,8 @@ function EventHandler() {
 
         }
         else {
-            alert("Kindly Login yourself First for Adding items into cart.");
-            location.href = "../view/user.login.html"
+            Swal.fire('Kindly Login yourself First for Adding items into cart.', '', 'error')
+
         }
 
 
@@ -127,9 +126,9 @@ function EventHandler() {
 
 function AddItemToCart(token) {
 
-    console.log('-------');
 
     document.getElementById('addToCartBtnhai').innerHTML = '<i class="fa fa-refresh fa-spin"></i> Add To Cart'
+    document.getElementById('addToCartBtnhai').disabled=true
 
     let quantitysel = document.getElementById("niteshproductquantity");
 
@@ -155,21 +154,39 @@ function AddItemToCart(token) {
 
             console.log(data);
             document.getElementById('addToCartBtnhai').innerHTML = 'Add To Cart'
+            document.getElementById('addToCartBtnhai').disabled=false
 
             if (data.Success) {
-                alert(data.msg)
-                location.reload()
+
+                Swal.fire({
+
+                    title: data.msg,
+                    
+                    icon:'success',
+                
+                    confirmButtonText: 'Ok'
+                
+                }).then((result) => {
+                
+                    if (result.isConfirmed) {
+                
+                        location.reload()
+                    }
+                
+                })
+
+              
             }
 
             else {
 
-                alert(data.msg)
+                Swal.fire(data.msg, '', 'error')
             }
 
         })
         .catch((err) => {
             document.getElementById('addToCartBtnhai').innerHTML = 'Add To Cart'
-            console.log(err);
+            document.getElementById('addToCartBtnhai').disabled=false
         })
 
 }
@@ -200,9 +217,9 @@ function showReviewToPage() {
 }
 
 function renderReviews(data) {
-    console.log('===>', data)
+   
     if (!data.length) {
-        console.log('kuch nhi');
+       
         productreviewcont.innerHTML = `<h3 style="text-align: center; margin: 30px;">No Review Yet 🔕</h3>`
         return
     }

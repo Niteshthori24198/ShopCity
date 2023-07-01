@@ -7,21 +7,21 @@ const useremail = document.getElementById("useremail");
 
 const userpass = document.getElementById("userpass");
 
-loginform.addEventListener("submit", function (e){
+loginform.addEventListener("submit", function (e) {
 
     e.preventDefault();
 
     document.getElementById('loginBtnHai').innerHTML = `<i class="fa fa-refresh fa-spin"></i> Login`
     document.getElementById('loginBtnHai').disabled = true;
-    
+
     userLogin();
 
 });
 
 
 
-function userLogin(){
-    
+function userLogin() {
+
     let user = {
 
         Email: useremail.value,
@@ -36,59 +36,72 @@ function userLogin(){
 
 
 
-function LoginNewUser(user){
+function LoginNewUser(user) {
 
-    console.log("user--->",user)
+    console.log("user--->", user)
 
-    fetch(`${BaseURL}/user/login`,{
-        method:'POST',
-        headers:{
-            'Content-type':'application/json'
+    fetch(`${BaseURL}/user/login`, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
         },
-        body:JSON.stringify(user)
+        body: JSON.stringify(user)
     })
-    .then((res)=>{
+        .then((res) => {
 
-        return res.json()
-    })
+            return res.json()
+        })
 
-    .then((data)=>{
+        .then((data) => {
 
-        console.log(data);
-        document.getElementById('loginBtnHai').innerHTML = `Login`
-        document.getElementById('loginBtnHai').disabled = false;
+            console.log(data);
+            document.getElementById('loginBtnHai').innerHTML = `Login`
+            document.getElementById('loginBtnHai').disabled = false;
 
-        if(data.Success){
+            if (data.Success) {
 
-            localStorage.setItem("usertoken", data.token);
+                Swal.fire({
 
-            alert(data.msg)
+                    title: data.msg,
+                    icon:'success',
 
-            location.href = "../index.html" 
-        }
+                    confirmButtonText: 'Ok'
 
-        else{
+                }).then((result) => {
 
-            alert(data.msg)
+                    if (result.isConfirmed) {
 
-        }
+                        localStorage.setItem("usertoken", data.token);
 
-    })
-    .catch((err)=>{
+                        location.href = "../index.html"
+                    }
 
-        document.getElementById('loginBtnHai').innerHTML = `Login`
-        document.getElementById('loginBtnHai').disabled = false;
+                })
 
-        alert(data.error);
-        
-    })
-   
+            }
+
+            else {
+
+                Swal.fire(data.msg, '', 'error')
+
+            }
+
+        })
+        .catch((err) => {
+
+            document.getElementById('loginBtnHai').innerHTML = `Login`
+            document.getElementById('loginBtnHai').disabled = false;
+
+            Swal.fire(err, '', 'error')
+
+        })
+
 
 }
 
 
 
-function HandleGoogleSignup(){
+function HandleGoogleSignup() {
 
     document.getElementById('niteshgoogleauth').innerHTML = `<i class="fa fa-refresh fa-spin"></i> Continue With Google`;
     window.location.href = `${BaseURL}/user/auth/google`;
