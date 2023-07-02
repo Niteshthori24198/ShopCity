@@ -23,8 +23,8 @@
 
 .shop-city-logo img {
     width: 150px;
-    mix-blend-mode:lighten;
-    border-radius: 1px;
+    /* mix-blend-mode: hard-light; */
+    /* border-radius: 1px; */
     padding-top: 5px;
 }
 
