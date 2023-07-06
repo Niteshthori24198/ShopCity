@@ -6,27 +6,27 @@ const replySchema = mongoose.Schema({
 
 
     ReviewId: {
-        type:mongoose.Schema.Types.ObjectId,
-                
+        type: mongoose.Schema.Types.ObjectId,
+
         ref: ReviewModel,
-        required : true
+        required: true
     },
-    Reply : [{
-        type : String,
-        required : true
+    Reply: [{
+        type: String,
+        required: true
     }]
 
 
 },
 
     {
-        versionKey:false,
-        timestamps :true
-    
+        versionKey: false,
+        timestamps: true
+
     }
 )
 
 
-const ReplyModel = mongoose.model("reply",replySchema)
+const ReplyModel = mongoose.model("reply", replySchema)
 
 module.exports = ReplyModel;

@@ -338,17 +338,17 @@ function sendEmailForVerification(userid, Name, Email) {
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'qr.insight.craft@gmail.com',
-            pass: 'hnzadhtrmwbqcyui'
+            user: process.env.email,
+            pass: process.env.emailPassword
         }
     });
 
-    const BaseUrl_Backend = `http://localhost:3000`
+    const BaseUrl_Backend = process.env.backendUrl
 
     const accessToken = jwt.sign({ UserID: userid }, process.env.SecretKey, { expiresIn: '6h' })
 
     let mailOptions = {
-        from: 'qr.insight.craft@gmail.com',
+        from: process.env.email,
         to: Email,
         subject: 'Email For User Verification',
         html: `<p>Hi ${Name} <br> Welcome ToShop City <br/> Please click here to 
@@ -553,17 +553,17 @@ function sendEmailForForgotPassword(userid, Name, Email) {
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'qr.insight.craft@gmail.com',
-            pass: 'hnzadhtrmwbqcyui'
+            user: process.env.email,
+            pass: process.env.emailPassword
         }
     });
 
-    const BaseUrl_Backend = `http://localhost:3000`
+    const BaseUrl_Backend = process.env.backendUrl
 
     const accessToken = jwt.sign({ UserID: userid }, process.env.SecretKey, { expiresIn: '30m' })
 
     let mailOptions = {
-        from: 'qr.insight.craft@gmail.com',
+        from: process.env.email,
         to: Email,
         subject: 'Email For Forgot Password',
         html: `<p>Hi ${Name} <br> Welcome To Shop City <br/> Please click here to
@@ -1221,7 +1221,7 @@ const googleAuthentication = async (req, res) => {
 
         let token = jwt.sign({ UserID: user._id }, process.env.SecretKey, { expiresIn: "24h" })
     
-        const frontendURL = "http://127.0.0.1:5501/FrontEnd/index.html"
+        const frontendURL = process.env.frontendUrl
     
         const imgSrc = 'https://cdn.kibrispdr.org/data/1750/3-dot-loading-gif-35.gif'
         const imgSrcAlt = 'https://i.pinimg.com/originals/b8/3e/c9/b83ec9d8ac7a6f2dfaa93fa4f150e3b6.gif'

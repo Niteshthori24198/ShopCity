@@ -94,6 +94,7 @@ userRouter.get("/getquery", AdminAuth, getallQueries)
 
 
 userRouter.patch('/blockUserAccount/:accountId', AdminAuth, blockUserAccount)
+
 userRouter.patch('/activeUserAccount/:accountId', AdminAuth, activeUserAccount)
 
 

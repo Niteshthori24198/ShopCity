@@ -324,10 +324,6 @@ const GetAllProducts = async (req, res) => {
 
     let { search, limit, page, price } = req.query;
 
-    // console.log("--->", search, limit, page, price)
-
-    // limit = limit || 12;
-
     let pricerange;
 
     if (price) {

@@ -8,13 +8,7 @@ const ProductModel = require('../model/product.model');
 
 const PlaceNewOrder = async (req,res) => {
 
-    // console.log(req.body)
-
-    
-
     let { UserID, Orders } = req.body;
-
-    console.log("----> order aaya",Orders)
 
     let flag = false
     let d = new Date()
@@ -43,11 +37,6 @@ const PlaceNewOrder = async (req,res) => {
         }
 
     })
-    console.log('---------------');
-    console.log(UserOrders);
-    console.log('---------------');
-
-   
 
 
     if(flag){

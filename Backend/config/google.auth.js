@@ -14,11 +14,11 @@ passport.use(new GoogleStrategy({
 
   clientID: process.env.googleclientid,
   clientSecret: process.env.googleclientsecret,
-  callbackURL: "http://localhost:3000/user/auth/google/callback"
+  callbackURL: `${process.env.backendUrl}/user/auth/google/callback`
 
 },
 
-async function (accessToken, refreshToken, profile, cb) {
+  async function (accessToken, refreshToken, profile, cb) {
 
     try {
 
@@ -53,11 +53,11 @@ async function (accessToken, refreshToken, profile, cb) {
       else {
 
         console.log("user is present db")
-        if(user.isBlocked){
+        if (user.isBlocked) {
 
           return cb(null, 'Blocked User')
-          
-        }else{
+
+        } else {
 
           return cb(null, user)
 

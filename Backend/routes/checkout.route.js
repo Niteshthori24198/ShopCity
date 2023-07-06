@@ -1,4 +1,5 @@
 // RazorPay
+require('dotenv').config()
 
 const Razorpay = require('razorpay');
 
@@ -7,8 +8,8 @@ const {Router} = require('express')
 const checkoutRouter = Router();
 
 var instance = new Razorpay({
-    key_id: 'rzp_test_FePSDKRvTiVZWa',
-    key_secret: '4JattZlaaFS7KVoIla0gXId1',
+    key_id: process.env.razorpay_key,
+    key_secret: process.env.razorpay_sceretKey,
 });
 
 
