@@ -369,11 +369,11 @@ const GetAllProducts = async (req, res) => {
 
             console.log("hello", searchFilter, pricerange)
 
-            products = await ProductModel.find({ Title: searchFilter }).sort({ Price: pricerange }).skip(limit * (page - 1)).limit(limit);
+            products = await ProductModel.find({ Description:searchFilter }).sort({ Price: pricerange }).skip(limit * (page - 1)).limit(limit);
 
         } else {
 
-            products = await ProductModel.find({ Title: searchFilter }).skip(limit * (page - 1)).limit(limit);
+            products = await ProductModel.find({ Description:searchFilter }).skip(limit * (page - 1)).limit(limit);
 
         }
 
@@ -528,11 +528,11 @@ const GetProductByCategory = async (req, res) => {
 
         if (pricerange) {
 
-            products = await ProductModel.find({ Title: searchFilter, Category }).sort({ Price: pricerange }).skip(limit * (page - 1)).limit(limit);
+            products = await ProductModel.find({ Category,Description:searchFilter }).sort({ Price: pricerange }).skip(limit * (page - 1)).limit(limit);
 
         } else {
 
-            products = await ProductModel.find({ Title: searchFilter, Category }).skip(limit * (page - 1)).limit(limit);
+            products = await ProductModel.find({ Category,Description:searchFilter }).skip(limit * (page - 1)).limit(limit);
 
         }
 
