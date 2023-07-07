@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
     <link rel="stylesheet" href="./AdminCSS/items.css">
@@ -187,7 +188,7 @@
                         </div>
                         <div class="mb-2">
                             <label for="recipient-name" class="col-form-label">Image :</label>
-                            <input type="file" class="form-control" id="productImage" required>
+                            <input type="file" accept="image/*" class="form-control" id="productImage" required>
                         </div>
                         <div class="mb-2">
                             <label for="recipient-name" class="col-form-label">Price:</label>
@@ -278,7 +279,7 @@
                         
                         <div class="mb-2">
                             <label for="recipient-name" class="col-form-label">Image :</label>
-                            <input type="file" class="form-control" id="productImageEdit">
+                            <input type="file" accept="image/*" class="form-control" id="productImageEdit">
                         </div>
                         
                         <input type="submit" class="form-control btn btn-secondary mb-3" id="recipient-name"

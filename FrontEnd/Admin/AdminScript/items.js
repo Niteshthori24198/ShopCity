@@ -5,7 +5,25 @@ const admin_baseurl = `http://localhost:3000`
 const adminusertoken = localStorage.getItem('usertoken') || null;
 
 if (!adminusertoken) {
-    location.href = "../view/user.login.html"
+
+
+    Swal.fire({
+
+        title: 'Kindly Login First to Access this section.',
+
+        icon: 'error',
+
+        confirmButtonText: 'Ok'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            location.href = "../view/user.login.html"
+        }
+
+    })
+
 }
 
 
@@ -107,10 +125,24 @@ function GetItemCard({ _id, Category, Description, Image, Price, Quantity, Ratin
 
 
 function editBtnClicked(productID) {
+
     if (!adminusertoken) {
-        alert('Kindly Login First')
-        location.href = "../view/user.login.html"
-        return
+        Swal.fire({
+
+            title: 'Kindly Login First to Access this section.',
+
+            icon: 'error',
+
+            confirmButtonText: 'Ok'
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                location.href = "../view/user.login.html"
+            }
+
+        })
     } else {
         console.log(productID);
         autoFillProductDetails(productID)
@@ -134,7 +166,7 @@ async function autoFillProductDetails(productID) {
     editProductForm.productCategoryEdit.value = data.Category;
     editProductForm.productQuantityEdit.value = data.Quantity;
     editProductForm.productPriceEdit.value = data.Price;
-    editProductForm.productRatingEdit.value = data.Rating+'⭐';
+    editProductForm.productRatingEdit.value = data.Rating + '⭐';
     editProductForm.productDescEdit.value = data.Description;
 
     // editProductForm.productImageEdit.files[0] = data.Image;
@@ -163,92 +195,165 @@ async function handleEditProduct(event) {
 
     console.log(productID);
 
-    if (!confirm('Are you sure you want to update the product?')) return
 
-    let res = await fetch(`${admin_baseurl}/product/update/${productID}`, {
-        method: "PATCH",
-        headers: {
-            'Content-type': 'application/json',
-            'authorization': `Bearer ${adminusertoken}`
-        },
-        body: JSON.stringify(data)
-    }).then(r => r.json())
+    Swal.fire({
 
-    console.log(res);
-    alert(res.msg);
-    document.getElementById('edit_close_btn').click()
-    fetchAndRenderPro()
+        title: 'Are you sure you want to update the product?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            updateProductInfo()
+        }
+
+        else {
+            document.getElementById('edit_close_btn').click()
+        }
+    })
+
+
+    async function updateProductInfo() {
+
+        let res = await fetch(`${admin_baseurl}/product/update/${productID}`, {
+            method: "PATCH",
+            headers: {
+                'Content-type': 'application/json',
+                'authorization': `Bearer ${adminusertoken}`
+            },
+            body: JSON.stringify(data)
+        }).then(r => r.json())
+
+        console.log(res);
+
+        Swal.fire({
+
+            title: res.msg,
+
+            icon: 'success',
+
+            confirmButtonText: 'Ok'
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                document.getElementById('edit_close_btn').click()
+                fetchAndRenderPro()
+            }
+
+            else {
+                document.getElementById('edit_close_btn').click()
+                fetchAndRenderPro()
+            }
+
+        })
+
+
+    }
 
 }
 
 
 async function handleAddProduct(event) {
     event.preventDefault()
-    if (!confirm('Are you sure you want to Add the product?')) return
 
-    let addProductForm = document.getElementById('addProductForm');
+    Swal.fire({
 
-    const ImageFile = addProductForm.productImage.files[0]
+        title: 'Are you sure you want to Add the product?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
 
-    const Title = addProductForm.productTitle.value
-    const Category = addProductForm.productCategory.value
-    const Quantity = addProductForm.productQuantity.value
-    const Price = addProductForm.productPrice.value
-    const Description = addProductForm.productDesc.value
-    // const Rating = addProductForm.productRating.value
+    }).then((result) => {
 
+        if (result.isConfirmed) {
 
-    const formData = new FormData(addProductForm);
+            addNewProductToDB()
+        }
 
-    formData.append("Image", ImageFile);
-
-    formData.append("Title", Title);
-    formData.append("Category", Category);
-    formData.append("Quantity", Quantity);
-    formData.append("Price", Price);
-    formData.append("Description", Description);
-    // formData.append("Rating", Rating);
+        else {
+            document.getElementById('addd_close_btn').click()
+            EmptyForm() 
+        }
+    })
 
 
-    console.log(formData);
 
-    // const data = {}
-    // data.Image = addProductForm.productImage.value;
-    // data.Title = addProductForm.productTitle.value;
-    // data.Category = addProductForm.productCategory.value;
-    // data.Quantity = addProductForm.productQuantity.value;
-    // data.Price = addProductForm.productPrice.value;
-    // data.Rating = addProductForm.productRating.value;
-    // data.Description = addProductForm.productDesc.value;
-    // console.log(data);
+    async function addNewProductToDB() {
 
-    // headers: {
-    //     'Content-type': 'application/json',
-    //     'authorization': `Bearer ${adminusertoken}`
-    // },
+        let addProductForm = document.getElementById('addProductForm');
 
-    let res = await fetch(`${admin_baseurl}/product/add`, {
-        method: "POST",
-        headers: {
-            'authorization': `Bearer ${adminusertoken}`
-        },
-        body: formData
-    }).then(r => r.json())
+        const ImageFile = addProductForm.productImage.files[0]
 
-    console.log(res);
+        const Title = addProductForm.productTitle.value
+        const Category = addProductForm.productCategory.value
+        const Quantity = addProductForm.productQuantity.value
+        const Price = addProductForm.productPrice.value
+        const Description = addProductForm.productDesc.value
+        // const Rating = addProductForm.productRating.value
 
-    alert(res.msg);
 
-    document.getElementById('addd_close_btn').click()
-    fetchAndRenderPro()
+        const formData = new FormData(addProductForm);
 
-    // addProductForm.productImage.value = '';
-    addProductForm.productTitle.value = '';
-    addProductForm.productCategory.value = '';
-    addProductForm.productQuantity.value = '';
-    addProductForm.productPrice.value = '';
-    // addProductForm.productRating.value = '';
-    addProductForm.productDesc.value = '';
+        formData.append("Image", ImageFile);
+
+        formData.append("Title", Title);
+        formData.append("Category", Category);
+        formData.append("Quantity", Quantity);
+        formData.append("Price", Price);
+        formData.append("Description", Description);
+        // formData.append("Rating", Rating);
+
+
+        console.log(formData);
+
+        let res = await fetch(`${admin_baseurl}/product/add`, {
+            method: "POST",
+            headers: {
+                'authorization': `Bearer ${adminusertoken}`
+            },
+            body: formData
+        }).then(r => r.json())
+
+
+        Swal.fire({
+
+            title: res.msg,
+
+            icon: 'success',
+
+            confirmButtonText: 'Ok'
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                document.getElementById('addd_close_btn').click()
+                fetchAndRenderPro()
+            }
+
+            EmptyForm() 
+
+        })
+
+
+    }
+
+
+
+    function EmptyForm() {
+        addProductForm.productImage.value = '';
+        addProductForm.productTitle.value = '';
+        addProductForm.productCategory.value = '';
+        addProductForm.productQuantity.value = '';
+        addProductForm.productPrice.value = '';
+        addProductForm.productDesc.value = '';
+    }
+
 
 }
 
@@ -256,39 +361,82 @@ async function handleAddProduct(event) {
 
 async function handleEditProductImage(event) {
     event.preventDefault()
-    if (!confirm('Are you sure you want to Change the Product Image?')) return
-
-    let editProductImageForm = document.getElementById('editProductImageForm');
-    let productID = document.getElementById('productIdEdit').value;
-    let ImageFile = document.getElementById('productImageEdit').files[0]
-
-    // const ImageFile = editProductImageForm.productImage.files[0]
-    
 
 
-    const formData = new FormData(editProductImageForm);
-    formData.append("Image", ImageFile);
+    Swal.fire({
+
+        title: 'Are you sure you want to Change the Product Image?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            updateProductImageInfo()
+        }
+
+        else {
+            document.getElementById('edit_close_btn').click()
+            document.getElementById('addd_close_btn').click()
+        }
+    })
 
 
-    console.log(formData);
+
+    async function updateProductImageInfo() {
+
+        let editProductImageForm = document.getElementById('editProductImageForm');
+        let productID = document.getElementById('productIdEdit').value;
+        let ImageFile = document.getElementById('productImageEdit').files[0]
 
 
-    let res = await fetch(`${admin_baseurl}/product/updateImage/${productID}`, {
-        method: "PATCH",
-        headers: {
-            'authorization': `Bearer ${adminusertoken}`
-        },
-        body: formData
-    }).then(r => r.json())
+        const formData = new FormData(editProductImageForm);
+        formData.append("Image", ImageFile);
 
-    console.log(res);
 
-    alert(res.msg);
+        console.log(formData);
 
-    document.getElementById('addd_close_btn').click()
-    fetchAndRenderPro()
 
-    // addProductForm.productImage.value = '';
+        let res = await fetch(`${admin_baseurl}/product/updateImage/${productID}`, {
+            method: "PATCH",
+            headers: {
+                'authorization': `Bearer ${adminusertoken}`
+            },
+            body: formData
+        }).then(r => r.json())
+
+
+        Swal.fire({
+
+            title: res.msg,
+
+            icon: 'success',
+
+            confirmButtonText: 'Ok'
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                document.getElementById('addd_close_btn').click()
+                document.getElementById('edit_close_btn').click()
+                fetchAndRenderPro()
+            }
+
+            else {
+                document.getElementById('edit_close_btn').click()
+                document.getElementById('addd_close_btn').click()
+                fetchAndRenderPro()
+
+            }
+
+        })
+
+
+    }
+
 
 }
 
@@ -299,22 +447,55 @@ async function handleEditProductImage(event) {
 async function handleDeleteProduct(productID) {
     console.log(productID);
 
-    if (!confirm('Are you sure you want to delete the product?')) return
+    Swal.fire({
 
-    document.getElementById(productID).innerHTML = '<i class="fa fa-refresh fa-spin"></i> Delete Product'
+        title: 'Are you sure you want to delete the product?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
 
-    let res = await fetch(`${admin_baseurl}/product/delete/${productID}`, {
-        method: "DELETE",
-        headers: {
-            'Content-type': 'application/json',
-            'authorization': `Bearer ${adminusertoken}`
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            productRemoveFromDB()
         }
-    }).then(r => r.json())
+    })
 
-    document.getElementById(productID).innerHTML = 'Delete Product'
-    console.log(res);
-    alert(res.msg);
-    fetchAndRenderPro()
+
+
+    async function productRemoveFromDB() {
+        document.getElementById(productID).innerHTML = '<i class="fa fa-refresh fa-spin"></i> Delete Product'
+
+        let res = await fetch(`${admin_baseurl}/product/delete/${productID}`, {
+            method: "DELETE",
+            headers: {
+                'Content-type': 'application/json',
+                'authorization': `Bearer ${adminusertoken}`
+            }
+        }).then(r => r.json())
+
+        Swal.fire({
+
+            title: res.msg,
+
+            icon: 'success',
+
+            confirmButtonText: 'Ok'
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                document.getElementById(productID).innerHTML = 'Delete Product'
+                fetchAndRenderPro()
+            }
+
+
+        })
+
+
+    }
 
 }
 

@@ -260,7 +260,22 @@ function UpdateCartStatus(ProductID, Payload) {
 
             if (data.Success) {
 
-                Swal.fire(data.msg, '', 'success')
+                Swal.fire({
+
+                    title: data.msg,
+
+                    icon: 'success',
+
+                    confirmButtonText: 'Ok'
+
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+
+                        fetchAndRenderCart()
+                    }
+
+                })
 
             }
             else {
