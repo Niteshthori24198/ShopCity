@@ -52,7 +52,7 @@ function ShowProduct(data) {
                     <div>
 
                         <div class="nitesh_product_detail">
-                            <h2>Title : ${data.Title}</h2>
+                            <h3>${data.Title}</h3>
                             <p>Category : ${data.Category}</p>
                             <p>Details : ${data.Description}</p>
                             ${data.Rating ? getRatingStarDetail(data.Rating) : '<p  id="newProductBtn"><span>New Product</span></p>'}
