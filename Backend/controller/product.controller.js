@@ -38,8 +38,6 @@ const s3 = new S3Client({
 
 const CreateNewProduct = async (req, res) => {
 
-    console.log(req.body);
-    console.log(req.file);
 
     if (req.file.mimetype !== 'image/jpeg' && req.file.mimetype !== 'image/png') {
         console.log('Invalid File Type');
@@ -92,7 +90,7 @@ const CreateNewProduct = async (req, res) => {
 
         // Remove 20 minutes from the future date
         futureDate.setMinutes(futureDate.getMinutes() - 20);
-        console.log(futureDate);
+        
 
 
         const product = new ProductModel({ ...req.body, Image: url, S3_Url: ImageName, S3_Url_ExipreDate: futureDate });
@@ -125,7 +123,6 @@ const UpdateProduct = async (req, res) => {
 
     const { productID } = req.params;
 
-    console.log('update route pe request--->', productID);
 
     const { Title, Category, Quantity, Description, Price } = req.body;
 
@@ -168,8 +165,7 @@ const UpdateProduct = async (req, res) => {
 
 
 const UpdateProductImage = async (req, res) => {
-    console.log(req.body);
-    console.log(req.file);
+
     const {productID} = req.params
     if (!req.file) {
         return res.status(400).send({
@@ -328,7 +324,6 @@ const GetAllProducts = async (req, res) => {
 
     if (price) {
 
-        console.log("--> pc", price)
 
         if (price === "asc" || price === 'desc') {
 
@@ -367,7 +362,6 @@ const GetAllProducts = async (req, res) => {
 
         if (pricerange) {
 
-            console.log("hello", searchFilter, pricerange)
 
             products = await ProductModel.find({ Description:searchFilter }).sort({ Price: pricerange }).skip(limit * (page - 1)).limit(limit);
 
@@ -485,9 +479,6 @@ const GetProductByCategory = async (req, res) => {
 
     let { search, limit, page, price } = req.query;
 
-    console.log(search, limit, page, price, Category)
-
-    // limit = limit || 12;
 
     let pricerange;
 

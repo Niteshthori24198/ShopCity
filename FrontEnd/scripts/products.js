@@ -123,6 +123,7 @@ function getbutton(pno, text) {
 
 function cahngeBtn(pn){
     console.log(pn);
+    location.href="#"
     FetchAndDisplayProducts(pn);
 }
 

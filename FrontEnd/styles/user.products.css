@@ -5,15 +5,15 @@
 }
 
 .niteshfiltersection {
-    margin: 50px auto;
-    width: 80%;
-    border-radius: 10px;
+    margin: 40px auto;
+    width: 100%;
+    border-radius: 5px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    /* background-color: rgb(245, 242, 242); */
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    padding: 10px;
+    background-color: rgb(241, 237, 237);
+    padding: 40px;
     font-size: 18px;
+    gap: 20px;
 }
 
 .niteshfiltersection>div {
@@ -29,12 +29,11 @@
 .niteshfiltersection>div:nth-child(1)>input {
     border: none;
     outline: none;
-    border-radius: 5px;
-    border-bottom: 1px solid #666;
-    border-top: 1px solid #666;
     text-align: center;
-    width: 80%;
+    width: 50%;
     font-size: 15px;
+    border: 2px solid black;
+    padding: 5px;
 }
 
 
@@ -42,21 +41,22 @@
 #Niteshcategoryselect {
     font-size: 15px;
     border: none;
-    border-radius: 5px;
-    border-bottom: 1px solid #666;
-    border-top: 1px solid #666;
     text-align: center;
-    width: 60%;
+    width: 50%;
+    border: 2px solid black;
+    padding: 5px;
 }
+
+
 
 #NiteshsortbyPrice {
     font-size: 15px;
     border: none;
-    border-radius: 5px;
-    border-bottom: 1px solid #666;
-    border-top: 1px solid #666;
+    /* border-radius: 5px; */
     text-align: center;
-    width: 60%;
+    width: 50%;
+    border: 2px solid black;
+    padding: 5px;
 }
 
 
