@@ -5,7 +5,26 @@ const admin_baseurl = `http://localhost:3000`
 const adminusertoken = localStorage.getItem('usertoken') || null;
 
 if (!adminusertoken) {
-    location.href = "../view/user.login.html"
+
+    document.body.innerHTML = ''
+
+
+    Swal.fire({
+
+        title: 'Kindly Login First to Access this section.',
+
+        icon: 'error',
+
+        confirmButtonText: 'Ok'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            location.href = "../view/user.login.html"
+        }
+
+    })
 }
 
 let fetchedUserData = []
@@ -204,7 +223,7 @@ function GetOrderCard({ _id, Customer, Product, customerId, orderDate, orderQuan
 
             <p> <span> Order ID </span>  :- ${_id} </p>
             <p> <span> Payment Mode </span>  :- ${PaymentMode} </p>
-            ${ PaymentMode=='Internet-Banking' ?  `<p style="font-size:14px;"> <span> payment_id </span>  :- ${razorpay_payment_id} </p>` : ''}
+            ${PaymentMode == 'Internet-Banking' ? `<p style="font-size:14px;"> <span> payment_id </span>  :- ${razorpay_payment_id} </p>` : ''}
             
            
             
@@ -229,35 +248,67 @@ function GetOrderCard({ _id, Customer, Product, customerId, orderDate, orderQuan
 
 function handleDeveivery(ID) {
 
-    if (!confirm('Are you sure you want to mark the product as delivered?')) return
 
-    document.getElementById(ID).innerHTML = '<i class="fa fa-refresh fa-spin"></i> Delivered'
+    Swal.fire({
 
-    fetch(`${admin_baseurl}/order/updatestatus/${ID}`, {
-        method: 'PATCH',
-        headers: {
-            'content-type': 'application/json',
-            'authorization': `Bearer ${adminusertoken}`
+        title: 'Are you sure you want to mark the product as delivered?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            userProductDeliverHandle()
         }
     })
-        .then((res) => {
-            return res.json()
-        })
-        .then((data) => {
 
-            document.getElementById(ID).innerHTML = 'Delivered'
 
-            console.log(data)
-            if (data.Success) {
-                alert(data.msg)
-                location.reload()
+    function userProductDeliverHandle() {
+
+        document.getElementById(ID).innerHTML = '<i class="fa fa-refresh fa-spin"></i> Delivered'
+
+        fetch(`${admin_baseurl}/order/updatestatus/${ID}`, {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${adminusertoken}`
             }
         })
-        .catch((err) => {
-            document.getElementById(ID).innerHTML = 'Delivered'
-            console.log(err)
-        })
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
 
+                document.getElementById(ID).innerHTML = 'Delivered'
+
+                console.log(data)
+                if (data.Success) {
+                    
+                    Swal.fire({
+
+                        title: data.msg,
+
+                        icon: 'success',
+
+                        confirmButtonText: 'Ok'
+
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+
+                            location.reload()
+                        }
+
+                    })
+                }
+            })
+            .catch((err) => {
+                document.getElementById(ID).innerHTML = 'Delivered'
+                console.log(err)
+            })
+    }
 
 }
 

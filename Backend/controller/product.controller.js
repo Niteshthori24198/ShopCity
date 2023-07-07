@@ -47,7 +47,7 @@ const CreateNewProduct = async (req, res) => {
 
             "msg": "Kindly Pass Only JPEG or PNG Image",
 
-            "Success": fasle
+            "Success": false
 
         })
     }
@@ -179,7 +179,7 @@ const UpdateProductImage = async (req, res) => {
         return res.status(400).send({
             "error": "Invalid File Type",
             "msg": "Kindly Pass Only JPEG or PNG Image",
-            "Success": fasle
+            "Success": false
         })
     }
 
@@ -192,7 +192,7 @@ const UpdateProductImage = async (req, res) => {
             return res.status(404).send({
                 "error": "Product Not Found",
                 "msg": "Currently Product is not exits",
-                "Success": fasle
+                "Success": false
             })
         }
 
@@ -265,7 +265,7 @@ const RemoveProduct = async (req, res) => {
             return res.status(404).send({
                 "error": "Product Not Found",
                 "msg": "Currently Product is not exits",
-                "Success": fasle
+                "Success": false
             })
         }
 

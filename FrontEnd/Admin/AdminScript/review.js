@@ -6,7 +6,24 @@ const admin_review_baseurl = `http://localhost:3000`
 const adminuserReviewtoken = localStorage.getItem('usertoken') || null;
 
 if (!adminuserReviewtoken) {
-    location.href = "../view/user.login.html"
+
+    Swal.fire({
+
+        title: 'Kindly Login First to Access this section.',
+
+        icon: 'error',
+
+        confirmButtonText: 'Ok'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            location.href = "../view/user.login.html"
+        }
+
+    })
+
 }
 
 
@@ -35,7 +52,7 @@ function fetchAndRenderQuery() {
             }
         })
         .catch((err) => {
-            console.log('error==>');
+
             console.log(err)
         })
 
@@ -60,7 +77,7 @@ function renderReviews(Reviews) {
 
 
 
-function getReviewCard({ _id,CustomerId, CustomerName, CustomerImage, OrderId, ProductId,NewRating, Description }) {
+function getReviewCard({ _id, CustomerId, CustomerName, CustomerImage, OrderId, ProductId, NewRating, Description }) {
 
     return `
     
@@ -98,28 +115,79 @@ function getReviewCard({ _id,CustomerId, CustomerName, CustomerImage, OrderId, P
 }
 
 
-function handleDeleteReview(id){
-    if(!confirm('Are you sure you want to delete this review?')){
-        return;
-    }
-    fetch(`${admin_review_baseurl}/review/delete/${id}`, {
-        method : "DELETE",
-        headers : {
-            'content-type' : 'application/json',
-            'authorization' : `Bearer ${adminuserReviewtoken}`
+function handleDeleteReview(id) {
+
+    Swal.fire({
+
+        title: 'Are you sure you want to delete this review?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            deleteProductReview()
         }
-    }).then( res => res.json())
-    .then( data => {
-        console.log(data);
-        if(data.Success){
-            alert(data.msg)
-        }else{
-            alert(data.error)
-        }
-    }).catch(err => {
-        console.log(err);
-        alert('Something Went Wrong')
-    }).finally(()=>{
-        fetchAndRenderQuery()  
     })
+
+
+    function deleteProductReview() {
+
+        fetch(`${admin_review_baseurl}/review/delete/${id}`, {
+            method: "DELETE",
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${adminuserReviewtoken}`
+            }
+        }).then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.Success) {
+
+                    Swal.fire({
+
+                        title: data.msg,
+
+                        icon: 'success',
+
+                        confirmButtonText: 'Ok'
+
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+
+                            fetchAndRenderQuery()
+                        }
+
+                    })
+
+                } else {
+
+                    Swal.fire({
+
+                        title: data.error,
+
+                        icon: 'error',
+
+                        confirmButtonText: 'Ok'
+
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+
+                            fetchAndRenderQuery()
+                        }
+
+                    })
+
+                }
+            }).catch(err => {
+                console.log(err);
+                Swal.fire(err, '', 'error')
+                fetchAndRenderQuery()
+            })
+    }
+
 }

@@ -109,6 +109,7 @@ body,
     border: 1px solid black;
     color: rgb(22, 22, 190);
     font-weight: bold;
+    cursor: pointer;
 }
 
 

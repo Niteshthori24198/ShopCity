@@ -5,7 +5,26 @@ const admin_baseurl = `http://localhost:3000`
 const adminusertoken = localStorage.getItem('usertoken') || null;
 
 if (!adminusertoken) {
-    location.href = "../view/user.login.html"
+
+    document.body.innerHTML = null
+
+    Swal.fire({
+
+        title: 'Kindly Login First to Access this section.',
+
+        icon: 'error',
+
+        confirmButtonText: 'Ok'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            location.href = "../view/user.login.html"
+        }
+
+    })
+
 }
 
 
@@ -38,7 +57,9 @@ function fetchAndRenderUsers() {
         })
         .catch((err) => {
             console.log(err)
-            alert('Something Went Wrong!')
+
+            Swal.fire(err, '', 'error')
+
         })
 
 
@@ -128,57 +149,86 @@ function handleUpdateRole(userid, isAdmin) {
 
     // console.log("---> click data",userid,isAdmin, typeof isAdmin)
 
-    if (!confirm("Are you sure you want to update the user's role?")) {
-        return
-    }
+    Swal.fire({
 
-    document.getElementById(userid).innerHTML = '<i class="fa fa-refresh fa-spin"></i> Update Role'
+        title: `Are you sure you want to update the user role?`,
+        showCancelButton: true,
+        confirmButtonText: 'Upgrade'
 
+    }).then((result) => {
 
-
-    if (isAdmin === 'true') {
-        isAdmin = false
-    }
-    else {
-        isAdmin = true
-    }
-
-    // console.log("---> click data",userid,isAdmin, typeof isAdmin)
-
-    const payload = {
-        UserID: `${userid}`,
-        isAdmin: isAdmin
-    }
-
-    fetch(`${admin_baseurl}/user/updateRole`, {
-        method: 'PUT',
-        headers: {
-            'content-type': 'application/json',
-            'authorization': `Bearer ${adminusertoken}`
-        },
-        body: JSON.stringify(payload)
+        if (result.isConfirmed) {
+            upGradeUserRole()
+        }
     })
-        .then((res) => {
-            return res.json()
-        })
-        .then((data) => {
 
-            document.getElementById(userid).innerHTML = 'Update Role'
 
-            if (data.Success) {
-                alert(data.msg)
-                location.reload()
-            }
-            else {
-                alert(data.msg)
-            }
-        })
-        .catch((err) => {
-            document.getElementById(userid).innerHTML = 'Update Role'
-            alert(data)
-            console.log(err)
-        })
+    function upGradeUserRole() {
 
+        document.getElementById(userid).innerHTML = '<i class="fa fa-refresh fa-spin"></i> Update Role'
+
+
+        if (isAdmin === 'true') {
+            isAdmin = false
+        }
+        else {
+            isAdmin = true
+        }
+
+        // console.log("---> click data",userid,isAdmin, typeof isAdmin)
+
+        const payload = {
+            UserID: `${userid}`,
+            isAdmin: isAdmin
+        }
+
+        fetch(`${admin_baseurl}/user/updateRole`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${adminusertoken}`
+            },
+            body: JSON.stringify(payload)
+        })
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
+
+                document.getElementById(userid).innerHTML = 'Update Role'
+
+                if (data.Success) {
+
+                    Swal.fire({
+
+                        title: data.msg,
+
+                        icon: 'success',
+
+                        confirmButtonText: 'Ok'
+
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+
+                            location.reload()
+                        }
+
+                    })
+
+                }
+                else {
+                    Swal.fire(data.msg, '', 'error')
+                }
+            })
+            .catch((err) => {
+                document.getElementById(userid).innerHTML = 'Update Role'
+                Swal.fire(data.msg, '', 'error')
+                console.log(err)
+            })
+
+
+    }
 
 }
 
@@ -225,53 +275,159 @@ function handleSearchNav_users(value) {
 
 
 function handleBlockUserAccount(id) {
-    if (!confirm('Are you sure you want to block this user?')) {
-        return
-    }
-    fetch(`${admin_baseurl}/user/blockUserAccount/${id}`, {
-        method: "PATCH",
-        headers: {
-            'content-type': 'application/json',
-            'authorization': `Bearer ${adminusertoken}`
+
+    Swal.fire({
+
+        title: 'Are you sure you want to block this user?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            userAccountBlock()
         }
-    }).then(res => res.json())
-        .then(data => {
-            console.log(data);
-            if (data.Success) {
-                alert(data.msg)
-            } else {
-                alert(data.error)
+    })
+
+
+    function userAccountBlock() {
+
+        fetch(`${admin_baseurl}/user/blockUserAccount/${id}`, {
+            method: "PATCH",
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${adminusertoken}`
             }
-        }).catch(err => {
-            console.log(err);
-            alert('Something Went Wrong.(Try Again.)')
-        }).finally(() => {
-            location.reload()
-        })
+        }).then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.Success) {
+
+                    Swal.fire({
+
+                        title: data.msg,
+
+                        icon: 'success',
+
+                        confirmButtonText: 'Ok'
+
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+
+                            location.reload()
+                        }
+
+                    })
+
+                } else {
+
+                    Swal.fire({
+
+                        title: data.msg,
+
+                        icon: 'error',
+
+                        confirmButtonText: 'Ok'
+
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+
+                            location.reload()
+                        }
+
+                    })
+                }
+            }).catch(err => {
+                console.log(err);
+                Swal.fire(err, '', 'error')
+            })
+    }
+
+
+
 }
 
+
+
+
 function handleActiveUserAccount(id) {
-    if (!confirm('Are you sure you want to Activate this user?')) {
-        return
-    }
-    fetch(`${admin_baseurl}/user/activeUserAccount/${id}`, {
-        method: "PATCH",
-        headers: {
-            'content-type': 'application/json',
-            'authorization': `Bearer ${adminusertoken}`
+
+    Swal.fire({
+
+        title: 'Are you sure you want to Activate this user?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            userAccountActivation()
         }
-    }).then(res => res.json())
-        .then(data => {
-            console.log(data);
-            if (data.Success) {
-                alert(data.msg)
-            } else {
-                alert(data.error)
+    })
+
+
+
+    function userAccountActivation() {
+
+
+        fetch(`${admin_baseurl}/user/activeUserAccount/${id}`, {
+            method: "PATCH",
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${adminusertoken}`
             }
-        }).catch(err => {
-            console.log(err);
-            alert('Something Went Wrong.(Try Again.)')
-        }).finally(() => {
-            location.reload()
-        })
+        }).then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.Success) {
+
+                    Swal.fire({
+
+                        title: data.msg,
+
+                        icon: 'success',
+
+                        confirmButtonText: 'Ok'
+
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+
+                            location.reload()
+                        }
+
+                    })
+                    
+                } else {
+                    Swal.fire({
+
+                        title: data.msg,
+
+                        icon: 'error',
+
+                        confirmButtonText: 'Ok'
+
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+
+                            location.reload()
+                        }
+
+                    })
+                }
+            }).catch(err => {
+                console.log(err);
+                Swal.fire(err, '', 'error')
+                
+            })
+    }
+
+
 }
