@@ -1,68 +1,143 @@
 body,
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 #forgotpassform {
-  
-    width: 42%;
-    margin: 75px auto;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    border-radius: 7px;
-    padding: 35px;
+  width: 42%;
+  margin: 75px auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 7px;
+  padding: 35px;
 }
 
-#forgotpassform > p{
-    margin: 12px auto;
-    width: 75%;
-    text-align: justify;
-    line-height: 25px;
+#forgotpassform > p {
+  margin: 12px auto;
+  width: 75%;
+  text-align: justify;
+  line-height: 25px;
 }
 
-#forgotpassform>form {
-    display: flex;
-    flex-direction: column;
-    margin-top: 25px;
+#forgotpassform > form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
 }
 
-#forgotpassform > a{
-    margin: 12px auto;
-    text-decoration: none;
-    color:#007bff;
-   
+#forgotpassform > a {
+  margin: 12px auto;
+  text-decoration: none;
+  color: #007bff;
 }
-#forgotpassform > a:hover{
-    margin: 12px auto;
-    text-decoration: none;
-    color:#056cdb;
+#forgotpassform > a:hover {
+  margin: 12px auto;
+  text-decoration: none;
+  color: #056cdb;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+#forgotpassform input,
+#forgotpassform button {
+  width: 80%;
+  margin: 15px auto;
+  height: 45px;
+  outline: none;
+  border-radius: 7px;
+  text-align: center;
+  border: none;
+  border: 1px solid rgb(203, 202, 202);
+  letter-spacing: 2px;
+}
+#forgotpassform button{
     font-weight: bold;
-    letter-spacing: 1px;
-   
 }
-
-
-
-#forgotpassform input,#forgotpassform button {
-    width: 80%;
-    margin: 15px auto;
-    height: 45px;
-    outline: none;
-    border-radius: 7px;
-    text-align: center;
-    border: none;
-    border: 1px solid gray;
-    letter-spacing: 2px;
-}
-
-
 
 #forgotpassform button:hover {
-    background-color:#007bff;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+@media screen and (max-width: 1000px) and (min-width: 550px) {
+    #forgotpassform {
+        width: 65%;
+        padding: 10px;
+        margin: 50px auto;
+      }
+    
+      #forgotpassform > p {
+        margin: 12px auto;
+        width: 90%;
+        text-align: justify;
+        line-height: 20px;
+      }
+    
+    
+      #forgotpassform > a {
+        margin: 12px auto;
+      }
+      #forgotpassform > a:hover {
+        margin: 12px auto;
+        letter-spacing: 1px;
+      }
+    
+      #forgotpassform input,
+      #forgotpassform button {
+        width: 90%;
+        margin: 15px auto;
+        height: 35px;
+        letter-spacing: 1px;
+      }
+    
+      #forgotpassform button:hover {
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        border: none;
+      }
+}
+
+@media screen and (max-width: 550px) {
+  #forgotpassform {
+    width: 85%;
+    padding: 10px;
+    margin: 50px auto;
+  }
+
+  #forgotpassform > p {
+    margin: 12px auto;
+    width: 90%;
+    text-align: justify;
+    line-height: 20px;
+  }
+
+
+  #forgotpassform > a {
+    margin: 12px auto;
+  }
+  #forgotpassform > a:hover {
+    margin: 12px auto;
+    letter-spacing: 1px;
+  }
+
+  #forgotpassform input,
+  #forgotpassform button {
+    width: 90%;
+    margin: 15px auto;
+    height: 35px;
+    letter-spacing: 1px;
+  }
+
+  #forgotpassform button:hover {
+    background-color: #007bff;
     color: white;
     cursor: pointer;
     border: none;
+  }
 }

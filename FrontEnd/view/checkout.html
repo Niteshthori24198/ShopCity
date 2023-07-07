@@ -111,12 +111,12 @@
 
                 <div>
                     <p>First Name</p>
-                    <input type="text" placeholder="Enter your First Name" id="CustomerFName">
+                    <input type="text" placeholder="Enter Your First Name" id="CustomerFName">
                 </div>
 
                 <div>
                     <p>Last Name</p>
-                    <input type="text" placeholder="Enter your Last Name" id="CustomerLName">
+                    <input type="text" placeholder="Enter Your Last Name" id="CustomerLName">
                 </div>
 
             </div>
@@ -125,13 +125,13 @@
                 <p>Country</p>
                 <select name="Country_Name" id="Country_Name" onchange="handleStateSelect(event)">
 
-                   <!-- add countries here -->
+                    <!-- add countries here -->
 
                 </select>
                 <p>Address</p>
-                <input type="text" id="CustomerAddress">
+                <input type="text" id="CustomerAddress" placeholder="Enter Your Address">
                 <p>City</p>
-                <input type="text" id="CustomerCityName">
+                <input type="text" id="CustomerCityName" placeholder="Enter Your City Name">
             </div>
 
             <div>
@@ -139,10 +139,10 @@
                 <div>
 
                     <p>State</p>
-                    <select name="State" id="State_Select">
-                        
+                    <select name="State" id="State_Select" >
 
-                   <!-- apend states as per country selected here -->
+                        <option value="">Select State</option>
+                        <!-- apend states as per country selected here -->
 
                     </select>
 
@@ -151,7 +151,7 @@
                 <div>
 
                     <p>Zip Code</p>
-                    <input type="number" id="CustomerZipCode">
+                    <input type="number" id="CustomerZipCode" placeholder="Zip Code">
 
                 </div>
 
@@ -159,7 +159,7 @@
 
             <div>
                 <p>Phone</p>
-                <input type="number" id="CustomerPhoneNumber">
+                <input type="number" id="CustomerPhoneNumber" placeholder="Enter Your Phone Number">
             </div>
 
             <div>
@@ -240,7 +240,7 @@
 
 
 
-    
+
 
 
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
