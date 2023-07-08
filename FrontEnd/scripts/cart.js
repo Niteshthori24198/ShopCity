@@ -35,7 +35,7 @@ if (!token) {
 
 let Cart_Amount = 0;
 
-
+let iscartvalid=true;
 
 
 let MainCartSection = document.getElementById("Nitesh_Cart_items");
@@ -48,12 +48,20 @@ let SubTotal = document.querySelector("#Nitesh_Order_Summary > div > p:nth-child
 let checkoutbtn = document.querySelector("#nitesh_checkoutbtn");
 
 checkoutbtn.addEventListener("click", function (e) {
-    
-    
+
+
     if (token && cartitems.length) {
-        window.location = "../view/checkout.html";
+
+        if(iscartvalid){
+
+            window.location = "../view/checkout.html";
+        }
+        else{
+            swal.fire('Kindly remove Out of Stock Item from cart for proceed to checkout.','We are sorry for this inconvience, the product gets available soon.🤗','warning')
+        }
+
     }
-    
+
 })
 
 
@@ -62,7 +70,7 @@ fetchAndRenderCart();
 function fetchAndRenderCart() {
 
 
-    MainCartSection.innerHTML=`<div id="loading_gif"><img  src="../Images/Loading.gif" alt="Loading ...."/></div>`
+    MainCartSection.innerHTML = `<div id="loading_gif"><img  src="../Images/Loading.gif" alt="Loading ...."/></div>`
 
 
     fetch(`${BaseUrl}/cart/get`, {
@@ -144,7 +152,7 @@ function RenderCartItem(data) {
         )
     }).join("")
 
-    MainCartSection.innerHTML=''
+    MainCartSection.innerHTML = ''
 
     MainCartSection.innerHTML = `${Cards}`;
 
@@ -200,7 +208,8 @@ function getCards(Image, Title, Category, Description, Price, Quantity, id, tota
             <p>${Category}</p>
             <p>${Description.substring(0, 50)} Rs</p>
             <p>Price : ${Price} Rs</p>
-            ${totalAvailbleQuantity > 0 ? getQuantitySelect(totalAvailbleQuantity, Quantity, id) : "<p>Out Of Stock</p>"}
+            ${totalAvailbleQuantity > 0 ? getQuantitySelect(totalAvailbleQuantity, Quantity, id, true) :
+            getQuantitySelect(totalAvailbleQuantity, Quantity, id, false)}
             
             <button id="${id}">Remove</button>
         </div>`
@@ -213,7 +222,19 @@ function goToDetailPage(id) {
     location.href = '../view/details.html'
 }
 
-function getQuantitySelect(totalavailbe, selectedQuantity, id) {
+function getQuantitySelect(totalavailbe, selectedQuantity, id, inStock) {
+
+    if (!inStock) {
+        iscartvalid=false;
+        return `
+        <select name="quantity" id="${id}" disabled style="background-color:transparent;color:red;font-weight:bolder;border:1px solid black">
+
+        <option value="">Out Of Stock</option>
+
+        </select>
+    `;
+    }
+
     let otpions = ''
     for (let i = 0; i < totalavailbe && i < 10; i++) {
         otpions += `<option value="${i + 1}" ${selectedQuantity == (i + 1) ? "Selected" : ""}>Quantity :- ${i + 1}</option>`

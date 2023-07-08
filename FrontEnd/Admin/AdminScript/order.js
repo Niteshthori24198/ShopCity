@@ -214,9 +214,9 @@ function GetOrderCard({ _id, Customer, Product, customerId, orderDate, orderQuan
             <p> <span> Order Date </span>  :- ${orderDate} </p>
             
             
-            </div>
+        </div>
             
-            <div>
+        <div>
             
             
             <p> <span> Shipping Address </span>  :- ${shippingAddress} </p>
@@ -225,16 +225,14 @@ function GetOrderCard({ _id, Customer, Product, customerId, orderDate, orderQuan
             <p> <span> Payment Mode </span>  :- ${PaymentMode} </p>
             ${PaymentMode == 'Internet-Banking' ? `<p style="font-size:14px;"> <span> payment_id </span>  :- ${razorpay_payment_id} </p>` : ''}
             
-           
             
+        </div>
             
-            
-            
-            </div>
-            
-            <div>
+        <div>
+        
             <p > Status : <span class="orderstatuscolor"> ${orderStatus} </span></p>
             ${orderStatus == 'Confirmed' ? `<button onclick="handleDeveivery('${_id}')" id="${_id}"> Delivered </button>` : ''}
+
         </div>
        
     </div>
