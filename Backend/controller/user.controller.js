@@ -559,6 +559,7 @@ function sendEmailForForgotPassword(userid, Name, Email) {
     });
 
     const BaseUrl_Backend = process.env.backendUrl
+    const frontendUrl = process.env.frontendUrl+'/view/forgot-password.html'
 
     const accessToken = jwt.sign({ UserID: userid }, process.env.SecretKey, { expiresIn: '30m' })
 
@@ -567,7 +568,7 @@ function sendEmailForForgotPassword(userid, Name, Email) {
         to: Email,
         subject: 'Email For Forgot Password',
         html: `<p>Hi ${Name} <br> Welcome To Shop City <br/> Please click here to
-         <a href="${BaseUrl_Backend}/user/reset-password/?userToken=${accessToken}">forgot password</a>  
+         <a href="${frontendUrl}?userToken=${accessToken}">forgot password</a>  
         your Email. This Link is Expired in 30 Minutes</p>`
     };
 
