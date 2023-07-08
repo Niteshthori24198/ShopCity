@@ -1,5 +1,5 @@
 
-const BaseUrL = `https://shopcity-mrkishansharma.vercel.app`
+const BaseUrL = `http://localhost:3000`
 
 let ProductData = [];
 
@@ -201,6 +201,8 @@ async function UpdateBEServer(MyOrders) {
                     window.location = "../index.html";
                 }
             })
+        }else{
+            swal.fire(data.msg,'Try Again','error')
         }
         
     } catch (error) {
