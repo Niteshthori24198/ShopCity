@@ -1,5 +1,5 @@
 
-const BaseUrL = `http://localhost:3000`
+const BaseUrL = `https://shopcity-mrkishansharma.vercel.app`
 
 let ProductData = [];
 
@@ -171,49 +171,41 @@ function Shooping(Address, PaymentMode, razorpay_payment_id = '', razorpay_order
 }
 
 
-function UpdateBEServer(MyOrders) {
+async function UpdateBEServer(MyOrders) {
 
-    fetch(`${BaseUrL}/order/place`, {
-        method: 'POST',
-        headers: {
-            'Content-type': 'application/json',
-            'authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(MyOrders)
-    })
-        .then((res) => {
-            return res.json()
+    try {
+
+        let res = await fetch(`${BaseUrL}/order/place`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+                'authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(MyOrders)
         })
-        .then((data) => {
-
-            console.log(data)
-
-            if (data.Success) {
-
-                Swal.fire({
-
-                    title: data.msg,
-
-                    icon: 'success',
-
-                    confirmButtonText: 'Ok'
-
-                }).then((result) => {
-
-                    if (result.isConfirmed) {
-
-                        ClearCart()
-
-                        window.location = "../index.html";
-                    }
-
-                })
-
-            }
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+        
+        let data = await res.json()
+    
+        console.log(data)
+    
+        if (data.Success) {
+    
+            await ClearCart()
+            
+            Swal.fire({
+                title: data.msg,
+                icon: 'success',
+                confirmButtonText: 'Ok'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location = "../index.html";
+                }
+            })
+        }
+        
+    } catch (error) {
+        console.log(error);
+    }
 
 }
 
@@ -319,25 +311,21 @@ function calculateCartTotal() {
 
 
 
-function ClearCart() {
+async function ClearCart() {
 
 
-    fetch(`${BaseUrL}/cart/empty`, {
+    let res = await fetch(`${BaseUrL}/cart/empty`, {
         method: 'delete',
         headers: {
             'Content-type': 'application/json',
             'authorization': `Bearer ${token}`
         }
     })
-        .then((res) => {
-            return res.json()
-        })
-        .then((data) => {
-            console.log("@@@----->", data)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+
+    let data = await res.json()
+
+    console.log(data);
+
 
 }
 
@@ -352,6 +340,7 @@ function ClearCart() {
 
 // Razorpay
 
+var orderId;
 function showRazorPayBtnFunc(Address) {
 
     document.getElementById('onlinePaymentSection').innerHTML = `
@@ -359,7 +348,6 @@ function showRazorPayBtnFunc(Address) {
 
 
 
-    var orderId;
     $(document).ready(function () {
         var settings = {
             "url": `${BaseUrL}/checkout/create/orderId`,
@@ -378,7 +366,7 @@ function showRazorPayBtnFunc(Address) {
             console.log('response obj==>', response);
 
             orderId = response.orderId;
-            console.log(orderId);
+            console.log('order id created ==> ',orderId);
         });
 
 
@@ -392,15 +380,21 @@ function showRazorPayBtnFunc(Address) {
                 "key": "rzp_test_FePSDKRvTiVZWa", // Enter the Key ID generated from the Dashboard
                 "amount": Cart_Amount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
                 "currency": "INR",
-                "name": "Acme Corp",
-                "description": "Test Transaction",
+                "name": "Shopcity",
+                "description": "Order Place",
                 "image": "https://example.com/your_logo",
                 "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
                 "handler": function (response) {
 
+                    console.log('response handler =>', response);
+
                     const razorpay_payment_id = response.razorpay_payment_id
                     const razorpay_order_id = response.razorpay_order_id
                     const razorpay_signature = response.razorpay_signature
+
+                    console.log('payment id ', razorpay_payment_id);
+                    console.log('order id ', razorpay_order_id);
+                    console.log('signature ', razorpay_signature);
 
                     var settings = {
                         "url": `${BaseUrL}/checkout/api/payment/verify`,
@@ -417,10 +411,12 @@ function showRazorPayBtnFunc(Address) {
 
                     //creates new orderId everytime
                     $.ajax(settings).done(function (response) {
-                        console.log('response obj==>', response);
+                        console.log('response obj -->', response);
 
-                        orderId = response.orderId;
-                        console.log(orderId);
+                        // orderId = response.orderId;
+
+                        console.log('order id from response -->',orderId);
+                        
                         $("button").show();
                         if (response.signatureIsValid) {
 
