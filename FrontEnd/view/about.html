@@ -92,44 +92,27 @@
 
 
     <header>
-        <h1>About Our Website</h1>
+        <h2>About Our Website</h2>
     </header>
 
     <section class="shopcity-overview">
-        <h2>About Us</h2>
+        
         <p>Welcome to our e-commerce website which offers a comprehensive shopping solution, empowering users to create
             accounts, securely login, explore a diverse range of products categorized for easy navigation, add items to
             their cart, and track order status. With a seamless end-to-end experience, we depver convenience, repabipty,
             and personapzed user profiles. Join us today to enjoy a streampned and secure onpne shopping experience.</p>
     </section>
 
+    <h2>Our Features</h2>
     <section class="shopcity-features">
-        <h2>Our Features</h2>
-        <div>
-            <p><i class="fa-solid fa-circle-check fa-fade fa-xl" style="color: #2b8221;"></i>&nbsp; User registration
-                and login</p>
-            <p><i class="fa-solid fa-circle-check fa-fade fa-xl" style="color: #2b8221;"></i>&nbsp; User Authentication
-                & Authorization</p>
-            <p><i class="fa-solid fa-circle-check fa-fade fa-xl" style="color: #2b8221;"></i>&nbsp; Third Party
-                Integration for Login</p>
-            <p><i class="fa-solid fa-circle-check fa-fade fa-xl" style="color: #2b8221;"></i>&nbsp; View all products
-            </p>
-            <p><i class="fa-solid fa-circle-check fa-fade fa-xl" style="color: #2b8221;"></i>&nbsp; Product details page
-            </p>
-            <p><i class="fa-solid fa-circle-check fa-fade fa-xl" style="color: #2b8221;"></i>&nbsp; Shopping cart
-                functionality</p>
-            <p><i class="fa-solid fa-circle-check fa-fade fa-xl" style="color: #2b8221;"></i>&nbsp; Order placement and
-                tracking</p>
-            <p><i class="fa-solid fa-circle-check fa-fade fa-xl" style="color: #2b8221;"></i>&nbsp; Real Time Payment
-            </p>
-            <p><i class="fa-solid fa-circle-check fa-fade fa-xl" style="color: #2b8221;"></i>&nbsp; User profile
-                management</p>
+        <div id="allFeaturesHere">
+            <!-- append all features here -->
 
         </div>
     </section>
 
+    <h2 id="developerinfoheading">Developer Information</h2>
     <section class="developer-info">
-        <h2>Developer Information</h2>
         <div class="developer-card">
             <div id="develop-image">
                 <img src="../Images/Nitesh_Pic.JPG" alt="Developer Image">
@@ -141,7 +124,7 @@
                     multiple
                     programming languages. With a keen passion for innovation to continually enhance your knowledge and
                     skills to deliver outstanding digital experiences.</p>
-                <p>Email : <span>niteshkumar240198@gmail.com</span> </p>
+                <p>Email : <span onclick="openMailBox('niteshkumar240198@gmail.com', 'Nitesh')" >niteshkumar240198@gmail.com</span> </p>
                 <p>Phone : <span>+91 742700-6856</span> </p>
             </div>
         </div>
@@ -149,16 +132,13 @@
 
         <div class="developer-card">
             <div id="develop-image">
-                <img src="../Images/Nitesh_Pic.JPG" alt="Developer Image">
+                <img src="../Images/kishan.jpeg" alt="Developer Image">
             </div>
             <div class="developer-details">
                 <h3>Kishan Sharma</h3>
                 <h5>Full Stack Developer</h5>
-                <p>Skilled and dedicated developer with a passion for innovative solutions, proficient in
-                    multiple
-                    programming languages. With a keen passion for innovation to continually enhance your knowledge and
-                    skills to deliver outstanding digital experiences.</p>
-                <p>Email : <span>kishansharma6377@gmail.com</span> </p>
+                <p>Experienced Full Stack Developer adept at front-end and back-end technologies. Proficient in frameworks like React.js and Node.js, with expertise in designing and implementing RESTful APIs.</p>
+                <p>Email : <span onclick="openMailBox('kishansharma6377@gmail.com', 'Kishan')">kishansharma6377@gmail.com</span> </p>
                 <p>Phone : <span>+91 6377 302984</span> </p>
             </div>
         </div>
@@ -218,3 +198,5 @@
 <script src="../scripts/index.js"></script>
 
 <script src="../scripts/navbar.js"></script>
+
+<script src="../scripts/about.js"></script>

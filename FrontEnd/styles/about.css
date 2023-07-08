@@ -14,7 +14,6 @@ body {
 header,
 section {
     padding: 20px;
-    /* border: 1px solid red; */
     width: 90%;
     margin: auto;
     line-height: 30px;
@@ -22,9 +21,8 @@ section {
 }
 
 h1,
-h2,
-h3 {
-    margin-bottom: 10px;
+h2{
+    margin: 40px auto 20px auto;
 
 }
 
@@ -33,13 +31,19 @@ h1 {
     text-align: center;
 }
 
-
-.shopcity-features p {
-    margin: 10px auto;
+h2{
+    text-align: center;
 }
+
+
 
 .shopcity-features>div {
     margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    /* width: 85%; */
+    gap: 30px;
+    margin: auto;
 }
 
 
@@ -47,20 +51,31 @@ h1 {
     text-align: justify;
 }
 
+
+.developer-info{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+    width: 90%;
+    margin: auto;
+}
+
+
 /* Developer information styles */
 .developer-card {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 25px auto;
-    width: 100%;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    margin: 25px 0px;
+    padding: 10px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+   border-radius: 5px;
 
 }
 
 #develop-image>img {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    /* height: 150px; */
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -121,5 +136,44 @@ h1 {
         margin: auto;
 
     }
+    h2{
+        margin-top: 20px;
+    }
+    .shopcity-features>div {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        /* width: 85%; */
+        gap: 20px;
+        margin: auto;
+    }
+    p{
+        font-size: 14px;
+    }
+    .developer-info{
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        gap: 20px;
+        width: 90%;
+        margin: auto;
+    }
 
+}
+
+@media (min-width: 768px) and (max-width:1000px) {
+    .shopcity-features>div {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        /* width: 85%; */
+        gap: 20px;
+        margin: auto;
+    }
+    .developer-info{
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        gap: 20px;
+        width: 90%;
+        margin: auto;
+    }
 }
