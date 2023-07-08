@@ -38,20 +38,24 @@
     font-size: 15px;
     float: right;
     border: none;
+    outline: none;
     padding: 5px 10px;
     border-radius: 5px;
     margin-top: 10px;
     cursor: pointer;
+   
 }
 
 #Nitesh_Cart_items>div>select {
     color: white;
-    background-color: #303e35;
+    background-color:rgb(5 185 100);
     font-size: 15px;
     border-radius: 5px;
     padding: 5px;
     margin-top: 10px;
     cursor: pointer;
+    outline: none;
+    border: none;
 }
 
 #Nitesh_Cart_items img {

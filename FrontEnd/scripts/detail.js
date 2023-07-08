@@ -64,7 +64,7 @@ function ShowProduct(data) {
                             ${data.Rating ? getRatingStarDetail(data.Rating) : '<p  id="newProductBtn"><span>New Product</span></p>'}
                             <p>Price : <i class="fa-solid fa-indian-rupee-sign"></i> ${data.Price} </p>
                             
-                            ${data.Quantity <= 0 ? '<p> Out Of Stock <p>' : `Quantity : ${getQuantitySelectTag(data.Quantity)}`}        
+                            ${data.Quantity <= 0 ? '<p style="color:red;font-size:18px;margin-top:10px"> Out Of Stock <p>' : `Quantity : ${getQuantitySelectTag(data.Quantity)}`}        
                         
 
                         </div>

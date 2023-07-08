@@ -36,6 +36,8 @@ body {
     border: 1px solid gray;
 }
 
+
+
 .register-form input:nth-child(1) {
     margin-top: 30px;
 }
