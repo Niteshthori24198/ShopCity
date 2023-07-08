@@ -29,10 +29,11 @@ body {
     border: none;
     outline: none;
     letter-spacing: 1px;
-    border-bottom: 1px solid gray;
-    border-top: 1px solid gray;
+    /* border-bottom: 1px solid gray;
+    border-top: 1px solid gray; */
     border-radius: 6px;
     text-align: center;
+    border: 1px solid gray;
 }
 
 .register-form input:nth-child(1) {
@@ -111,14 +112,15 @@ body {
 
 @media screen and (max-width:850px) {
     .register-form {
-        width: 80%;
+        width: 90%;
         /* margin: 10vh auto; */
     }
 
     .register-form input,
     #registerFormSubmitBtn,
     #new_user_gen {
-        width: 80%;
+        text-align: center;
+        width: 85%;
     }
 
 

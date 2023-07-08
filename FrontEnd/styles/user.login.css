@@ -29,10 +29,11 @@ body{
     border: none;
     outline: none;
     border-radius: 8px; 
-    border-bottom: 1px solid #333;
-    border-top: 1px solid #333;
+    /* border-bottom: 1px solid #333;
+    border-top: 1px solid #333; */
     text-align: center;
     letter-spacing: 1px;
+    border: 1px solid gray;
 }
 
 
@@ -121,13 +122,13 @@ body{
 
 @media screen and (max-width:850px) {
     .login-form{
-        width: 80%;
+        width: 90%;
         /* margin: 10vh auto; */
     }
-    .login-form input, #loginBtnHai{
-        width: 80%;
+    .login-form input{
+        width: 85%;
     }
-    .login-form > button{
+    .login-form > button,#loginBtnHai{
         width: 225px;
     }
 
@@ -135,7 +136,7 @@ body{
         /* border: 1px solid red; */
         width: 65%;
         /* float: right; */
-        margin-right: 2px;
+        margin-right: -12px;
     
     }
 }
