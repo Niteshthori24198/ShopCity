@@ -35,7 +35,6 @@ if (!token) {
 
 let Cart_Amount = 0;
 
-fetchAndRenderCart();
 
 
 
@@ -49,17 +48,22 @@ let SubTotal = document.querySelector("#Nitesh_Order_Summary > div > p:nth-child
 let checkoutbtn = document.querySelector("#nitesh_checkoutbtn");
 
 checkoutbtn.addEventListener("click", function (e) {
-
-
+    
+    
     if (token && cartitems.length) {
         window.location = "../view/checkout.html";
     }
-
+    
 })
 
 
+fetchAndRenderCart();
 
 function fetchAndRenderCart() {
+
+
+    MainCartSection.innerHTML=`<div id="loading_gif"><img  src="../Images/Loading.gif" alt="Loading ...."/></div>`
+
 
     fetch(`${BaseUrl}/cart/get`, {
         method: 'GET',
@@ -140,6 +144,7 @@ function RenderCartItem(data) {
         )
     }).join("")
 
+    MainCartSection.innerHTML=''
 
     MainCartSection.innerHTML = `${Cards}`;
 

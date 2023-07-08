@@ -29,13 +29,16 @@ if (!adminusertoken) {
 
 let allProductsDataDB = []
 
+
+const paginationwrapper = document.getElementById('pagination_wrapper_btn')
+
 fetchAndRenderPro()
 
 
 
-function fetchAndRenderPro() {
+function fetchAndRenderPro(page = 1) {
 
-    fetch(`${admin_baseurl}/product/getall`, {
+    fetch(`${admin_baseurl}/product/getall?limit=7&page=${page}`, {
         method: 'GET',
         headers: {
             'content-type': 'application/json',
@@ -43,6 +46,11 @@ function fetchAndRenderPro() {
         }
     })
         .then((res) => {
+
+            let totalProductCount = res.headers.get('X-Total-Count')
+
+            AppendPaginationButtons(Math.ceil(totalProductCount / 7));
+
             return res.json()
         })
         .then((data) => {
@@ -99,7 +107,7 @@ function GetItemCard({ _id, Category, Description, Image, Price, Quantity, Ratin
             <p> Quantity :- ${Quantity} </p>
             <p> Rating :- ${Rating} ⭐ / 5 </p>
             <p> Details :- ${Description} </p>
-            <p> Product ID :- ${_id} </p>
+            <p> Product-ID :- ${_id} </p>
 
         </div>
 
@@ -121,6 +129,32 @@ function GetItemCard({ _id, Category, Description, Image, Price, Quantity, Ratin
 }
 
 
+
+function AppendPaginationButtons(n) {
+
+
+    let btn = "";
+
+    for (let i = 1; i <= n; i++) {
+        btn = btn + getbutton(i, i)
+    }
+
+    paginationwrapper.innerHTML = '';
+    paginationwrapper.innerHTML = btn;
+
+}
+
+
+function getbutton(pno, text) {
+    return `<div><button class="pagination-button" data-page-number="${pno}" onclick={cahngeBtn('${pno}')}>${text}</button></div>`
+}
+
+
+function cahngeBtn(pn) {
+    console.log(pn);
+    location.href = "#"
+    fetchAndRenderPro(pn)
+}
 
 
 
@@ -277,7 +311,7 @@ async function handleAddProduct(event) {
 
         else {
             document.getElementById('addd_close_btn').click()
-            EmptyForm() 
+            EmptyForm()
         }
     })
 
@@ -336,7 +370,7 @@ async function handleAddProduct(event) {
                 fetchAndRenderPro()
             }
 
-            EmptyForm() 
+            EmptyForm()
 
         })
 

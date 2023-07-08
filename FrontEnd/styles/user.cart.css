@@ -133,6 +133,26 @@
 }
 
 
+
+#loading_gif {
+    margin: auto;
+    grid-area: 1/1/3/3;
+    width: 100% !important;
+    border: none;
+    box-shadow: none !important;
+    /* border: 20px solid red; */
+}
+
+
+#loading_gif >img{
+    width: 55%;
+    margin: auto;
+    /* border: 2px solid  green; */
+    display: block;
+}
+
+
+
 @media screen and (max-width:1000px) and (min-width:750px) {
     .Nitesh_cartdiv {
         grid-template-columns: 1fr;
@@ -169,6 +189,12 @@
         height: fit-content;
         margin: 10px auto;
         /* line-height: 50px; */
+    }
+
+
+    #loading_gif >img{
+        width: 75%;
+       
     }
 
 }

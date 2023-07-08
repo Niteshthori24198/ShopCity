@@ -32,29 +32,28 @@ body {
     align-items: center;
     margin: auto;
     border-radius: 10px;
-    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-  
+
 
 }
 
 .nitesh_top_grid img {
-   
+
     border-radius: 10px;
     width: 100%;
 }
 
 
 .nitesh_top_grid img:hover {
-   
-   transform: scale(1.1);
-   transition: 1s ease;
+
+    transform: scale(1.1);
+    transition: 1s ease;
 }
 
 .nitesh_top_grid p {
     text-align: center;
     margin: 15px auto;
-} 
+}
 
 .nitesh_middle_section {
     /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
@@ -118,15 +117,24 @@ h2 {
     text-align: center;
 }
 
+
+.nitesh_lower_bottom>div {
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    border-radius: 10px;
+}
+
 .nitesh_lower_bottom img {
-    width: 90%;
-    border-radius: 100%;
-    border: 5px solid rgb(177, 175, 175);
+    /* width: 90%; */
+
+    border-radius: 10px;
+    width: 100%;
+    /* border-radius: 100%;
+    border: 5px solid rgb(177, 175, 175); */
 }
 
 .nitesh_lower_bottom img:hover {
-   transform: scale(1.05);
-   transition: 2s ease-out;
+    transform: scale(1.05);
+    transition: 2s ease-out;
 }
 
 
@@ -135,6 +143,7 @@ h2 {
     width: 98%;
     border-radius: 10px;
     margin: 20px auto;
+
 }
 
 
@@ -193,19 +202,39 @@ h2 {
 }
 
 .nitesh_ourbrandsection>div {
-    box-shadow: rgba(169, 166, 166, 0.2) 0px 2px 8px 0px;
-    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    border-radius: 10px;
 }
 
 .nitesh_ourbrandsection img {
-    width: 80%;
-    border-radius: 10%;
+    width: 100%;
+    border-radius: 10px;
+
+
 }
 
 .nitesh_ourbrandsection img:hover {
-   transform: scale(1.1);
-   transition: 2s ease;
+    transform: scale(1.1);
+    transition: 2s ease;
 }
+
+
+
+#loading_gif {
+    margin: auto;
+    grid-area: 1/1/7/7;
+    width: 100% !important;
+    border: none;
+    box-shadow: none;
+}
+
+
+#loading_gif>img {
+    width: 21%;
+    margin: auto;
+    display: block;
+}
+
 
 
 
@@ -219,13 +248,13 @@ h2 {
     }
 
 
-    
+
     .Nitesh_section_grid {
         display: block;
         width: 100%;
         margin: 15px auto;
         gap: 15px;
-         grid-template-columns: 1fr; 
+        grid-template-columns: 1fr;
     }
 
 
@@ -256,6 +285,12 @@ h2 {
 
     .nitesh_ourbrandsection {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    #loading_gif>img {
+        width: 50%;
+        margin: auto;
+        display: block;
     }
 
 

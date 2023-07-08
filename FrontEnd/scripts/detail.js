@@ -11,6 +11,10 @@ fetchAndRenderItem();
 
 function fetchAndRenderItem() {
 
+
+    productdetailcont.innerHTML = `<div id="loading_gif"><img  src="../Images/Loading.gif" alt="Loading ...."/></div>`;
+
+
     fetch(`${Baseurl}/product/getone/${productID}`)
         .then((res) => {
             return res.json()
@@ -40,6 +44,8 @@ function fetchAndRenderItem() {
 
 
 function ShowProduct(data) {
+
+    productdetailcont.innerHTML = '';
     
 
     console.log(`<img src="${data.Image}" alt="Error"  class="zoom" data-magnify-src="${data.Image}" />`)
@@ -72,6 +78,10 @@ function ShowProduct(data) {
                 `
 
     productdetailcont.innerHTML = product;
+
+    productdetailcont.style.border='1px solid #ebe8e8'
+
+    productdetailcont.style.boxShadow='rgba(195, 195, 195, 0.2) 0px 2px 8px 0px'
 
     
 

@@ -1,6 +1,11 @@
 
 const HOMEBASEURL = `http://localhost:3000`
 
+const Mencont = document.querySelector('.nitesh_top_grid');
+
+const WoMencont = document.querySelector('.nitesh_lower_bottom');
+
+const kidcont = document.querySelector('.nitesh_ourbrandsection');
 
 let ProductDB = []
 
@@ -11,11 +16,23 @@ let WomenDB = []
 let KidDB = []
 
 
+
 fetchProducts()
 
 
 
 async function fetchProducts(){
+
+
+    Mencont.innerHTML=`<div id="loading_gif"><img  src="./Images/Loading.gif" alt="Loading ...."/></div>`
+
+    WoMencont.innerHTML=`<div id="loading_gif"><img  src="./Images/Loading.gif" alt="Loading ...."/></div>`
+
+    kidcont.innerHTML =`<div id="loading_gif"><img  src="./Images/Loading.gif" alt="Loading ...."/></div>`
+
+
+
+
 
     const response = await fetch(`${HOMEBASEURL}/product/getall`);
 
@@ -59,7 +76,6 @@ function DivideCategoryBased(){
 
 function RenderCategoryMen(MDB){
 
-    const Mencont = document.querySelector('.nitesh_top_grid');
 
     let sc=0;
     let tsc=0;
@@ -98,7 +114,6 @@ function RenderCategoryMen(MDB){
 
 function RenderCategoryWoMen(WDB){
 
-    const WoMencont = document.querySelector('.nitesh_lower_bottom');
 
 
     const filtereddata = WDB.filter((ele)=>{
@@ -126,7 +141,6 @@ function RenderCategoryWoMen(WDB){
 
 function RenderCategoryKids(KDB){
 
-    const kidcont = document.querySelector('.nitesh_ourbrandsection');
 
     const kiddata = KDB.map((ele,i)=>{
         if(i<6){

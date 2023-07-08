@@ -362,7 +362,7 @@ function showRazorPayBtnFunc(Address) {
     var orderId;
     $(document).ready(function () {
         var settings = {
-            "url": "http://localhost:3000/checkout/create/orderId",
+            "url": `${BaseUrL}/checkout/create/orderId`,
             "method": "POST",
             "timeout": 0,
             "headers": {
@@ -403,7 +403,7 @@ function showRazorPayBtnFunc(Address) {
                     const razorpay_signature = response.razorpay_signature
 
                     var settings = {
-                        "url": "http://localhost:3000/checkout/api/payment/verify",
+                        "url": `${BaseUrL}/checkout/api/payment/verify`,
                         "method": "POST",
                         "timeout": 0,
                         "headers": {

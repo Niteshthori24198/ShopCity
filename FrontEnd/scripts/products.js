@@ -19,6 +19,9 @@ function FetchAndDisplayProducts(page = 1, urlPass=false) {
         url = `${BaseURL}/product/getall?limit=12&page=${page}`
     }
 
+
+    productcont.innerHTML=`<div id="loading_gif"><img  src="../Images/Loading.gif" alt="Loading ...."/></div>`
+
     fetch(url)
         .then((res) => {
 

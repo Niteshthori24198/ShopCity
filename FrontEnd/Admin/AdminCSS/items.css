@@ -1,4 +1,5 @@
-body , *{
+body,
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -6,7 +7,7 @@ body , *{
 }
 
 
-.admin-container{
+.admin-container {
     display: grid;
     width: 90%;
     grid-template-columns: 1fr 4fr;
@@ -16,12 +17,12 @@ body , *{
 }
 
 
-.admin-container > div{
+.admin-container>div {
     /* border: 2px solid green; */
     border-radius: 7px;
 }
 
-.admin-container > div:nth-child(1){
+.admin-container>div:nth-child(1) {
     display: flex;
     flex-direction: column;
     padding: 25px 30px;
@@ -30,16 +31,16 @@ body , *{
     background-color: rgba(168, 195, 222, 0.15);
 }
 
-.admin-container a{
+.admin-container a {
     text-decoration: none;
 }
 
-.admin-container a:hover{
+.admin-container a:hover {
     color: gray;
 }
 
 
-#adminitemscontainer > div{
+#adminitemscontainer>div {
 
     display: grid;
     grid-template-columns: 1fr 2fr 2fr;
@@ -52,29 +53,39 @@ body , *{
 
 }
 
-#adminitemscontainer > div > div:nth-child(1){
+#adminitemscontainer>div>div:nth-child(1) {
     /* border: 1px solid red; */
     margin: auto;
     display: flex;
 }
 
-#adminitemscontainer img{
+#adminitemscontainer img {
     width: 80%;
     margin: auto;
 }
-#adminitemscontainer img:hover{
+
+#adminitemscontainer img:hover {
     transform: scale(1.3);
     transition: 2s;
     cursor: pointer;
 }
 
-#adminitemscontainer > div > div:nth-child(3){
+#adminitemscontainer>div>div:nth-child(3) {
     display: flex;
     margin: auto;
 }
 
 
-#adminitemscontainer > div button{
+#adminitemscontainer>div>div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    text-align: start;
+}
+
+
+
+#adminitemscontainer>div button {
     margin: 10px;
     border: none;
     background-color: #007bff;
@@ -83,7 +94,7 @@ body , *{
     padding: 5px 10px;
 }
 
-#adminitemscontainer > div button:hover{
+#adminitemscontainer>div button:hover {
     background: transparent;
     border: 1px solid black;
     color: rgb(22, 22, 190);
@@ -94,15 +105,77 @@ body , *{
 
 
 
+#shop_footer_rows>div:nth-child(1) li {
+
+    margin-left: -33px;
+
+}
+
+#shop_footer_rows>div:nth-child(2) li {
+
+    margin-left: -33px;
+
+}
+
+#shop_footer_rows>div:nth-child(3) li {
+
+    margin-left: -33px;
+
+}
+
+
+/* pagination css */
+
+
+#pagination_wrapper_btn {
+    width: 50%;
+    display: flex;
+    justify-content: start;
+    /* gap: 20px; */
+    align-items: center;
+    margin: 50px auto;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    /* background-color: blue; */
+
+}
+
+#pagination_wrapper_btn>div {
+
+    margin: 10px;
+    width: 60px;
+    padding: 5px 10px;
+    max-width: 50px;
+}
+
+.pagination-button {
+    box-sizing: content-box;
+    border: none;
+    font-size: 15px;
+    text-overflow: ellipsis;
+    color: white;
+    background-color: brown;
+    /* width: 100px; */
+    width: 40px;
+    max-width: 40px;
+    cursor: pointer;
+}
+
+.pagination-button:hover {
+    background-color: rgb(184, 62, 62);
+}
+
+
+
 
 
 /*  media querires */
 
 
-@media only screen and (min-width:750px) and (max-width:1000px){
+@media only screen and (min-width:750px) and (max-width:1000px) {
 
 
-    .admin-container{
+    .admin-container {
         grid-template-columns: 1fr;
         text-align: center;
     }
@@ -110,25 +183,25 @@ body , *{
 
 
 
-    #adminitemscontainer > div{
-        grid-template-columns: repeat(2,1fr);
+    #adminitemscontainer>div {
+        grid-template-columns: repeat(2, 1fr);
         text-align: justify;
     }
 
-    #adminitemscontainer > div > div:nth-child(3){
+    #adminitemscontainer>div>div:nth-child(3) {
         grid-area: 2/1/3/3;
     }
-       
-    #adminitemscontainer > div button{
+
+    #adminitemscontainer>div button {
         margin: 18px;
         border: none;
         border-radius: 4px;
         padding: 6px 25px;
-        
+
     }
 
 
-    
+
 
 
 }
@@ -136,10 +209,10 @@ body , *{
 
 
 
-@media only screen and (max-width:750px){
+@media only screen and (max-width:750px) {
 
 
-    .admin-container{
+    .admin-container {
         grid-template-columns: 1fr;
         text-align: center;
     }
@@ -147,51 +220,59 @@ body , *{
 
 
 
-    #adminitemscontainer > div{
-        grid-template-columns: repeat(1,1fr);
+    #adminitemscontainer>div {
+        grid-template-columns: repeat(1, 1fr);
         text-align: justify;
     }
 
-    .itemFilterSections{
+    .itemFilterSections {
         display: flex;
         flex-direction: column;
         padding-bottom: 18px;
     }
 
-    .itemFilterSections button, .itemFilterSections select{
+    .itemFilterSections button,
+    .itemFilterSections select {
         width: 80%;
-    } 
-    
+    }
 
-  
+    #adminitemscontainer>div>div:nth-child(2)>p {
+        font-size: 14px;
+    }
+
+    #pagination_wrapper_btn {
+        width: 80%;
+    }
+
 
 }
 
 
 
-#addProductBtn_item{
+#addProductBtn_item {
     width: 200px;
     margin: 25px 0px 20px 0px;
 }
 
-#addProductBtn_item:hover, .itemFilterSections select:hover{
+#addProductBtn_item:hover,
+.itemFilterSections select:hover {
     background-color: transparent;
     color: blue;
     font-weight: bold;
 }
 
 
-.itemFilterSections{
+.itemFilterSections {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     margin-bottom: 10px;
     border-radius: 5px;
-     box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
-     /* background-color: rgba(168, 195, 222, 0.15); */
+    box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
+    /* background-color: rgba(168, 195, 222, 0.15); */
 }
 
-.itemFilterSections select{
+.itemFilterSections select {
     background-color: #007bff;
     color: white;
     width: 200px;
