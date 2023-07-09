@@ -413,6 +413,7 @@ const getAllReview = async (req,res) => {
         const reviewInfo = await ReviewModel.find();
         for(let review of reviewInfo){
             const user = await UserModel.findById({ _id: review.CustomerId });
+            
 
             const currentDate = new Date();
             // Get the current date and get expiration date
@@ -420,24 +421,34 @@ const getAllReview = async (req,res) => {
             futureDate.setDate(currentDate.getDate() + 7);
             futureDate.setMinutes(futureDate.getMinutes() - 20);
            
-    
-    
-            if (user.S3_Url_ExipreDate && user.S3_Url_ExipreDate < currentDate) {
-                user.S3_Url_ExipreDate = futureDate;
-    
-                const getObjectParams = {
-                    Bucket: bucketName,
-                    Key: user.S3_Url
+            console.log('step 1');
+            console.log(user);
+
+            if(user){
+                if (user.S3_Url_ExipreDate && user.S3_Url_ExipreDate < currentDate) {
+                    console.log('step 2');
+                    user.S3_Url_ExipreDate = futureDate;
+                    
+                    const getObjectParams = {
+                        Bucket: bucketName,
+                        Key: user.S3_Url
+                    }
+                    const command1 = new GetObjectCommand(getObjectParams);
+                    console.log('step 3');
+                    const url = await getSignedUrl(s3, command1, { expiresIn: 604800 });
+                    user.Image = url;
+                    console.log('step 4');
+                    await UserModel.findByIdAndUpdate({ _id: user._id }, { S3_Url_ExipreDate: futureDate, Image: url })
                 }
-                const command1 = new GetObjectCommand(getObjectParams);
-                const url = await getSignedUrl(s3, command1, { expiresIn: 604800 });
-                user.Image = url;
-                await UserModel.findByIdAndUpdate({ _id: user._id }, { S3_Url_ExipreDate: futureDate, Image: url })
+                
+                review.CustomerImage = user.Image
+                
+                review.CustomerName = user.Name
+                console.log('step 5');
+
             }
             
-            review.CustomerImage = user.Image
             
-            review.CustomerName = user.Name
         }
         return res.status(200).send({
             "error": "no error",
@@ -446,6 +457,7 @@ const getAllReview = async (req,res) => {
             "Review": reviewInfo
         })
     } catch (error) {
+        console.log('step 6');
         return res.status(404).send({
             "error": error.message,
             "Success": false,
