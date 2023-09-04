@@ -227,7 +227,9 @@ Shopcity, an advanced full-stack e-commerce platform, guarantees a secure and se
 -  Manage your profile effortlessly. View and update personal details, change your password, and add a personal touch with a custom profile picture.
 
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/10a187cf-3aa7-4db5-8d9f-c60ca35fab79)
+
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/c22ad129-1c80-445a-b53c-c30ba35ba626)
+
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/0471e008-ef4f-4850-8dc4-401f93615795)
 
 
@@ -262,7 +264,9 @@ Shopcity, an advanced full-stack e-commerce platform, guarantees a secure and se
 -  Admins can easily manage the product catalog here. Add new products, update quantities, and make changes to details and images effortlessly to keep your offerings up to date.
 
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/91d6c0fb-5095-43ab-bd32-ab165dc4fced)
+
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/78bd30fd-9295-41da-93e0-db1d72f0bfd0)
+
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/08de0bda-6b59-48a8-9c7f-8d518c7350a7)
 
 
