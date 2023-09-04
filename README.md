@@ -102,7 +102,7 @@ Shopcity, an advanced full-stack e-commerce platform, guarantees a secure and se
     
   ## Features
   
-    Shopcity offers a wide range of features to both customers and administrators, making it a complete e-commerce solution. 
+  Shopcity offers a wide range of features to both customers and administrators, making it a complete e-commerce solution. 
 
 -  User registration with email verification & Login
 -  Integration of Google authentication as a third-party service
@@ -157,6 +157,7 @@ Shopcity, an advanced full-stack e-commerce platform, guarantees a secure and se
 ### Home Page
 
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/9be57043-aa03-4a5c-8d1d-deebfd8d2d20)
+
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/100125f9-ad39-4c40-a32d-f69f306597ec)
 
 
@@ -179,6 +180,7 @@ Shopcity, an advanced full-stack e-commerce platform, guarantees a secure and se
 -  Explore our product page for a curated selection of high-quality items to meet your needs and preferences.
 
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/9db78f9c-1678-46bb-8e4b-c889f9ddee91)
+
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/a12c5175-6002-4e8e-8cc0-3dc41b384bd8)
 
 
@@ -187,6 +189,7 @@ Shopcity, an advanced full-stack e-commerce platform, guarantees a secure and se
 -  Delve deeper into product details with magnified images and access valuable customer reviews for an informed shopping experience.
 
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/138e8af6-9e53-4b29-9e11-328499bd7d61)
+
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/0159daea-3e3f-40c4-b797-fa9cb26260f4)
 
 
@@ -195,6 +198,7 @@ Shopcity, an advanced full-stack e-commerce platform, guarantees a secure and se
 -  Effortlessly manage your shopping cart, adding, removing products, and adjusting quantities to tailor your order to perfection.
 
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/7ce617fd-6988-44a4-b45d-49d581f65801)
+
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/f4e85a5f-2560-46f8-b50f-e0b321894fbf)
 
 
@@ -203,7 +207,9 @@ Shopcity, an advanced full-stack e-commerce platform, guarantees a secure and se
 -  Finalize your order by entering shipping details. Choose from multiple Razorpay payment options or enjoy the flexibility of Cash on Delivery for a seamless shopping experience.
 
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/9ffd8ad3-704f-4286-b9dd-1458fcc73fa7)
+
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/5797d112-3c6c-456a-816f-e24202740be0)
+
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/6d3133ee-b39d-46ea-bc36-b3a9f80303a5)
 
 
@@ -212,6 +218,7 @@ Shopcity, an advanced full-stack e-commerce platform, guarantees a secure and se
 -  View all your orders here, with the option to cancel if needed. Share your valuable feedback on delivered items to help us serve you better.
 
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/10a6be7c-71ec-47d1-9237-fbddc0c8563c)
+
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/2f1f1689-2414-4590-bee8-e2eccbf74dc2)
 
 
