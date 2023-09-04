@@ -1,14 +1,14 @@
-# ***Shop-City***
+# ***ShopCity 💖***
 
-### ***Logo***
+## Logo
 
 ![image](https://github.com/Niteshthori24198/ShopCity/assets/62844049/de0678ff-33ec-4c4c-848c-a3b405442354)
 
-## ***Shopcity - Full Stack E-commerce Application***
+## Shopcity - Full Stack E-commerce Application
 
 Shopcity, an advanced full-stack e-commerce platform, guarantees a secure and seamless shopping experience. Offering a wide product selection, effortless checkout, thorough review system, and live order tracking, Shopcity revolutionizes online shopping for ultimate convenience and confidence.
 
-## ***Table of Contents***
+## Table of Contents
 
   - Code Base
   - Technologies Used
