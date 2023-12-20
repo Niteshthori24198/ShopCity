@@ -918,7 +918,7 @@ const getAllUsersData = async (req, res) => {
 
     if (!limit) {
 
-        limit = 10
+        limit = 100
     }
 
     try {
