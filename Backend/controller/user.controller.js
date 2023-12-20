@@ -916,10 +916,12 @@ const getAllUsersData = async (req, res) => {
 
     let { search, limit, page, isAdmin } = req.query;
 
-    if (!limit) {
+    // if (!limit) {
 
-        limit = 100
-    }
+    //     limit = 100
+    // }
+
+    limit=100;
 
     try {
 
