@@ -145,7 +145,7 @@ Shopcity, an advanced full-stack e-commerce platform, guarantees a secure and se
   The backend of this project has been deployed using Cyclic, and the front end has been deployed on github.io.
   
   - Github.io : ***https://mrkishansharma.github.io/shop-city.github.io/***
-  - BackEnd : ***https://quaint-flannel-shirt-moth.cyclic.app/***
+  - BackEnd : ***https://shopcity-mrkishansharma.vercel.app/***
   - Github : ***https://github.com/Niteshthori24198/ShopCity***
 
 
